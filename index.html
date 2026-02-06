@@ -1,63 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>For My Love ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Love 💖</title>
 
 <style>
 body{
-  background: linear-gradient(to right,#ff9a9e,#fad0c4);
+  margin:0;
   font-family: Arial;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
   text-align:center;
   color:white;
-  padding-top:50px;
 }
 
-h1{
-  font-size:45px;
+.container{
+  padding-top:40px;
 }
 
-p{
-  font-size:22px;
-  width:80%;
-  margin:auto;
+img{
+  width:200px;
+  border-radius:20px;
+  box-shadow:0 10px 20px rgba(0,0,0,0.2);
 }
 
 button{
   padding:15px 25px;
-  font-size:20px;
   border:none;
-  border-radius:10px;
+  border-radius:30px;
   background:#ff4d6d;
   color:white;
+  font-size:18px;
+  margin:10px;
+}
+
+.question{
+  display:none;
   margin-top:30px;
 }
 
-button:hover{
-  background:#ff1e4d;
+.big{
+  font-size:28px;
+  font-weight:bold;
 }
 </style>
-
 </head>
 
 <body>
 
+<div class="container">
+
 <h1>Hey My Love 💕</h1>
+<p>You found the secret surprise 😘</p>
 
-<p>
-This website is made only for you.  
-You are my favorite notification, my peace, and my happiness.  
-No matter what happens, I will always choose you. ❤️
-</p>
+<button onclick="start()">Start Game 💖</button>
 
-<button onclick="showMessage()">Click Me 😘</button>
+<div id="q1" class="question">
+<h2>Do you love me? 🥺</h2>
+<button onclick="yes1()">Yes ❤️</button>
+<button onclick="no1()">No 😒</button>
+</div>
 
-<h2 id="msg"></h2>
+<div id="q2" class="question">
+<h2>Will you be my Valentine? 💌</h2>
+<button onclick="yes2()">Yesss 💕</button>
+<button onclick="no2()">No 😝</button>
+</div>
+
+<div id="final" class="question">
+<p class="big">YAYYYYY 😍</p>
+<p class="big">You are officially my Valentine 💖</p>
+<p class="big">I LOVE YOU SO MUCH ❤️</p>
+</div>
+
+</div>
 
 <script>
-function showMessage(){
-document.getElementById("msg").innerHTML =
-"I LOVE YOU SO MUCH ❤️";
+
+function start(){
+  document.getElementById("q1").style.display="block";
 }
+
+function no1(){
+  alert("Wrong answer 😡 Try again 😂");
+}
+
+function yes1(){
+  document.getElementById("q1").style.display="none";
+  document.getElementById("q2").style.display="block";
+}
+
+function no2(){
+  alert("Hehe wrong option 😜 choose again");
+}
+
+function yes2(){
+  document.getElementById("q2").style.display="none";
+  document.getElementById("final").style.display="block";
+}
+
 </script>
 
 </body>
