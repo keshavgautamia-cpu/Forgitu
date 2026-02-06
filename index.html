@@ -2,137 +2,91 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Love 💖</title>
+<title>For Gitu 💖</title>
 
 <style>
 body{
   margin:0;
-  font-family: Arial;
-  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
-  text-align:center;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
   color:white;
 }
 
-.container{
-  padding-top:40px;
+/* glass card */
+.card{
+  backdrop-filter: blur(15px);
+  background: rgba(255,255,255,0.15);
+  padding:40px 25px;
+  border-radius:25px;
+  text-align:center;
+  width:85%;
+  max-width:360px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  animation: fadeIn 1.5s ease;
 }
 
-img{
-  width:200px;
+h1{
+  font-size:32px;
+  margin-bottom:10px;
+}
+
+p{
+  opacity:0.9;
+  font-size:18px;
+}
+
+input{
+  padding:12px;
+  width:80%;
+  border:none;
   border-radius:20px;
-  box-shadow:0 10px 20px rgba(0,0,0,0.2);
+  margin-top:15px;
+  text-align:center;
 }
 
 button{
-  padding:15px 25px;
+  padding:12px 25px;
   border:none;
-  border-radius:30px;
+  border-radius:25px;
   background:#ff4d6d;
   color:white;
   font-size:18px;
-  margin:10px;
+  margin-top:20px;
 }
 
-.question{
-  display:none;
-  margin-top:30px;
-}
-
-.big{
-  font-size:28px;
-  font-weight:bold;
+@keyframes fadeIn{
+  from{opacity:0; transform:scale(0.9);}
+  to{opacity:1; transform:scale(1);}
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="card">
+<h1>🔒 Private App</h1>
+<p>This surprise belongs to<br><b>Gitu My Jaanu 💖</b></p>
 
-<h1>Hey My Love 💕</h1>
-<p>You found the secret surprise 😘</p>
+<input id="pass" placeholder="Enter password">
+<br>
+<button onclick="unlock()">Unlock</button>
 
-<button onclick="start()">Start Game 💖</button>
-
-<div id="q1" class="question">
-<h2>Do you love me? 🥺</h2>
-<button onclick="yes1()">Yes ❤️</button>
-<button onclick="no1()">No 😒</button>
-</div>
-
-<div id="q2" class="question">
-<h2>Will you be my Valentine? 💌</h2>
-<button onclick="yes2()">Yesss 💕</button>
-<button onclick="no2()">No 😝</button>
-</div>
-
-<div id="final" class="question">
-<p class="big">YAYYYYY 😍</p>
-<p class="big">You are officially my Valentine 💖</p>
-<p class="big">I LOVE YOU SO MUCH ❤️</p>
-</div>
-
+<p id="msg"></p>
 </div>
 
 <script>
-
-function start(){
-  document.getElementById("q1").style.display="block";
+function unlock(){
+ if(document.getElementById("pass").value.toLowerCase()=="jaanu"){
+   document.body.innerHTML="<h1 style='text-align:center'>Unlocked 😍</h1>";
+ }else{
+   document.getElementById("msg").innerHTML="Wrong password 😜";
+ }
 }
-
-function no1(){
-  alert("Wrong answer 😡 Try again 😂");
-}
-
-function yes1(){
-  document.getElementById("q1").style.display="none";
-  document.getElementById("q2").style.display="block";
-}
-
-function no2(){
-  alert("Hehe wrong option 😜 choose again");
-}
-
-function yes2(){
-  document.getElementById("q2").style.display="none";
-  document.getElementById("final").style.display="block";
-}
-
 </script>
 
 </body>
 </html>
-
-
-
-<style>
-.heart {
-  position: fixed;
-  top: -10px;
-  font-size: 20px;
-  animation: fall 5s linear infinite;
-}
-@keyframes fall {
-  to {
-    transform: translateY(110vh);
-  }
-}
-</style>
-
-<script>
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML = "💖";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (Math.random()*2+3) + "s";
-  document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 5000);
-}
-setInterval(createHeart, 300);
-</script>
-
-
