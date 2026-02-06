@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>For Gitu ❤️</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+}
+
+.card{
+  background:white;
+  padding:25px;
+  border-radius:20px;
+  width:90%;
+  max-width:350px;
+  box-shadow:0 10px 25px rgba(0,0,0,.25);
+}
+
+.hidden{display:none}
+h1{color:#ff4d6d}
+
+button{
+  padding:10px 20px;
+  border:none;
+  border-radius:20px;
+  background:#ff4d6d;
+  color:white;
+  font-size:16px;
+  margin-top:10px;
+}
+
+input{
+ padding:10px;
+ border-radius:15px;
+ border:1px solid #ccc;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="lock">
+<h1>Only my jaanu can open 💖</h1>
+<input id="pass" placeholder="Enter password">
+<br>
+<button onclick="unlock()">Unlock</button>
+<p id="msg"></p>
+</div>
+
+<div class="card hidden" id="main">
+<h1>Hey gitu my jaanu 😘</h1>
+<p>Your Jaan made this for you ❤️</p>
+
+<h2>Will you be my Valentine? 🥺</h2>
+
+<button onclick="yes()">YES 😍</button>
+<button onclick="no()">NO 🙄</button>
+
+<p id="answer" style="font-size:20px;"></p>
+</div>
+
+<script>
+function unlock(){
+ if(document.getElementById("pass").value.toLowerCase()=="jaanu"){
+   lock.classList.add("hidden");
+   main.classList.remove("hidden");
+ }else{
+   msg.innerHTML="Wrong password 😜";
+ }
+}
+
+function no(){
+ answer.innerHTML="Wrong option 😜 Try again jaanu ❤️";
+}
+
+function yes(){
+ answer.innerHTML="YESSS 😭💖 My Valentine 💕";
+}
+</script>
+
+</body>
+</html>
