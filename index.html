@@ -19,123 +19,156 @@ background:url("bg.jpg") center/cover no-repeat;
 overflow:hidden;
 }
 
-/* Dark romantic overlay */
-body::before{
-content:"";
+/* blur overlay */
+.overlay{
 position:absolute;
-width:100%;
 height:100%;
+width:100%;
 background:rgba(0,0,0,0.45);
-backdrop-filter: blur(6px);
+backdrop-filter:blur(4px);
 }
 
-/* Glass card */
+/* login card */
 .card{
 position:relative;
-background:rgba(255,255,255,0.15);
-padding:35px;
-border-radius:25px;
+z-index:2;
+background:rgba(255,255,255,0.12);
+padding:40px 30px;
+border-radius:20px;
 text-align:center;
 color:white;
-width:85%;
-max-width:350px;
-backdrop-filter: blur(15px);
-box-shadow:0 0 40px rgba(255,0,120,0.6);
-animation:fadeIn 1s ease;
+width:320px;
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+backdrop-filter:blur(12px);
+animation:pop 1s ease;
 }
 
-@keyframes fadeIn{
-from{opacity:0; transform:translateY(40px);}
-to{opacity:1; transform:translateY(0);}
+@keyframes pop{
+from{transform:scale(0.5);opacity:0}
+to{transform:scale(1);opacity:1}
 }
 
-h1{margin-bottom:10px}
-p{font-size:14px; opacity:0.9}
+h1{
+font-size:26px;
+margin-bottom:8px;
+}
+
+p{
+font-size:14px;
+opacity:.9;
+margin-bottom:20px;
+}
 
 input{
-margin-top:15px;
+width:100%;
 padding:12px;
-width:90%;
 border:none;
 border-radius:10px;
-outline:none;
+margin-bottom:15px;
+font-size:16px;
 text-align:center;
 }
 
 button{
-margin-top:15px;
-padding:12px 25px;
+background:#ff4d79;
 border:none;
-border-radius:20px;
-background:#ff4d88;
+padding:12px 25px;
+border-radius:30px;
 color:white;
 font-size:16px;
 cursor:pointer;
-box-shadow:0 0 15px hotpink;
-transition:0.3s;
+transition:.3s;
 }
 
 button:hover{
-transform:scale(1.1);
+transform:scale(1.08);
+background:#ff2e63;
 }
 
-/* WRONG PASSWORD POPUP */
-#wrongBox{
-position:fixed;
-top:50%;
+/* wrong password animation */
+#wrong{
+position:absolute;
+font-size:90px;
+top:-100px;
 left:50%;
-transform:translate(-50%,-50%) scale(0);
-background:white;
-color:#ff4d88;
-padding:30px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 0 30px hotpink;
-z-index:5;
+transform:translateX(-50%);
+opacity:0;
+transition:.6s;
 }
 
-#wrongEmoji{font-size:70px}
+.shake{
+animation:shake .5s;
+}
 
-.showWrong{animation:popup .6s forwards;}
+@keyframes shake{
+0%{transform:translateX(0)}
+25%{transform:translateX(-10px)}
+50%{transform:translateX(10px)}
+75%{transform:translateX(-10px)}
+100%{transform:translateX(0)}
+}
 
-@keyframes popup{
-0%{transform:translate(-50%,-50%) scale(0);}
-80%{transform:translate(-50%,-50%) scale(1.1);}
-100%{transform:translate(-50%,-50%) scale(1);}
+/* next page */
+#main{
+display:none;
+position:absolute;
+color:white;
+text-align:center;
+animation:fade 1s;
+}
+
+@keyframes fade{
+from{opacity:0}
+to{opacity:1}
+}
+
+.big{
+font-size:38px;
+margin-bottom:20px;
+}
+
+.love{
+font-size:20px;
+opacity:.9;
 }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="overlay"></div>
+
+<div class="card" id="loginCard">
+<div id="wrong">🤣</div>
 <h1>Private Portal 💕</h1>
-<p>Only my baby can enter 😏</p>
+<p>Only my baby can enter 😌</p>
 
 <input id="pass" placeholder="Enter secret password">
-<br>
 <button onclick="check()">Unlock ❤️</button>
 </div>
 
-<!-- Wrong password popup -->
-<div id="wrongBox">
-<div id="wrongEmoji">🥺</div>
-<h2>Wrong password baby 😝</h2>
-<p>You know the password 😏 try again</p>
+<div id="main">
+<div class="big">Welcome Jaan ❤️</div>
+<div class="love">You unlocked my heart 🔓</div>
 </div>
 
 <script>
 function check(){
-var p=document.getElementById("pass").value;
+var p=document.getElementById("pass").value.trim().toLowerCase();
 
 if(p=="jaanu"){
-window.location.href="home.html";
+document.getElementById("loginCard").style.display="none";
+document.getElementById("main").style.display="block";
 }
 else{
-document.getElementById("wrongBox").classList.add("showWrong");
+let wrong=document.getElementById("wrong");
+wrong.style.top="-80px";
+wrong.style.opacity="1";
+document.querySelector(".card").classList.add("shake");
+
 setTimeout(()=>{
-document.getElementById("wrongBox").classList.remove("showWrong");
-},2000);
+document.querySelector(".card").classList.remove("shake");
+},500);
 }
 }
 </script>
