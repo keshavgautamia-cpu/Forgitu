@@ -1,66 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Gitu 💖</title>
+<title>For My Love ❤️</title>
 
 <style>
 body{
   margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4);
   height:100vh;
+  font-family:'Segoe UI',sans-serif;
+  background:
+  linear-gradient(rgba(0,0,0,0.45), rgba(255,105,180,0.25)),
+  url("bg.jpg");
+  background-size:cover;
+  background-position:center;
   display:flex;
   justify-content:center;
   align-items:center;
   color:white;
+  text-align:center;
 }
 
 /* glass card */
 .card{
-  backdrop-filter: blur(15px);
+  backdrop-filter: blur(12px);
   background: rgba(255,255,255,0.15);
-  padding:40px 25px;
+  padding:40px;
   border-radius:25px;
-  text-align:center;
-  width:85%;
-  max-width:360px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.25);
-  animation: fadeIn 1.5s ease;
+  width:90%;
+  max-width:400px;
+  box-shadow:0 0 40px rgba(255,105,180,0.5);
+  animation: fadeIn 1.5s;
 }
 
 h1{
-  font-size:32px;
+  font-size:30px;
   margin-bottom:10px;
-}
-
-p{
-  opacity:0.9;
-  font-size:18px;
 }
 
 input{
   padding:12px;
   width:80%;
   border:none;
-  border-radius:20px;
+  border-radius:10px;
   margin-top:15px;
-  text-align:center;
+  font-size:16px;
 }
 
 button{
+  margin-top:20px;
   padding:12px 25px;
   border:none;
-  border-radius:25px;
-  background:#ff4d6d;
+  border-radius:20px;
+  background:#ff4d88;
   color:white;
   font-size:18px;
-  margin-top:20px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+  background:#ff1a66;
+}
+
+/* WRONG PASSWORD EMOJI */
+#wrong{
+  position:fixed;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  font-size:120px;
+  animation: pop .6s forwards;
+}
+
+@keyframes pop{
+  0%{transform:translate(-50%,-50%) scale(0);}
+  70%{transform:translate(-50%,-50%) scale(1.2);}
+  100%{transform:translate(-50%,-50%) scale(1);}
 }
 
 @keyframes fadeIn{
-  from{opacity:0; transform:scale(0.9);}
-  to{opacity:1; transform:scale(1);}
+  from{opacity:0; transform:translateY(30px);}
+  to{opacity:1;}
 }
 </style>
 </head>
@@ -68,23 +89,29 @@ button{
 <body>
 
 <div class="card">
-<h1>🔒 Private App</h1>
-<p>This surprise belongs to<br><b>Gitu My Jaanu 💖</b></p>
+  <h1>Private Love Portal 💕</h1>
+  <p>Only my baby can enter 😏</p>
 
-<input id="pass" placeholder="Enter password">
-<br>
-<button onclick="unlock()">Unlock</button>
-
-<p id="msg"></p>
+  <input type="password" id="pass" placeholder="Enter secret password">
+  <br>
+  <button onclick="check()">Unlock ❤️</button>
 </div>
 
+<div id="wrong">🤣</div>
+
 <script>
-function unlock(){
- if(document.getElementById("pass").value.toLowerCase()=="jaanu"){
-   document.body.innerHTML="<h1 style='text-align:center'>Unlocked 😍</h1>";
- }else{
-   document.getElementById("msg").innerHTML="Wrong password 😜";
- }
+function check(){
+  var password = document.getElementById("pass").value;
+
+  if(password == "iloveyou"){
+    window.location.href="home.html";
+  }
+  else{
+    var emoji = document.getElementById("wrong");
+    emoji.style.animation="none";
+    void emoji.offsetWidth;
+    emoji.style.animation="pop .6s forwards";
+  }
 }
 </script>
 
