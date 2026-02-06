@@ -1,89 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>For Gitu ❤️</title>
+<title>For My Love ❤️</title>
 
 <style>
 body{
-  margin:0;
-  font-family:Arial;
-  background:linear-gradient(135deg,#ff758c,#ff7eb3);
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  background: linear-gradient(to right,#ff9a9e,#fad0c4);
+  font-family: Arial;
   text-align:center;
+  color:white;
+  padding-top:50px;
 }
 
-.card{
-  background:white;
-  padding:25px;
-  border-radius:20px;
-  width:90%;
-  max-width:350px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
+h1{
+  font-size:45px;
 }
 
-.hidden{display:none}
-h1{color:#ff4d6d}
+p{
+  font-size:22px;
+  width:80%;
+  margin:auto;
+}
 
 button{
-  padding:10px 20px;
+  padding:15px 25px;
+  font-size:20px;
   border:none;
-  border-radius:20px;
+  border-radius:10px;
   background:#ff4d6d;
   color:white;
-  font-size:16px;
-  margin-top:10px;
+  margin-top:30px;
 }
 
-input{
- padding:10px;
- border-radius:15px;
- border:1px solid #ccc;
+button:hover{
+  background:#ff1e4d;
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="card" id="lock">
-<h1>Only my jaanu can open 💖</h1>
-<input id="pass" placeholder="Enter password">
-<br>
-<button onclick="unlock()">Unlock</button>
-<p id="msg"></p>
-</div>
+<h1>Hey My Love 💕</h1>
 
-<div class="card hidden" id="main">
-<h1>Hey gitu my jaanu 😘</h1>
-<p>Your Jaan made this for you ❤️</p>
+<p>
+This website is made only for you.  
+You are my favorite notification, my peace, and my happiness.  
+No matter what happens, I will always choose you. ❤️
+</p>
 
-<h2>Will you be my Valentine? 🥺</h2>
+<button onclick="showMessage()">Click Me 😘</button>
 
-<button onclick="yes()">YES 😍</button>
-<button onclick="no()">NO 🙄</button>
-
-<p id="answer" style="font-size:20px;"></p>
-</div>
+<h2 id="msg"></h2>
 
 <script>
-function unlock(){
- if(document.getElementById("pass").value.toLowerCase()=="jaanu"){
-   lock.classList.add("hidden");
-   main.classList.remove("hidden");
- }else{
-   msg.innerHTML="Wrong password 😜";
- }
-}
-
-function no(){
- answer.innerHTML="Wrong option 😜 Try again jaanu ❤️";
-}
-
-function yes(){
- answer.innerHTML="YESSS 😭💖 My Valentine 💕";
+function showMessage(){
+document.getElementById("msg").innerHTML =
+"I LOVE YOU SO MUCH ❤️";
 }
 </script>
 
