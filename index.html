@@ -15,7 +15,7 @@ justify-content:center;
 align-items:center;
 }
 
-/* GLASS CARD */
+/* PASSWORD CARD */
 .card{
 background:rgba(255,255,255,0.15);
 padding:35px;
@@ -48,16 +48,34 @@ color:white;
 font-size:16px;
 }
 
-#cry{
-font-size:70px;
+/* LOVE SCREEN */
+#loveScreen{
+position:fixed;
+top:0;left:0;
+width:100%;height:100vh;
 display:none;
-margin-top:10px;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+background:url("bg.jpg") center/cover no-repeat;
+color:white;
+text-align:center;
 }
+
+.line{
+opacity:0;
+font-size:32px;
+margin:15px;
+transition:1s;
+}
+
+#cry{font-size:70px;display:none;margin-top:10px}
 </style>
 </head>
 
 <body>
 
+<!-- PASSWORD PAGE -->
 <div class="card">
 <h2>Only for my baby 💕</h2>
 
@@ -69,6 +87,14 @@ margin-top:10px;
 <div id="cry">😭🐱</div>
 </div>
 
+<!-- LOVE LINES PAGE -->
+<div id="loveScreen">
+<h1 id="l1" class="line">You are my favorite notification ❤️</h1>
+<h1 id="l2" class="line">My peace after chaos ☁️</h1>
+<h1 id="l3" class="line">My daily happiness 🌸</h1>
+<h1 id="l4" class="line">My best decision 😌</h1>
+</div>
+
 <script>
 let attempts=0;
 
@@ -77,7 +103,13 @@ let p=document.getElementById("pass").value.trim();
 let msg=document.getElementById("msg");
 
 if(p=="Classy"){
-alert("Unlocked ❤️ Next page we build again step by step");
+document.querySelector(".card").style.display="none";
+document.getElementById("loveScreen").style.display="flex";
+
+setTimeout(()=>l1.style.opacity=1,500);
+setTimeout(()=>l2.style.opacity=1,2000);
+setTimeout(()=>l3.style.opacity=1,3500);
+setTimeout(()=>l4.style.opacity=1,5000);
 return;
 }
 
