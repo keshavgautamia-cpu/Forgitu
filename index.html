@@ -2,112 +2,199 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Gitu ❤️</title>
+<title>For My Gitu 💖</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family: 'Segoe UI', sans-serif;
+}
 
 body{
-height:100vh;
+background:black;
 overflow:hidden;
-background:url("bg.jpg") center/cover no-repeat;
 color:white;
 }
 
-/* glass effect */
-.screen{
-position:absolute;
+/* FULLSCREEN BACKGROUND PHOTO */
+.bg{
+position:fixed;
 width:100%;
 height:100%;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-background:rgba(0,0,0,0.35);
-backdrop-filter:blur(8px);
+background:url("bg.jpg") center/cover no-repeat;
+filter:blur(6px) brightness(0.6);
+z-index:-1;
+}
+
+/* CENTER CARD */
+.card{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+background:rgba(255,255,255,0.15);
+backdrop-filter:blur(15px);
+padding:30px;
+border-radius:25px;
 text-align:center;
-padding:20px;
-transition:1s;
+width:90%;
+max-width:350px;
+box-shadow:0 0 40px rgba(255,0,100,0.4);
+animation:fadeIn 1.5s ease;
 }
 
-h1{font-size:42px;margin-bottom:20px}
-.line{font-size:32px;margin:10px 0;opacity:0}
-
-.btn{
-margin-top:25px;
-padding:14px 30px;
-font-size:20px;
+input{
+width:100%;
+padding:12px;
 border:none;
-border-radius:30px;
-background:#ff4f7b;
-color:white;
-box-shadow:0 0 20px #ff4f7b;
+border-radius:12px;
+margin-top:15px;
+font-size:16px;
 }
 
-/* cartoon screen */
+button{
+margin-top:15px;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:linear-gradient(45deg,#ff4d88,#ff0066);
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+/* WRONG ANIMATION */
+#wrong{
+position:fixed;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(0);
+font-size:120px;
+transition:0.5s;
+}
+
+/* LOVE LINES */
+.line{
+position:absolute;
+width:100%;
+text-align:center;
+font-size:34px;
+font-weight:bold;
+opacity:0;
+}
+
+#l1{top:15%}
+#l2{top:30%}
+#l3{top:45%}
+#l4{top:60%}
+
+/* FULLSCREEN CARTOON */
 #cartoon{
+position:fixed;
+width:100%;
+height:100%;
 display:none;
-background:linear-gradient(#ff7fa2,#ffb6c9);
 }
 
 #cartoon img{
-width:280px;
-border-radius:20px;
-box-shadow:0 0 40px pink;
-animation:zoom 2s ease forwards;
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+animation:zoom 3s ease forwards;
+}
+
+#finalText{
+position:absolute;
+bottom:30px;
+width:100%;
+text-align:center;
+font-size:40px;
+font-weight:bold;
+text-shadow:0 0 20px pink;
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn{
+from{opacity:0; transform:translate(-50%,-60%)}
+to{opacity:1; transform:translate(-50%,-50%)}
 }
 
 @keyframes zoom{
-from{transform:scale(0.2);opacity:0}
-to{transform:scale(1);opacity:1}
+from{transform:scale(1.4)}
+to{transform:scale(1)}
 }
 </style>
 </head>
 
 <body>
 
-<!-- Screen 1 -->
-<div class="screen" id="s1">
-<h1>Hey Gitu My Jaanu 😘</h1>
-<div class="line" id="l1">I made something for you 💖</div>
-<div class="line" id="l2">A tiny world of us 🌎</div>
-<button class="btn" onclick="next1()">Tap Here ❤️</button>
+<div class="bg"></div>
+
+<!-- PASSWORD CARD -->
+<div class="card" id="login">
+<h2>Private Love Portal 💕</h2>
+<p>Only my baby can enter 😌</p>
+<input id="pass" placeholder="Enter password">
+<button onclick="check()">Unlock ❤️</button>
 </div>
 
-<!-- Screen 2 -->
-<div class="screen" id="s2" style="opacity:0;pointer-events:none">
-<h1>Before we continue 😌</h1>
-<div class="line" id="l3">Close the lights 💡</div>
-<div class="line" id="l4">Increase volume 🔊</div>
-<button class="btn" onclick="next2()">Ready 💕</button>
-</div>
+<div id="wrong">🥺</div>
 
-<!-- Screen 3 Cartoon -->
-<div class="screen" id="cartoon">
-<h1>Us 😍</h1>
+<!-- LOVE STORY TEXT -->
+<div class="line" id="l1">Hey my beautiful Gitu 💕</div>
+<div class="line" id="l2">You make my world brighter ☀️</div>
+<div class="line" id="l3">You are my peace, my happiness 🥰</div>
+<div class="line" id="l4">And my forever Valentine 💖</div>
+
+<!-- FULLSCREEN CARTOON REVEAL -->
+<div id="cartoon">
 <img src="cartoon.png">
-<div class="line" id="l5">My favourite people in one photo 🥰</div>
-<button class="btn" onclick="alert('Next screen coming 😘')">Continue 💖</button>
+<div id="finalText">Keshav ❤️ Gitu</div>
 </div>
 
 <script>
-setTimeout(()=>l1.style.opacity=1,800)
-setTimeout(()=>l2.style.opacity=1,1600)
+let tries=0;
 
-function next1(){
-s1.style.opacity=0
-s1.style.pointerEvents="none"
-s2.style.opacity=1
-s2.style.pointerEvents="auto"
-setTimeout(()=>l3.style.opacity=1,800)
-setTimeout(()=>l4.style.opacity=1,1600)
+function check(){
+let p=document.getElementById("pass").value;
+
+if(p=="Classy"){
+document.getElementById("login").style.display="none";
+startLove();
+}
+else{
+tries++;
+showWrong();
+}
 }
 
-function next2(){
-s2.style.opacity=0
-s2.style.pointerEvents="none"
-cartoon.style.display="flex"
-setTimeout(()=>l5.style.opacity=1,1500)
+function showWrong(){
+let w=document.getElementById("wrong");
+w.style.transform="translate(-50%,-50%) scale(1)";
+setTimeout(()=>w.style.transform="translate(-50%,-50%) scale(0)",1200);
+
+if(tries==1) alert("Ohh I knew this would happen 😌 Try again no hint 😉");
+else if(tries==2) alert("Haha my gitu 😅 Hint: it has to do with starting 😁");
+else if(tries==3) alert("It is the word which made us met ❤️ 6 letter word, first letter capital 😁");
+}
+
+function startLove(){
+let lines=["l1","l2","l3","l4"];
+let i=0;
+
+let interval=setInterval(()=>{
+document.getElementById(lines[i]).style.opacity=1;
+i++;
+if(i==lines.length){
+clearInterval(interval);
+setTimeout(()=>{
+document.getElementById("cartoon").style.display="block";
+},2500);
+}
+},2000);
 }
 </script>
 
