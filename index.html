@@ -81,7 +81,6 @@ background:black;
 overflow:hidden;
 }
 
-/* ZOOM TO FULL SCREEN */
 .collageImg{
 width:200px;
 border-radius:20px;
@@ -99,6 +98,8 @@ animation:zoomFull 6s forwards;
 </head>
 
 <body>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
 
 <!-- PASSWORD -->
 <div class="card">
@@ -139,10 +140,11 @@ setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-// show collage after love lines
+// show collage + start music
 setTimeout(()=>{
 document.getElementById("loveScreen").style.display="none";
 document.getElementById("collageScreen").style.display="flex";
+document.getElementById("bgMusic").play();
 },9000);
 
 return;
@@ -152,13 +154,10 @@ attempts++;
 
 if(attempts==1)
 msg.innerHTML="Ohh I knew this would happen first time 😌 Try again… no hint 😉";
-
 else if(attempts==2)
 msg.innerHTML="Haha my gitu 😅 hint: it has to do something with starting 😁";
-
 else if(attempts==3)
 msg.innerHTML="It is the word which made us meet 😌 6 letter word, first letter capital 😁";
-
 else{
 msg.innerHTML="You are breaking my heart 😭";
 document.getElementById("cry").style.display="block";
