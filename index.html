@@ -49,7 +49,7 @@ font-size:16px;
 }
 
 /* LOVE SCREEN */
-#loveScreen, #collageScreen{
+#loveScreen{
 position:fixed;
 top:0;left:0;
 width:100%;height:100vh;
@@ -69,12 +69,29 @@ margin:15px;
 transition:1s;
 }
 
-/* COLLAGE */
+/* COLLAGE SCREEN */
+#collageScreen{
+position:fixed;
+top:0;left:0;
+width:100%;height:100vh;
+display:none;
+justify-content:center;
+align-items:center;
+background:black;
+overflow:hidden;
+}
+
+/* ZOOM TO FULL SCREEN */
 .collageImg{
-width:80%;
-max-width:420px;
+width:200px;
 border-radius:20px;
 box-shadow:0 0 40px pink;
+animation:zoomFull 6s forwards;
+}
+
+@keyframes zoomFull{
+0%{width:200px;}
+100%{width:100%;height:100%;border-radius:0;}
 }
 
 #cry{font-size:70px;display:none;margin-top:10px}
@@ -83,19 +100,17 @@ box-shadow:0 0 40px pink;
 
 <body>
 
-<!-- PASSWORD PAGE -->
+<!-- PASSWORD -->
 <div class="card">
 <h2>Only for my baby 💕</h2>
-
 <input id="pass" placeholder="Enter password">
 <br>
 <button onclick="checkPass()">Unlock ❤️</button>
-
 <p id="msg"></p>
 <div id="cry">😭🐱</div>
 </div>
 
-<!-- LOVE LINES PAGE -->
+<!-- LOVE LINES -->
 <div id="loveScreen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
@@ -103,7 +118,7 @@ box-shadow:0 0 40px pink;
 <h1 id="l4" class="line">My best decision 😌</h1>
 </div>
 
-<!-- COLLAGE PAGE -->
+<!-- COLLAGE -->
 <div id="collageScreen">
 <img src="collage.jpg" class="collageImg">
 </div>
@@ -124,7 +139,7 @@ setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-// SHOW COLLAGE AFTER LOVE LINES
+// show collage after love lines
 setTimeout(()=>{
 document.getElementById("loveScreen").style.display="none";
 document.getElementById("collageScreen").style.display="flex";
