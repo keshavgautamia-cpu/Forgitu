@@ -49,7 +49,7 @@ font-size:16px;
 }
 
 /* LOVE SCREEN */
-#loveScreen{
+#loveScreen, #collageScreen{
 position:fixed;
 top:0;left:0;
 width:100%;height:100vh;
@@ -67,6 +67,14 @@ opacity:0;
 font-size:32px;
 margin:15px;
 transition:1s;
+}
+
+/* COLLAGE */
+.collageImg{
+width:80%;
+max-width:420px;
+border-radius:20px;
+box-shadow:0 0 40px pink;
 }
 
 #cry{font-size:70px;display:none;margin-top:10px}
@@ -95,6 +103,11 @@ transition:1s;
 <h1 id="l4" class="line">My best decision 😌</h1>
 </div>
 
+<!-- COLLAGE PAGE -->
+<div id="collageScreen">
+<img src="collage.jpg" class="collageImg">
+</div>
+
 <script>
 let attempts=0;
 
@@ -110,6 +123,13 @@ setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
+
+// SHOW COLLAGE AFTER LOVE LINES
+setTimeout(()=>{
+document.getElementById("loveScreen").style.display="none";
+document.getElementById("collageScreen").style.display="flex";
+},9000);
+
 return;
 }
 
