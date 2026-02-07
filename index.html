@@ -5,12 +5,7 @@
 <title>For My Gitu 💖</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family: 'Segoe UI', sans-serif;
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
 
 body{
 background:black;
@@ -18,7 +13,7 @@ overflow:hidden;
 color:white;
 }
 
-/* FULLSCREEN BACKGROUND PHOTO */
+/* Background */
 .bg{
 position:fixed;
 width:100%;
@@ -28,7 +23,7 @@ filter:blur(6px) brightness(0.6);
 z-index:-1;
 }
 
-/* CENTER CARD */
+/* Login card */
 .card{
 position:absolute;
 top:50%;
@@ -65,7 +60,7 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* WRONG ANIMATION */
+/* wrong emoji */
 #wrong{
 position:fixed;
 top:50%;
@@ -75,7 +70,7 @@ font-size:120px;
 transition:0.5s;
 }
 
-/* LOVE LINES */
+/* love lines */
 .line{
 position:absolute;
 width:100%;
@@ -90,7 +85,7 @@ opacity:0;
 #l3{top:45%}
 #l4{top:60%}
 
-/* FULLSCREEN CARTOON */
+/* Cartoon reveal */
 #cartoon{
 position:fixed;
 width:100%;
@@ -100,9 +95,13 @@ display:none;
 
 #cartoon img{
 position:absolute;
-width:100%;
-height:100%;
-object-fit:cover;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:85%;
+max-width:420px;
+border-radius:25px;
+box-shadow:0 0 40px pink;
 animation:zoom 3s ease forwards;
 }
 
@@ -116,15 +115,15 @@ font-weight:bold;
 text-shadow:0 0 20px pink;
 }
 
-/* ANIMATIONS */
+/* animations */
 @keyframes fadeIn{
-from{opacity:0; transform:translate(-50%,-60%)}
-to{opacity:1; transform:translate(-50%,-50%)}
+from{opacity:0;transform:translate(-50%,-60%)}
+to{opacity:1;transform:translate(-50%,-50%)}
 }
 
 @keyframes zoom{
-from{transform:scale(1.4)}
-to{transform:scale(1)}
+from{transform:translate(-50%,-50%) scale(1.3)}
+to{transform:translate(-50%,-50%) scale(1)}
 }
 </style>
 </head>
@@ -133,7 +132,7 @@ to{transform:scale(1)}
 
 <div class="bg"></div>
 
-<!-- PASSWORD CARD -->
+<!-- Login -->
 <div class="card" id="login">
 <h2>Private Love Portal 💕</h2>
 <p>Only my baby can enter 😌</p>
@@ -143,16 +142,16 @@ to{transform:scale(1)}
 
 <div id="wrong">🥺</div>
 
-<!-- LOVE STORY TEXT -->
+<!-- Love lines -->
 <div class="line" id="l1">Hey my beautiful Gitu 💕</div>
 <div class="line" id="l2">You make my world brighter ☀️</div>
 <div class="line" id="l3">You are my peace, my happiness 🥰</div>
 <div class="line" id="l4">And my forever Valentine 💖</div>
 
-<!-- FULLSCREEN CARTOON REVEAL -->
+<!-- Cartoon reveal -->
 <div id="cartoon">
 <img src="cartoon.png">
-<div id="finalText">Keshav ❤️ Gitu</div>
+<div id="finalText">Keshuv ❤️ Gitu</div>
 </div>
 
 <script>
@@ -160,39 +159,26 @@ let tries=0;
 
 function check(){
 let p=document.getElementById("pass").value;
-
 if(p=="Classy"){
 document.getElementById("login").style.display="none";
 startLove();
-}
-else{
+}else{
 tries++;
-showWrong();
-}
-}
-
-function showWrong(){
 let w=document.getElementById("wrong");
 w.style.transform="translate(-50%,-50%) scale(1)";
 setTimeout(()=>w.style.transform="translate(-50%,-50%) scale(0)",1200);
-
-if(tries==1) alert("Ohh I knew this would happen 😌 Try again no hint 😉");
-else if(tries==2) alert("Haha my gitu 😅 Hint: it has to do with starting 😁");
-else if(tries==3) alert("It is the word which made us met ❤️ 6 letter word, first letter capital 😁");
+}
 }
 
 function startLove(){
 let lines=["l1","l2","l3","l4"];
 let i=0;
-
 let interval=setInterval(()=>{
 document.getElementById(lines[i]).style.opacity=1;
 i++;
 if(i==lines.length){
 clearInterval(interval);
-setTimeout(()=>{
-document.getElementById("cartoon").style.display="block";
-},2500);
+setTimeout(()=>document.getElementById("cartoon").style.display="block",2500);
 }
 },2000);
 }
