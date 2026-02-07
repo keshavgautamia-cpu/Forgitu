@@ -13,7 +13,7 @@ overflow:hidden;
 color:white;
 }
 
-/* Background */
+/* Background blur photo */
 .bg{
 position:fixed;
 width:100%;
@@ -60,7 +60,7 @@ font-size:16px;
 cursor:pointer;
 }
 
-/* wrong emoji */
+/* Wrong emoji animation */
 #wrong{
 position:fixed;
 top:50%;
@@ -70,7 +70,7 @@ font-size:120px;
 transition:0.5s;
 }
 
-/* love lines */
+/* Love lines */
 .line{
 position:absolute;
 width:100%;
@@ -85,7 +85,7 @@ opacity:0;
 #l3{top:45%}
 #l4{top:60%}
 
-/* Cartoon reveal */
+/* FULLSCREEN CARTOON */
 #cartoon{
 position:fixed;
 width:100%;
@@ -95,35 +95,31 @@ display:none;
 
 #cartoon img{
 position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:85%;
-max-width:420px;
-border-radius:25px;
-box-shadow:0 0 40px pink;
-animation:zoom 3s ease forwards;
+width:100%;
+height:100%;
+object-fit:cover;
+animation:zoom 4s ease forwards;
 }
 
 #finalText{
 position:absolute;
-bottom:30px;
+bottom:40px;
 width:100%;
 text-align:center;
-font-size:40px;
+font-size:45px;
 font-weight:bold;
 text-shadow:0 0 20px pink;
 }
 
-/* animations */
+/* Animations */
 @keyframes fadeIn{
 from{opacity:0;transform:translate(-50%,-60%)}
 to{opacity:1;transform:translate(-50%,-50%)}
 }
 
 @keyframes zoom{
-from{transform:translate(-50%,-50%) scale(1.3)}
-to{transform:translate(-50%,-50%) scale(1)}
+from{transform:scale(1.4)}
+to{transform:scale(1)}
 }
 </style>
 </head>
@@ -148,7 +144,7 @@ to{transform:translate(-50%,-50%) scale(1)}
 <div class="line" id="l3">You are my peace, my happiness 🥰</div>
 <div class="line" id="l4">And my forever Valentine 💖</div>
 
-<!-- Cartoon reveal -->
+<!-- FULLSCREEN CARTOON REVEAL -->
 <div id="cartoon">
 <img src="cartoon.png">
 <div id="finalText">Keshuv ❤️ Gitu</div>
@@ -163,7 +159,6 @@ if(p=="Classy"){
 document.getElementById("login").style.display="none";
 startLove();
 }else{
-tries++;
 let w=document.getElementById("wrong");
 w.style.transform="translate(-50%,-50%) scale(1)";
 setTimeout(()=>w.style.transform="translate(-50%,-50%) scale(0)",1200);
