@@ -1,181 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Gitu 💖</title>
+<title>For My Love ❤️</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif;}
-
 body{
-background:black;
+margin:0;
 overflow:hidden;
-color:white;
+font-family: 'Poppins', sans-serif;
+background:black;
 }
 
-/* Background blur photo */
-.bg{
+/* screens */
+.screen{
 position:fixed;
 width:100%;
-height:100%;
-background:url("bg.jpg") center/cover no-repeat;
-filter:blur(6px) brightness(0.6);
-z-index:-1;
-}
-
-/* Login card */
-.card{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-background:rgba(255,255,255,0.15);
-backdrop-filter:blur(15px);
-padding:30px;
-border-radius:25px;
-text-align:center;
-width:90%;
-max-width:350px;
-box-shadow:0 0 40px rgba(255,0,100,0.4);
-animation:fadeIn 1.5s ease;
-}
-
-input{
-width:100%;
-padding:12px;
-border:none;
-border-radius:12px;
-margin-top:15px;
-font-size:16px;
-}
-
-button{
-margin-top:15px;
-padding:12px 25px;
-border:none;
-border-radius:25px;
-background:linear-gradient(45deg,#ff4d88,#ff0066);
-color:white;
-font-size:16px;
-cursor:pointer;
-}
-
-/* Wrong emoji animation */
-#wrong{
-position:fixed;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(0);
-font-size:120px;
-transition:0.5s;
-}
-
-/* Love lines */
-.line{
-position:absolute;
-width:100%;
-text-align:center;
-font-size:34px;
-font-weight:bold;
+height:100vh;
+top:0;
+left:0;
+display:flex;
+justify-content:center;
+align-items:center;
 opacity:0;
+transition:1.5s;
 }
 
-#l1{top:15%}
-#l2{top:30%}
-#l3{top:45%}
-#l4{top:60%}
-
-/* FULLSCREEN CARTOON */
-#cartoon{
-position:fixed;
-width:100%;
-height:100%;
-display:none;
+.show{
+opacity:1;
 }
 
-#cartoon img{
-position:absolute;
+/* REAL COLLAGE */
+.real{
+background:black;
+}
+
+.real img{
 width:100%;
 height:100%;
 object-fit:cover;
-animation:zoom 4s ease forwards;
 }
 
-#finalText{
-position:absolute;
-bottom:40px;
+/* CARTOON SCREEN */
+.cartoon{
+background:black;
+}
+
+.cartoon img{
 width:100%;
-text-align:center;
-font-size:45px;
-font-weight:bold;
-text-shadow:0 0 20px pink;
-}
-
-/* Animations */
-@keyframes fadeIn{
-from{opacity:0;transform:translate(-50%,-60%)}
-to{opacity:1;transform:translate(-50%,-50%)}
+height:100%;
+object-fit:cover;
+animation:zoom 8s ease-in-out infinite alternate;
 }
 
 @keyframes zoom{
-from{transform:scale(1.4)}
-to{transform:scale(1)}
+from{transform:scale(1);}
+to{transform:scale(1.08);}
+}
+
+/* LOVE TEXT */
+.loveText{
+position:absolute;
+bottom:60px;
+width:100%;
+text-align:center;
+color:white;
+font-size:40px;
+font-weight:bold;
+letter-spacing:2px;
+text-shadow:0 0 20px pink;
+animation:fadeText 3s infinite;
+}
+
+@keyframes fadeText{
+0%{opacity:0}
+50%{opacity:1}
+100%{opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<div class="bg"></div>
-
-<!-- Login -->
-<div class="card" id="login">
-<h2>Private Love Portal 💕</h2>
-<p>Only my baby can enter 😌</p>
-<input id="pass" placeholder="Enter password">
-<button onclick="check()">Unlock ❤️</button>
+<!-- REAL COLLAGE FIRST -->
+<div id="realIntro" class="screen real show">
+<img src="real.jpg">
 </div>
 
-<div id="wrong">🥺</div>
-
-<!-- Love lines -->
-<div class="line" id="l1">Hey my beautiful Gitu 💕</div>
-<div class="line" id="l2">You make my world brighter ☀️</div>
-<div class="line" id="l3">You are my peace, my happiness 🥰</div>
-<div class="line" id="l4">And my forever Valentine 💖</div>
-
-<!-- FULLSCREEN CARTOON REVEAL -->
-<div id="cartoon">
-<img src="cartoon.png">
-<div id="finalText">Keshuv ❤️ Gitu</div>
+<!-- CARTOON SECOND -->
+<div id="cartoonIntro" class="screen cartoon">
+<img src="bg.jpg">
+<div class="loveText">Keshav ❤️ Gitu</div>
 </div>
 
 <script>
-let tries=0;
+// show real collage first, then auto switch to cartoon after 5 sec
+window.onload = function () {
 
-function check(){
-let p=document.getElementById("pass").value;
-if(p=="Classy"){
-document.getElementById("login").style.display="none";
-startLove();
-}else{
-let w=document.getElementById("wrong");
-w.style.transform="translate(-50%,-50%) scale(1)";
-setTimeout(()=>w.style.transform="translate(-50%,-50%) scale(0)",1200);
-}
-}
+    // hide cartoon first
+    document.getElementById("cartoonIntro").classList.remove("show");
 
-function startLove(){
-let lines=["l1","l2","l3","l4"];
-let i=0;
-let interval=setInterval(()=>{
-document.getElementById(lines[i]).style.opacity=1;
-i++;
-if(i==lines.length){
-clearInterval(interval);
-setTimeout(()=>document.getElementById("cartoon").style.display="block",2500);
-}
-},2000);
+    setTimeout(() => {
+        // hide real collage
+        document.getElementById("realIntro").classList.remove("show");
+
+        // show cartoon image
+        document.getElementById("cartoonIntro").classList.add("show");
+
+    }, 5000); // 5 seconds
 }
 </script>
 
