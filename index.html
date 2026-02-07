@@ -12,7 +12,7 @@ background:black;
 font-family:sans-serif;
 }
 
-/* background blur */
+/* blurred background */
 .bg{
 position:fixed;
 width:100%;
@@ -37,13 +37,22 @@ transition:1.5s;
 
 .show{opacity:1;}
 
-img{
+/* SMALL COLLAGE */
+.collageImg{
+width:80%;
+max-width:420px;
+border-radius:20px;
+box-shadow:0 0 40px pink;
+animation:zoom 6s ease;
+}
+
+/* CARTOON FULL SCREEN */
+.fullImg{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* cartoon text */
 .cartoonText{
 position:absolute;
 bottom:60px;
@@ -54,6 +63,11 @@ font-size:42px;
 font-weight:bold;
 text-shadow:0 0 20px pink;
 }
+
+@keyframes zoom{
+from{transform:scale(0.8)}
+to{transform:scale(1)}
+}
 </style>
 </head>
 
@@ -61,14 +75,14 @@ text-shadow:0 0 20px pink;
 
 <div class="bg"></div>
 
-<!-- REAL COLLAGE FIRST -->
+<!-- SMALL REAL COLLAGE -->
 <div id="real" class="screen show">
-<img src="collage.jpg">
+<img src="collage.jpg" class="collageImg">
 </div>
 
-<!-- CARTOON SECOND -->
+<!-- CARTOON FULL SCREEN -->
 <div id="cartoon" class="screen">
-<img src="cartoon.png">
+<img src="cartoon.png" class="fullImg">
 <div class="cartoonText">Keshuv ❤️ Gitu</div>
 </div>
 
