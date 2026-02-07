@@ -19,69 +19,45 @@ overflow:hidden;
 /* PASSWORD CARD */
 .card{
 background:rgba(255,255,255,0.15);
-padding:35px;
-border-radius:25px;
-text-align:center;
-color:white;
-width:85%;
-max-width:330px;
-backdrop-filter:blur(12px);
+padding:35px;border-radius:25px;text-align:center;color:white;
+width:85%;max-width:330px;backdrop-filter:blur(12px);
 box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 button{margin-top:15px;padding:12px 25px;border:none;border-radius:20px;background:#ff4d88;color:white}
 
 /* LOVE SCREEN */
-#loveScreen{
-position:fixed;top:0;left:0;width:100%;height:100vh;
-display:none;justify-content:center;align-items:center;
-flex-direction:column;background:url("bg.jpg") center/cover no-repeat;
-color:white;text-align:center;
-}
+#loveScreen{position:fixed;top:0;left:0;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;flex-direction:column;
+background:url("bg.jpg") center/cover no-repeat;color:white;text-align:center;}
 .line{opacity:0;font-size:32px;margin:15px;transition:1s}
 
 /* COLLAGE */
-#collageScreen{
-position:fixed;top:0;left:0;width:100%;height:100vh;
-display:none;justify-content:center;align-items:center;background:black;
-}
-.collageImg{
-width:200px;border-radius:20px;box-shadow:0 0 40px pink;
-animation:zoomFull 6s forwards;
-}
-@keyframes zoomFull{
-0%{width:200px;}
-100%{width:100%;height:100%;border-radius:0;}
-}
+#collageScreen{position:fixed;top:0;left:0;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;background:black;}
+.collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;
+animation:zoomFull 6s forwards;}
+@keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0;}}
 
 /* CARTOON */
-#cartoonScreen{
-position:fixed;top:0;left:0;width:100%;height:100vh;
-display:none;background:black;
-}
-.cartoonImg{
-width:100%;height:100%;object-fit:cover;
-animation:zoomCartoon 8s infinite alternate;
-}
+#cartoonScreen{position:fixed;top:0;left:0;width:100%;height:100vh;display:none;background:black;}
+.cartoonImg{width:100%;height:100%;object-fit:cover;animation:zoomCartoon 8s infinite alternate;}
 @keyframes zoomCartoon{from{transform:scale(1);}to{transform:scale(1.08);}}
-.cartoonText{
-position:absolute;bottom:60px;width:100%;
-text-align:center;font-size:42px;font-weight:bold;
-color:white;text-shadow:0 0 20px pink;
-}
+.cartoonText{position:absolute;bottom:60px;width:100%;text-align:center;font-size:42px;font-weight:bold;color:white;text-shadow:0 0 20px pink;}
 
 /* VALENTINE SCREEN */
-#questionScreen{
-position:fixed;top:0;left:0;width:100%;height:100vh;
-display:none;justify-content:center;align-items:center;
-flex-direction:column;
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-color:white;text-align:center;
-}
+#questionScreen{position:fixed;top:0;left:0;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;flex-direction:column;
+background:linear-gradient(135deg,#ff9ecb,#ff6aa6);color:white;text-align:center;}
 .big{font-size:52px;margin-bottom:40px}
-.bigBtn{
-padding:18px 45px;font-size:28px;border:none;border-radius:40px;margin:15px;
-}
+.bigBtn{padding:18px 45px;font-size:28px;border:none;border-radius:40px;margin:15px}
+
+/* YES SCREEN */
+#yesScreen{position:fixed;top:0;left:0;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;flex-direction:column;
+background:url("yes.jpg") center/cover no-repeat;color:white;text-align:center;}
+
+@keyframes pop{from{transform:scale(1)}to{transform:scale(1.15)}}
 </style>
 </head>
 
@@ -120,15 +96,20 @@ padding:18px 45px;font-size:28px;border:none;border-radius:40px;margin:15px;
 <!-- VALENTINE GAME -->
 <div id="questionScreen">
 <h1 class="big">Will you be my Valentine? 💖</h1>
-
-<button id="yesBtn" class="bigBtn" style="background:white;color:#ff4d88" onclick="yesClicked()">YES 💘</button>
+<button class="bigBtn" style="background:white;color:#ff4d88" onclick="yesClicked()">YES 💘</button>
 <button id="noBtn" class="bigBtn" style="background:#ff4d88;color:white" onclick="noClicked()">NO 😝</button>
+</div>
+
+<!-- YES CELEBRATION -->
+<div id="yesScreen">
+<h1 style="font-size:60px;text-shadow:0 0 25px pink;animation:pop 1.5s infinite alternate;">
+SHE SAID YESSS 😍💍
+</h1>
 </div>
 
 <script>
 function checkPass(){
 if(pass.value!="Classy"){msg.innerHTML="Wrong password 😝";return;}
-
 document.querySelector(".card").style.display="none";
 loveScreen.style.display="flex";
 
@@ -142,7 +123,6 @@ setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
-/* NO button story */
 let stage=0;
 function noClicked(){
 let btn=document.getElementById("noBtn");
@@ -156,7 +136,8 @@ btn.style.transform=`translate(${x}px,${y}px)`;
 }
 
 function yesClicked(){
-alert("I knew it 😍💖");
+questionScreen.style.display="none";
+yesScreen.style.display="flex";
 }
 
 /* floating hearts */
@@ -166,11 +147,11 @@ heart.innerHTML="💖";
 heart.style.position="fixed";
 heart.style.left=Math.random()*100+"vw";
 heart.style.bottom="-20px";
-heart.style.fontSize="24px";
-heart.style.animation="float 5s linear";
+heart.style.fontSize="30px";
+heart.style.animation="float 4s linear";
 document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),5000);
-},300);
+setTimeout(()=>heart.remove(),4000);
+},200);
 </script>
 
 <style>
