@@ -2,147 +2,95 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Gitu ❤️</title>
+<title>Private Portal 💕</title>
 
 <style>
 body{
 margin:0;
 font-family:sans-serif;
-background:black;
-overflow:hidden;
-color:white;
-}
-
-/* blurred background */
-.bg{
-position:fixed;
-width:100%;
-height:100%;
 background:url("bg.jpg") center/cover no-repeat;
-filter:blur(6px) brightness(0.5);
-z-index:-1;
-}
-
-.screen{
-position:fixed;
-width:100%;
 height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
-flex-direction:column;
-opacity:0;
-transition:1.5s;
-text-align:center;
 }
-.show{opacity:1}
 
-/* password card */
+/* GLASS CARD */
 .card{
 background:rgba(255,255,255,0.15);
-padding:30px;
+padding:35px;
 border-radius:25px;
-backdrop-filter:blur(10px);
-}
-input{padding:12px;border:none;border-radius:10px;margin-top:15px}
-button{padding:12px 25px;border:none;border-radius:25px;margin-top:15px;background:pink}
-
-/* love lines */
-.line{font-size:32px;margin:15px;opacity:0;transition:1s}
-
-/* collage */
-.collageImg{
-width:80%;max-width:420px;border-radius:20px;
-box-shadow:0 0 40px pink;
+text-align:center;
+color:white;
+width:85%;
+max-width:330px;
+backdrop-filter:blur(12px);
+box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 
-/* cartoon */
-.fullImg{width:100%;height:100%;object-fit:cover;}
-.cartoonText{
-position:absolute;bottom:60px;width:100%;
-font-size:40px;font-weight:bold;text-shadow:0 0 20px pink;
+input{
+margin-top:15px;
+padding:12px;
+width:90%;
+border:none;
+border-radius:10px;
+font-size:16px;
+text-align:center;
 }
 
-#cry{font-size:80px;display:none}
+button{
+margin-top:15px;
+padding:12px 25px;
+border:none;
+border-radius:20px;
+background:#ff4d88;
+color:white;
+font-size:16px;
+}
+
+#cry{
+font-size:70px;
+display:none;
+margin-top:10px;
+}
 </style>
 </head>
 
 <body>
-<div class="bg"></div>
 
-<!-- PASSWORD -->
-<div id="password" class="screen show">
 <div class="card">
-<h2>Private Portal 💕</h2>
+<h2>Only for my baby 💕</h2>
+
 <input id="pass" placeholder="Enter password">
+<br>
 <button onclick="checkPass()">Unlock ❤️</button>
+
 <p id="msg"></p>
 <div id="cry">😭🐱</div>
-</div>
-</div>
-
-<!-- LOVE LINES -->
-<div id="love" class="screen">
-<div class="line" id="l1">You are my favorite notification ❤️</div>
-<div class="line" id="l2">My peace after chaos ☁️</div>
-<div class="line" id="l3">My daily happiness 🌸</div>
-<div class="line" id="l4">My best decision 😌</div>
-</div>
-
-<!-- COLLAGE -->
-<div id="real" class="screen">
-<img src="collage.jpg" class="collageImg">
-</div>
-
-<!-- CARTOON -->
-<div id="cartoon" class="screen">
-<img src="cartoon.png" class="fullImg">
-<div class="cartoonText">Keshuv ❤️ Gitu</div>
 </div>
 
 <script>
 let attempts=0;
 
 function checkPass(){
-let p=pass.value.trim();
+let p=document.getElementById("pass").value.trim();
 let msg=document.getElementById("msg");
 
 if(p=="Classy"){
-password.classList.remove("show");
-love.classList.add("show");
-
-// love lines animation
-setTimeout(()=>l1.style.opacity=1,500);
-setTimeout(()=>l2.style.opacity=1,2000);
-setTimeout(()=>l3.style.opacity=1,3500);
-setTimeout(()=>l4.style.opacity=1,5000);
-
-// go to collage
-setTimeout(()=>{
-love.classList.remove("show");
-real.classList.add("show");
-},9000);
-
-// go to cartoon
-setTimeout(()=>{
-real.classList.remove("show");
-cartoon.classList.add("show");
-},14000);
-
+alert("Unlocked ❤️ Next page we build again step by step");
 return;
 }
 
-// WRONG PASSWORD HINT SYSTEM
 attempts++;
 
 if(attempts==1)
-msg.innerHTML="Ohh I knew this would happen first time 😌 Try again… no hint this time 😉";
+msg.innerHTML="Ohh I knew this would happen first time 😌 Try again… no hint 😉";
 
 else if(attempts==2)
 msg.innerHTML="Haha my gitu 😅 hint: it has to do something with starting 😁";
 
 else if(attempts==3)
-msg.innerHTML="It is the word which made us meet 😌 It is 6 letter word and first letter capital 😁";
+msg.innerHTML="It is the word which made us meet 😌 6 letter word, first letter capital 😁";
 
 else{
 msg.innerHTML="You are breaking my heart 😭";
