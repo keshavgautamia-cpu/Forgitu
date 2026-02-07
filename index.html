@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Love ❤️</title>
 
@@ -9,11 +8,20 @@
 body{
 margin:0;
 overflow:hidden;
-font-family: 'Poppins', sans-serif;
 background:black;
+font-family:sans-serif;
 }
 
-/* screens */
+/* background blur */
+.bg{
+position:fixed;
+width:100%;
+height:100%;
+background:url("bg.jpg") center/cover no-repeat;
+filter:blur(6px) brightness(0.5);
+z-index:-1;
+}
+
 .screen{
 position:fixed;
 width:100%;
@@ -27,89 +35,48 @@ opacity:0;
 transition:1.5s;
 }
 
-.show{
-opacity:1;
-}
+.show{opacity:1;}
 
-/* REAL COLLAGE */
-.real{
-background:black;
-}
-
-.real img{
+img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* CARTOON SCREEN */
-.cartoon{
-background:black;
-}
-
-.cartoon img{
-width:100%;
-height:100%;
-object-fit:cover;
-animation:zoom 8s ease-in-out infinite alternate;
-}
-
-@keyframes zoom{
-from{transform:scale(1);}
-to{transform:scale(1.08);}
-}
-
-/* LOVE TEXT */
-.loveText{
+/* cartoon text */
+.cartoonText{
 position:absolute;
 bottom:60px;
 width:100%;
 text-align:center;
 color:white;
-font-size:40px;
+font-size:42px;
 font-weight:bold;
-letter-spacing:2px;
 text-shadow:0 0 20px pink;
-animation:fadeText 3s infinite;
-}
-
-@keyframes fadeText{
-0%{opacity:0}
-50%{opacity:1}
-100%{opacity:0}
 }
 </style>
 </head>
 
 <body>
 
+<div class="bg"></div>
+
 <!-- REAL COLLAGE FIRST -->
-<div id="realIntro" class="screen real show">
-<img src="real.jpg">
+<div id="real" class="screen show">
+<img src="collage.jpg">
 </div>
 
 <!-- CARTOON SECOND -->
-<div id="cartoonIntro" class="screen cartoon">
-<img src="bg.jpg">
-<div class="loveText">Keshav ❤️ Gitu</div>
+<div id="cartoon" class="screen">
+<img src="cartoon.png">
+<div class="cartoonText">Keshuv ❤️ Gitu</div>
 </div>
 
 <script>
-// show real collage first, then auto switch to cartoon after 5 sec
-window.onload = function () {
-
-    // hide cartoon first
-    document.getElementById("cartoonIntro").classList.remove("show");
-
-    setTimeout(() => {
-        // hide real collage
-        document.getElementById("realIntro").classList.remove("show");
-
-        // show cartoon image
-        document.getElementById("cartoonIntro").classList.add("show");
-
-    }, 5000); // 5 seconds
-}
+setTimeout(function(){
+document.getElementById("real").classList.remove("show");
+document.getElementById("cartoon").classList.add("show");
+},5000);
 </script>
 
 </body>
