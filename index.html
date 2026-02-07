@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Private Portal 💕</title>
+<title>For Gitu 💖</title>
 
 <style>
 body{
@@ -13,6 +13,7 @@ height:100vh;
 display:flex;
 justify-content:center;
 align-items:center;
+overflow:hidden;
 }
 
 /* PASSWORD CARD */
@@ -27,26 +28,8 @@ max-width:330px;
 backdrop-filter:blur(12px);
 box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
-
-input{
-margin-top:15px;
-padding:12px;
-width:90%;
-border:none;
-border-radius:10px;
-font-size:16px;
-text-align:center;
-}
-
-button{
-margin-top:15px;
-padding:12px 25px;
-border:none;
-border-radius:20px;
-background:#ff4d88;
-color:white;
-font-size:16px;
-}
+input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
+button{margin-top:15px;padding:12px 25px;border:none;border-radius:20px;background:#ff4d88;color:white}
 
 /* LOVE SCREEN */
 #loveScreen{
@@ -60,8 +43,7 @@ color:white;text-align:center;
 /* COLLAGE */
 #collageScreen{
 position:fixed;top:0;left:0;width:100%;height:100vh;
-display:none;justify-content:center;align-items:center;
-background:black;overflow:hidden;
+display:none;justify-content:center;align-items:center;background:black;
 }
 .collageImg{
 width:200px;border-radius:20px;box-shadow:0 0 40px pink;
@@ -81,14 +63,24 @@ display:none;background:black;
 width:100%;height:100%;object-fit:cover;
 animation:zoomCartoon 8s infinite alternate;
 }
-@keyframes zoomCartoon{
-from{transform:scale(1);}
-to{transform:scale(1.08);}
-}
+@keyframes zoomCartoon{from{transform:scale(1);}to{transform:scale(1.08);}}
 .cartoonText{
 position:absolute;bottom:60px;width:100%;
 text-align:center;font-size:42px;font-weight:bold;
 color:white;text-shadow:0 0 20px pink;
+}
+
+/* VALENTINE SCREEN */
+#questionScreen{
+position:fixed;top:0;left:0;width:100%;height:100vh;
+display:none;justify-content:center;align-items:center;
+flex-direction:column;
+background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
+color:white;text-align:center;
+}
+.big{font-size:52px;margin-bottom:40px}
+.bigBtn{
+padding:18px 45px;font-size:28px;border:none;border-radius:40px;margin:15px;
 }
 </style>
 </head>
@@ -125,22 +117,12 @@ color:white;text-shadow:0 0 20px pink;
 <div class="cartoonText">Keshuv ❤️ Gitu</div>
 </div>
 
-<!-- VALENTINE QUESTION -->
-<div id="questionScreen" style="
-position:fixed;top:0;left:0;width:100%;height:100vh;
-display:none;justify-content:center;align-items:center;
-flex-direction:column;background:url('bg.jpg') center/cover no-repeat;
-text-align:center;color:white;
-">
-<h1 style="font-size:48px;margin-bottom:40px;">Will you be my Valentine? 💖</h1>
+<!-- VALENTINE GAME -->
+<div id="questionScreen">
+<h1 class="big">Will you be my Valentine? 💖</h1>
 
-<button onclick="yesClicked()" style="
-padding:15px 35px;font-size:22px;border:none;border-radius:30px;
-background:#ff4d88;color:white;margin:15px;">YES 💘</button>
-
-<button id="noBtn" onclick="moveNo()" style="
-padding:15px 35px;font-size:22px;border:none;border-radius:30px;
-background:white;color:#ff4d88;margin:15px;position:absolute;">NO 😝</button>
+<button id="yesBtn" class="bigBtn" style="background:white;color:#ff4d88" onclick="yesClicked()">YES 💘</button>
+<button id="noBtn" class="bigBtn" style="background:#ff4d88;color:white" onclick="noClicked()">NO 😝</button>
 </div>
 
 <script>
@@ -155,34 +137,45 @@ setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-setTimeout(()=>{
-loveScreen.style.display="none";
-collageScreen.style.display="flex";
-bgMusic.play();
-},9000);
-
-setTimeout(()=>{
-collageScreen.style.display="none";
-cartoonScreen.style.display="block";
-},16000);
-
-setTimeout(()=>{
-cartoonScreen.style.display="none";
-questionScreen.style.display="flex";
-},31000);
+setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
+setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="block";},16000);
+setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
-function moveNo(){
+/* NO button story */
+let stage=0;
+function noClicked(){
 let btn=document.getElementById("noBtn");
+if(stage==0){btn.innerHTML="Not a chance 😤";stage=1;return;}
+if(stage==1){btn.innerHTML="This is not what you want 😏";stage=2;return;}
+if(stage>=2){
 let x=Math.random()*300-150;
 let y=Math.random()*300-150;
 btn.style.transform=`translate(${x}px,${y}px)`;
 }
+}
 
 function yesClicked(){
-alert("Yayyyyy ❤️ Final surprise next 😍");
+alert("I knew it 😍💖");
 }
+
+/* floating hearts */
+setInterval(()=>{
+let heart=document.createElement("div");
+heart.innerHTML="💖";
+heart.style.position="fixed";
+heart.style.left=Math.random()*100+"vw";
+heart.style.bottom="-20px";
+heart.style.fontSize="24px";
+heart.style.animation="float 5s linear";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),5000);
+},300);
 </script>
+
+<style>
+@keyframes float{to{transform:translateY(-120vh);opacity:0;}}
+</style>
 
 </body>
 </html>
