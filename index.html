@@ -20,7 +20,6 @@ height:100%;
 background:rgba(0,0,0,0.55);
 }
 
-/* screens */
 .screen{
 position:fixed;
 width:100%;
@@ -53,7 +52,6 @@ font-size:18px;
 cursor:pointer;
 }
 
-/* input */
 input{
 padding:12px;
 border-radius:10px;
@@ -62,53 +60,58 @@ margin-top:20px;
 text-align:center;
 }
 
-/* crying emoji */
-#cry{
-font-size:90px;
-display:none;
-animation:bounce 1s infinite;
-}
+#cry{font-size:90px;display:none;animation:bounce 1s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
 
-@keyframes bounce{
-0%,100%{transform:translateY(0);}
-50%{transform:translateY(-20px);}
+/* typing text */
+.line{
+font-size:28px;
+opacity:0;
+transition:1s;
 }
+.show{opacity:1;}
 </style>
 </head>
 
 <body>
 <div class="overlay"></div>
 
-<!-- SCREEN 1 -->
+<!-- Screen 1 -->
 <div class="screen active" id="s1">
 <div class="big">Hey Gitu My Jaanu 😘</div>
 <div class="small">I made something for you…</div>
 <button class="btn" onclick="nextScreen('s2')">Tap to continue 💖</button>
 </div>
 
-<!-- SCREEN 2 -->
+<!-- Screen 2 -->
 <div class="screen" id="s2">
 <div class="big">But first…</div>
-<div class="small">You must unlock my heart 🔐</div>
+<div class="small">Unlock my heart 🔐</div>
 <button class="btn" onclick="nextScreen('s3')">Continue 😌</button>
 </div>
 
-<!-- SCREEN 3 PASSWORD -->
+<!-- Screen 3 Password -->
 <div class="screen" id="s3">
 <div class="big">Private Portal 💕</div>
-<div class="small">Only my baby can enter 😌</div>
-
 <input id="pass" placeholder="Enter password">
 <button class="btn" onclick="checkPass()">Unlock ❤️</button>
-
-<div id="msg" class="small" style="margin-top:15px;"></div>
+<div id="msg" class="small"></div>
 <div id="cry">😭🐱</div>
 </div>
 
-<!-- SCREEN 4 -->
+<!-- Screen 4 -->
 <div class="screen" id="s4">
 <div class="big">You unlocked my heart 💖</div>
-<button class="btn" onclick="nextScreen('s5')">Continue 😘</button>
+<button class="btn" onclick="startLove()">Continue 😘</button>
+</div>
+
+<!-- Screen 5 Love Lines -->
+<div class="screen" id="s5">
+<div class="line" id="l1">You are my favorite notification ❤️</div>
+<div class="line" id="l2">My peace after chaos ☁️</div>
+<div class="line" id="l3">My daily happiness 🌸</div>
+<div class="line" id="l4">My best decision 😌</div>
+<button class="btn" onclick="nextScreen('s6')" id="nextBtn" style="display:none">Continue 💕</button>
 </div>
 
 <script>
@@ -118,31 +121,24 @@ document.getElementById(id).classList.add("active");
 }
 
 let attempts=0;
-
 function checkPass(){
 let p=document.getElementById("pass").value.trim();
-
-if(p=="Classy"){
-nextScreen("s4");
-return;
-}
-
+if(p=="Classy"){nextScreen("s4");return;}
 attempts++;
 let msg=document.getElementById("msg");
-
-if(attempts==1)
-msg.innerHTML="Ohh I knew this would happen first time 😌 Try again… no hint 😉";
-
-else if(attempts==2)
-msg.innerHTML="Haha my gitu 😅 hint: it has to do with starting 😁";
-
-else if(attempts==3)
-msg.innerHTML="It is the word which made us meet 😌 6 letter word, first letter CAPITAL 😁";
-
-else{
-document.getElementById("cry").style.display="block";
-msg.innerHTML="You are breaking my heart 😭";
+if(attempts==1)msg.innerHTML="I knew you'd get it wrong 😌 try again";
+else if(attempts==2)msg.innerHTML="Hint: it has to do with starting 😁";
+else if(attempts==3)msg.innerHTML="6 letters. First capital 😏";
+else{document.getElementById("cry").style.display="block";}
 }
+
+function startLove(){
+nextScreen("s5");
+setTimeout(()=>document.getElementById("l1").classList.add("show"),500);
+setTimeout(()=>document.getElementById("l2").classList.add("show"),2000);
+setTimeout(()=>document.getElementById("l3").classList.add("show"),3500);
+setTimeout(()=>document.getElementById("l4").classList.add("show"),5000);
+setTimeout(()=>document.getElementById("nextBtn").style.display="block",6000);
 }
 </script>
 
