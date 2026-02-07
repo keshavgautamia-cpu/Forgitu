@@ -90,15 +90,6 @@ position:absolute;bottom:60px;width:100%;
 text-align:center;font-size:42px;font-weight:bold;
 color:white;text-shadow:0 0 20px pink;
 }
-
-/* QUESTION SCREEN */
-#questionScreen{
-position:fixed;top:0;left:0;width:100%;height:100vh;
-display:none;justify-content:center;align-items:center;
-flex-direction:column;background:url("bg.jpg") center/cover no-repeat;
-color:white;text-align:center;
-}
-.big{font-size:40px;margin-bottom:20px}
 </style>
 </head>
 
@@ -115,7 +106,7 @@ color:white;text-align:center;
 <p id="msg"></p>
 </div>
 
-<!-- LOVE -->
+<!-- LOVE LINES -->
 <div id="loveScreen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
@@ -134,11 +125,22 @@ color:white;text-align:center;
 <div class="cartoonText">Keshuv ❤️ Gitu</div>
 </div>
 
-<!-- QUESTION -->
-<div id="questionScreen">
-<h1 class="big">Will you be my Valentine? 💖</h1>
-<button>YES 💘</button>
-<button>NO 😝</button>
+<!-- VALENTINE QUESTION -->
+<div id="questionScreen" style="
+position:fixed;top:0;left:0;width:100%;height:100vh;
+display:none;justify-content:center;align-items:center;
+flex-direction:column;background:url('bg.jpg') center/cover no-repeat;
+text-align:center;color:white;
+">
+<h1 style="font-size:48px;margin-bottom:40px;">Will you be my Valentine? 💖</h1>
+
+<button onclick="yesClicked()" style="
+padding:15px 35px;font-size:22px;border:none;border-radius:30px;
+background:#ff4d88;color:white;margin:15px;">YES 💘</button>
+
+<button id="noBtn" onclick="moveNo()" style="
+padding:15px 35px;font-size:22px;border:none;border-radius:30px;
+background:white;color:#ff4d88;margin:15px;position:absolute;">NO 😝</button>
 </div>
 
 <script>
@@ -167,7 +169,18 @@ cartoonScreen.style.display="block";
 setTimeout(()=>{
 cartoonScreen.style.display="none";
 questionScreen.style.display="flex";
-},31000); // cartoon stays 15 seconds
+},31000);
+}
+
+function moveNo(){
+let btn=document.getElementById("noBtn");
+let x=Math.random()*300-150;
+let y=Math.random()*300-150;
+btn.style.transform=`translate(${x}px,${y}px)`;
+}
+
+function yesClicked(){
+alert("Yayyyyy ❤️ Final surprise next 😍");
 }
 </script>
 
