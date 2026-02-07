@@ -38,8 +38,8 @@ padding:20px;
 
 .active{opacity:1;pointer-events:auto;}
 
-.big{font-size:38px;margin-bottom:20px;}
-.small{font-size:20px;}
+.big{font-size:40px;margin-bottom:20px;}
+.small{font-size:22px;}
 
 .btn{
 margin-top:30px;
@@ -48,24 +48,27 @@ border:none;
 border-radius:30px;
 background:#ff4d88;
 color:white;
-font-size:18px;
+font-size:20px;
 cursor:pointer;
 }
 
 input{
-padding:12px;
+padding:14px;
 border-radius:10px;
 border:none;
 margin-top:20px;
 text-align:center;
+font-size:18px;
 }
 
 #cry{font-size:90px;display:none;animation:bounce 1s infinite;}
 @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-20px);}}
 
-/* typing text */
+/* LOVE LINES BIGGER */
 .line{
-font-size:28px;
+font-size:36px;
+font-weight:600;
+margin:14px 0;
 opacity:0;
 transition:1s;
 }
@@ -126,19 +129,19 @@ let p=document.getElementById("pass").value.trim();
 if(p=="Classy"){nextScreen("s4");return;}
 attempts++;
 let msg=document.getElementById("msg");
-if(attempts==1)msg.innerHTML="I knew you'd get it wrong 😌 try again";
-else if(attempts==2)msg.innerHTML="Hint: it has to do with starting 😁";
-else if(attempts==3)msg.innerHTML="6 letters. First capital 😏";
+if(attempts==1)msg.innerHTML="Ohh I knew this would happen first time 😌 Try again 😉";
+else if(attempts==2)msg.innerHTML="Haha my gitu 😅 hint: it has to do with starting 😁";
+else if(attempts==3)msg.innerHTML="It is the word which made us meet 😌 6 letters, first letter CAPITAL 😁";
 else{document.getElementById("cry").style.display="block";}
 }
 
 function startLove(){
 nextScreen("s5");
-setTimeout(()=>document.getElementById("l1").classList.add("show"),500);
-setTimeout(()=>document.getElementById("l2").classList.add("show"),2000);
-setTimeout(()=>document.getElementById("l3").classList.add("show"),3500);
-setTimeout(()=>document.getElementById("l4").classList.add("show"),5000);
-setTimeout(()=>document.getElementById("nextBtn").style.display="block",6000);
+setTimeout(()=>l1.classList.add("show"),500);
+setTimeout(()=>l2.classList.add("show"),2000);
+setTimeout(()=>l3.classList.add("show"),3500);
+setTimeout(()=>l4.classList.add("show"),5000);
+setTimeout(()=>nextBtn.style.display="block",6000);
 }
 </script>
 
