@@ -5,26 +5,43 @@
 <title>For Gitu ❤️</title>
 
 <style>
-body{margin:0;font-family:sans-serif;background:black;overflow:hidden;color:white}
+body{
+margin:0;
+font-family:sans-serif;
+background:black;
+overflow:hidden;
+color:white;
+}
 
 /* blurred background */
 .bg{
-position:fixed;width:100%;height:100%;
+position:fixed;
+width:100%;
+height:100%;
 background:url("bg.jpg") center/cover no-repeat;
-filter:blur(6px) brightness(0.5);z-index:-1;
+filter:blur(6px) brightness(0.5);
+z-index:-1;
 }
 
 .screen{
-position:fixed;width:100%;height:100vh;
-display:flex;justify-content:center;align-items:center;
-flex-direction:column;opacity:0;transition:1.5s;text-align:center;
+position:fixed;
+width:100%;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+opacity:0;
+transition:1.5s;
+text-align:center;
 }
 .show{opacity:1}
 
 /* password card */
 .card{
 background:rgba(255,255,255,0.15);
-padding:30px;border-radius:25px;
+padding:30px;
+border-radius:25px;
 backdrop-filter:blur(10px);
 }
 input{padding:12px;border:none;border-radius:10px;margin-top:15px}
@@ -45,6 +62,8 @@ box-shadow:0 0 40px pink;
 position:absolute;bottom:60px;width:100%;
 font-size:40px;font-weight:bold;text-shadow:0 0 20px pink;
 }
+
+#cry{font-size:80px;display:none}
 </style>
 </head>
 
@@ -58,6 +77,7 @@ font-size:40px;font-weight:bold;text-shadow:0 0 20px pink;
 <input id="pass" placeholder="Enter password">
 <button onclick="checkPass()">Unlock ❤️</button>
 <p id="msg"></p>
+<div id="cry">😭🐱</div>
 </div>
 </div>
 
@@ -81,29 +101,53 @@ font-size:40px;font-weight:bold;text-shadow:0 0 20px pink;
 </div>
 
 <script>
+let attempts=0;
+
 function checkPass(){
-if(pass.value=="Classy"){
+let p=pass.value.trim();
+let msg=document.getElementById("msg");
+
+if(p=="Classy"){
 password.classList.remove("show");
 love.classList.add("show");
 
+// love lines animation
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-// after love lines -> collage
+// go to collage
 setTimeout(()=>{
 love.classList.remove("show");
 real.classList.add("show");
 },9000);
 
-// after collage -> cartoon
+// go to cartoon
 setTimeout(()=>{
 real.classList.remove("show");
 cartoon.classList.add("show");
 },14000);
+
+return;
 }
-else msg.innerHTML="Wrong password 😝";
+
+// WRONG PASSWORD HINT SYSTEM
+attempts++;
+
+if(attempts==1)
+msg.innerHTML="Ohh I knew this would happen first time 😌 Try again… no hint this time 😉";
+
+else if(attempts==2)
+msg.innerHTML="Haha my gitu 😅 hint: it has to do something with starting 😁";
+
+else if(attempts==3)
+msg.innerHTML="It is the word which made us meet 😌 It is 6 letter word and first letter capital 😁";
+
+else{
+msg.innerHTML="You are breaking my heart 😭";
+document.getElementById("cry").style.display="block";
+}
 }
 </script>
 
