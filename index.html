@@ -55,49 +55,50 @@ display:none;justify-content:center;align-items:center;
 flex-direction:column;background:url("bg.jpg") center/cover no-repeat;
 color:white;text-align:center;
 }
-
 .line{opacity:0;font-size:32px;margin:15px;transition:1s}
 
-/* COLLAGE SCREEN */
+/* COLLAGE */
 #collageScreen{
 position:fixed;top:0;left:0;width:100%;height:100vh;
 display:none;justify-content:center;align-items:center;
 background:black;overflow:hidden;
 }
-
 .collageImg{
 width:200px;border-radius:20px;box-shadow:0 0 40px pink;
 animation:zoomFull 6s forwards;
 }
-
 @keyframes zoomFull{
 0%{width:200px;}
 100%{width:100%;height:100%;border-radius:0;}
 }
 
-/* CARTOON SCREEN */
+/* CARTOON */
 #cartoonScreen{
 position:fixed;top:0;left:0;width:100%;height:100vh;
 display:none;background:black;
 }
-
 .cartoonImg{
 width:100%;height:100%;object-fit:cover;
 animation:zoomCartoon 8s infinite alternate;
 }
-
 @keyframes zoomCartoon{
 from{transform:scale(1);}
 to{transform:scale(1.08);}
 }
-
 .cartoonText{
 position:absolute;bottom:60px;width:100%;
 text-align:center;font-size:42px;font-weight:bold;
 color:white;text-shadow:0 0 20px pink;
 }
 
-#cry{font-size:70px;display:none;margin-top:10px}
+/* QUESTION SCREEN */
+#questionScreen{
+position:fixed;top:0;left:0;width:100%;height:100vh;
+display:none;justify-content:center;align-items:center;
+flex-direction:column;background:url("bg.jpg") center/cover no-repeat;
+color:white;text-align:center;
+}
+.big{font-size:40px;margin-bottom:20px}
 </style>
 </head>
 
@@ -112,10 +113,9 @@ color:white;text-shadow:0 0 20px pink;
 <br>
 <button onclick="checkPass()">Unlock ❤️</button>
 <p id="msg"></p>
-<div id="cry">😭🐱</div>
 </div>
 
-<!-- LOVE LINES -->
+<!-- LOVE -->
 <div id="loveScreen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
@@ -134,50 +134,40 @@ color:white;text-shadow:0 0 20px pink;
 <div class="cartoonText">Keshuv ❤️ Gitu</div>
 </div>
 
+<!-- QUESTION -->
+<div id="questionScreen">
+<h1 class="big">Will you be my Valentine? 💖</h1>
+<button>YES 💘</button>
+<button>NO 😝</button>
+</div>
+
 <script>
-let attempts=0;
-
 function checkPass(){
-let p=document.getElementById("pass").value.trim();
-let msg=document.getElementById("msg");
+if(pass.value!="Classy"){msg.innerHTML="Wrong password 😝";return;}
 
-if(p=="Classy"){
 document.querySelector(".card").style.display="none";
-document.getElementById("loveScreen").style.display="flex";
+loveScreen.style.display="flex";
 
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-// collage + music
 setTimeout(()=>{
 loveScreen.style.display="none";
 collageScreen.style.display="flex";
-document.getElementById("bgMusic").play();
+bgMusic.play();
 },9000);
 
-// cartoon reveal
 setTimeout(()=>{
 collageScreen.style.display="none";
 cartoonScreen.style.display="block";
 },16000);
 
-return;
-}
-
-attempts++;
-
-if(attempts==1)
-msg.innerHTML="Ohh I knew this would happen first time 😌 Try again… no hint 😉";
-else if(attempts==2)
-msg.innerHTML="Haha my gitu 😅 hint: it has to do something with starting 😁";
-else if(attempts==3)
-msg.innerHTML="It is the word which made us meet 😌 6 letter word, first letter capital 😁";
-else{
-msg.innerHTML="You are breaking my heart 😭";
-document.getElementById("cry").style.display="block";
-}
+setTimeout(()=>{
+cartoonScreen.style.display="none";
+questionScreen.style.display="flex";
+},31000); // cartoon stays 15 seconds
 }
 </script>
 
