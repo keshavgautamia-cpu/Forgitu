@@ -1,70 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For My Baby ❤️</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Only for my baby ❤️</title>
 
-<script src="https://unpkg.com/lottie-web@5.9.6/build/player/lottie.min.js"></script>
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 body{
-margin:0;
-font-family:Arial,Helvetica,sans-serif;
 overflow:hidden;
-background:#ff6fa5;
 color:white;
 text-align:center;
+background:url("bg.jpg") center/cover no-repeat;
 }
-
-.screen{
-position:absolute;
+body::before{
+content:"";
+position:fixed;
 width:100%;
 height:100%;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-transition:1s;
+backdrop-filter:blur(12px) brightness(0.7);
+z-index:-1;
 }
-
+.screen{position:absolute;width:100%;height:100%;display:none;justify-content:center;align-items:center;flex-direction:column}
 .show{display:flex}
 
-input{
-padding:15px;
-border:none;
-border-radius:30px;
-font-size:18px;
-text-align:center;
-}
+/* password */
+input{padding:15px;border-radius:30px;border:none;width:230px;font-size:18px;text-align:center;margin-top:20px}
+button{padding:14px 30px;border:none;border-radius:30px;background:#ff4b8a;color:white;font-size:18px;margin-top:15px}
 
-button{
-padding:15px 30px;
-border:none;
-border-radius:30px;
-font-size:20px;
-margin:10px;
-cursor:pointer;
-}
-
+/* collage */
 #collage{
 position:absolute;
-width:200px;
+width:60%;
+border-radius:30px;
+transform:scale(.5);
 opacity:0;
-transition:3s;
-border-radius:20px;
+transition:2s;
 }
 
-#cartoon{
-width:80%;
-border-radius:20px;
+/* pink screens */
+.pink{
+background:linear-gradient(180deg,#ff7eb3,#ff4b8a);
 }
 
+/* valentine buttons */
 .bigBtn{
-font-size:30px;
-padding:20px 40px;
+padding:18px 40px;
+font-size:22px;
+border-radius:40px;
+margin:15px;
 }
 
-#noBtn{position:absolute}
+/* questions */
+.option{
+background:white;color:#ff4b8a;padding:14px 30px;border-radius:30px;margin:10px;font-weight:bold
+}
 </style>
 </head>
 
@@ -75,13 +66,9 @@ padding:20px 40px;
 <!-- PASSWORD -->
 <div id="pass" class="screen show">
 <h1>Only for my baby ❤️</h1>
-<input id="pwd" placeholder="Enter password">
+<input id="pw" placeholder="Enter password">
+<button onclick="check()">Unlock ❤️</button>
 <p id="hint"></p>
-</div>
-
-<!-- LOVE TEXT -->
-<div id="love" class="screen">
-<h1 id="loveText"></h1>
 </div>
 
 <!-- COLLAGE -->
@@ -90,141 +77,100 @@ padding:20px 40px;
 </div>
 
 <!-- CARTOON -->
-<div id="cartoonScreen" class="screen">
-<img id="cartoon" src="cartoon.png">
+<div id="cartoonScreen" class="screen pink">
+<img src="cartoon.png" style="width:70%">
 </div>
 
 <!-- VALENTINE -->
-<div id="valentine" class="screen">
-<h1>Will you be my Valentine? ❤️</h1>
-<button class="bigBtn" onclick="yes()">YES 😍</button>
-<button id="noBtn" class="bigBtn" onclick="no()">NO 😢</button>
+<div id="valentine" class="screen pink">
+<h1 style="font-size:40px">Will you be my Valentine? 💖</h1>
+<button id="yesBtn" class="bigBtn" onclick="yes()">YES 😍</button>
+<button id="noBtn" class="bigBtn" onclick="no()">NO 😜</button>
 </div>
 
-<!-- YES SCREEN -->
-<div id="yesScreen" class="screen">
-<img src="yes.jpg" style="width:100%;position:absolute;z-index:-1">
-<h1 style="font-size:60px">SHE SAID YESSSS 💍❤️</h1>
+<!-- BIG YES -->
+<div id="bigYes" class="screen" style="background:url(yes.jpg) center/cover">
+<h1 style="font-size:60px">SHE SAID YESSSS 😭💍❤️</h1>
+<button onclick="startQuestions()">Continue 😍</button>
 </div>
 
 <!-- QUESTIONS -->
-<div id="questions" class="screen">
-<div id="lottie" style="width:200px"></div>
-<h1 id="q"></h1>
-<div id="opts"></div>
+<div id="questions" class="screen pink">
+<lottie-player id="bunny" src="idle.json" background="transparent" speed="1" style="width:200px" loop autoplay></lottie-player>
+<h2 id="q"></h2>
+<div id="answers"></div>
 </div>
 
 <script>
-let wrong=0;
+let tries=0
+function check(){
+let p=document.getElementById("pw").value
+let hint=document.getElementById("hint")
 
-document.getElementById("pwd").onchange=function(){
-if(this.value=="Classy"){
-startLove();
-}else{
-wrong++;
-let hints=[
-"Ohh I knew this would happen first time 😉",
-"Haha my gitu 😅 hint: something from starting 😁",
-"It is 6 letter word & first letter capital 😁"
-];
-document.getElementById("hint").innerText=hints[wrong-1]||"😭";
+if(p==="Classy"){
+document.getElementById("pass").style.display="none"
+startCollage()
 }
+else{
+tries++
+if(tries==1)hint.innerText="Ohh I knew this would happen first time 😉"
+else if(tries==2)hint.innerText="Hint: has to do with beginning 😅"
+else hint.innerText="6 letters, first capital 😁"
 }
-
-function startLove(){
-show("love");
-type("I made this just for you ❤️",()=>{
-setTimeout(startCollage,2000);
-});
-}
-
-function type(text,cb){
-let i=0;
-let el=document.getElementById("loveText");
-let t=setInterval(()=>{
-el.innerHTML+=text[i];
-i++;
-if(i>=text.length){clearInterval(t);cb();}
-},50);
 }
 
 function startCollage(){
-show("collageScreen");
-let img=document.getElementById("collage");
-setTimeout(()=>{
-img.style.opacity=1;
-img.style.width="100%";
-document.body.style.background="black";
-document.getElementById("music").play();
-setTimeout(startCartoon,5000);
-},500);
-}
-
-function startCartoon(){
-show("cartoonScreen");
-setTimeout(()=>show("valentine"),15000);
-}
-
-let noCount=0;
-function no(){
-noCount++;
-let btn=document.getElementById("noBtn");
-btn.innerText=["Not chance 😤","Think again 😭","This is wrong 😡"][noCount-1]||"NO";
-btn.style.top=Math.random()*70+"%";
-btn.style.left=Math.random()*70+"%";
+document.getElementById("music").play()
+let s=document.getElementById("collageScreen")
+let img=document.getElementById("collage")
+s.style.display="flex"
+setTimeout(()=>{img.style.opacity=1;img.style.transform="scale(1.2)"},300)
+setTimeout(()=>{s.style.display="none";document.getElementById("cartoonScreen").style.display="flex"},5000)
+setTimeout(()=>{document.getElementById("cartoonScreen").style.display="none";document.getElementById("valentine").style.display="flex"},20000)
 }
 
 function yes(){
-show("yesScreen");
-setTimeout(startQuestions,5000);
+document.getElementById("valentine").style.display="none"
+document.getElementById("bigYes").style.display="flex"
+}
+function no(){
+let b=document.getElementById("noBtn")
+b.style.position="absolute"
+b.style.left=Math.random()*80+"%"
+b.style.top=Math.random()*80+"%"
 }
 
 let qs=[
-["Who fell first? 😉",["Me 😎","You 😘","Destiny 💫"]],
-["Who loves more? 🥰",["Me","You","Both 💞"]],
-["How much I love you? 💖",["A lot ❤️","So much 💕","Infinite ♾️"]]
-];
-let qi=0;
+{q:"Who fell first? 😌",a:["Me 😎","You 😘"]},
+{q:"Who loves more? 🥺",a:["Me ❤️","You ❤️"]},
+{q:"How much I love you? 💖",a:["A lot 💕","Infinite ♾️"]}
+]
 
+let qi=0
 function startQuestions(){
-show("questions");
-lottie.loadAnimation({
-container:document.getElementById("lottie"),
-renderer:"svg",
-loop:true,
-autoplay:true,
-path:"idle.json"
-});
-nextQ();
+document.getElementById("bigYes").style.display="none"
+document.getElementById("questions").style.display="flex"
+showQ()
 }
-
-function nextQ(){
-if(qi>=qs.length)return;
-document.getElementById("q").innerText=qs[qi][0];
-let html="";
-qs[qi][1].forEach(a=>{
-html+=`<button onclick="happy()">${a}</button>`;
-});
-document.getElementById("opts").innerHTML=html;
-qi++;
+function showQ(){
+let q=qs[qi]
+document.getElementById("q").innerText=q.q
+let ans=document.getElementById("answers")
+ans.innerHTML=""
+q.a.forEach(t=>{
+let b=document.createElement("button")
+b.className="option"
+b.innerText=t
+b.onclick=()=>{
+document.getElementById("bunny").src="happy.json"
+setTimeout(()=>{document.getElementById("bunny").src="idle.json"},2000)
+qi++
+if(qi<qs.length)showQ()
+else document.getElementById("q").innerText="I LOVE YOU FOREVER ❤️"
 }
-
-function happy(){
-lottie.loadAnimation({
-container:document.getElementById("lottie"),
-renderer:"svg",
-loop:false,
-autoplay:true,
-path:"happy.json"
-});
-setTimeout(nextQ,2000);
-}
-
-function show(id){
-document.querySelectorAll(".screen").forEach(s=>s.classList.remove("show"));
-document.getElementById(id).classList.add("show");
+ans.appendChild(b)
+})
 }
 </script>
-
 </body>
 </html>
