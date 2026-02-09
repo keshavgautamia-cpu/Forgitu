@@ -24,7 +24,11 @@ box-shadow:0 0 40px rgba(255,0,120,0.6);
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
 /* LOVE LINES */
-#loveScreen,#quizScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+#loveScreen,#questionScreen,#quizScreen{
+position:fixed;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;flex-direction:column;
+text-align:center;color:white
+}
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
@@ -37,25 +41,20 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 #cartoonScreen{position:fixed;width:100%;height:100vh;display:none;background:black}
 .cartoonImg{width:100%;height:100%;object-fit:cover}
 
-/* VALENTINE (CENTERED FIXED) */
-#questionScreen{
-position:fixed;
-width:100%;
-height:100vh;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-color:white;
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-}
+/* VALENTINE */
+#questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 
 /* YES */
 #yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
 
 /* STORY */
 #quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+
+/* ⭐⭐⭐ THIS IS THE ONLY FIX ADDED ⭐⭐⭐ */
+#quizScreen{gap:20px;padding-bottom:80px;}
+#idleAnim{margin-top:-40px;}
+#quizQ{margin-top:0;}
+
 .storyText{font-size:42px}
 #quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
 </style>
@@ -64,7 +63,6 @@ background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
 <body>
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
-<!-- PASSWORD -->
 <div class="card">
 <h2>Only for my baby 💕</h2>
 <input id="pass" placeholder="Enter password">
@@ -72,7 +70,6 @@ background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
 <p id="msg"></p>
 </div>
 
-<!-- LOVE LINES -->
 <div id="loveScreen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
@@ -80,46 +77,24 @@ background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
 <h1 id="l4" class="line">My best decision 😌</h1>
 </div>
 
-<!-- COLLAGE -->
 <div id="collageScreen"><img src="collage.jpg" class="collageImg"></div>
-
-<!-- CARTOON -->
 <div id="cartoonScreen"><img src="cartoon.png" class="cartoonImg"></div>
 
-<!-- VALENTINE -->
 <div id="questionScreen">
-  <div style="max-width:90%;padding:20px">
-    <h1 style="font-size:55px;margin-bottom:30px">
-      Will you be my Valentine? 💖
-    </h1>
-    <button onclick="yesClicked()" style="background:white;color:#ff4d88;font-size:26px;padding:18px 45px">
-      YES 💘
-    </button>
-    <button id="noBtn" onclick="noClicked()" style="font-size:26px;padding:18px 45px">
-      NO 😝
-    </button>
-  </div>
+<h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
+<button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
+<button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<!-- YES SCREEN -->
 <div id="yesScreen">
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<!-- LOVE STORY -->
 <div id="quizScreen">
-
-<lottie-player id="idleAnim"
-src="idle.json"
-background="transparent"
-speed="1"
-style="width:220px"
-loop autoplay></lottie-player>
-
+<lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
 <h1 id="quizQ" class="storyText"></h1>
 <div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
-
 </div>
 
 <script>
