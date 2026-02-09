@@ -1,126 +1,96 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Baby ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins}
-body{overflow:hidden}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
 
-/* SCREENS */
+body{
+background:#ff7eb3;
+overflow:hidden;
+color:white;
+}
+
+/* ALL SCREENS */
 .screen{
 position:fixed;
+display:none;
 width:100%;
 height:100vh;
-display:flex;
 justify-content:center;
 align-items:center;
 flex-direction:column;
+text-align:center;
+padding:20px;
 }
+
+#passwordScreen{display:flex}
 
 /* PASSWORD */
-#passwordScreen{
-background:url(bg.jpg) center/cover;
-color:white;
-text-align:center;
-}
-
 input{
 padding:15px;
-font-size:20px;
-border:none;
-border-radius:30px;
-text-align:center;
-}
-
-button{
-padding:15px 25px;
-border:none;
-border-radius:30px;
-background:#ff4d88;
-color:white;
 font-size:18px;
+border-radius:30px;
+border:none;
+text-align:center;
 margin-top:20px;
 }
 
 /* LOVE LINES */
-#loveScreen{background:#ff9ecb;color:white;text-align:center}
-.loveText{font-size:40px;padding:40px}
+#loveText{
+font-size:28px;
+width:90%;
+}
 
 /* COLLAGE */
-#collageScreen{background:black;display:none}
 #collage{
-width:200px;
-border-radius:20px;
-animation:zoom 5s forwards;
-}
-@keyframes zoom{
-to{transform:scale(8)}
+width:70%;
+border-radius:30px;
+opacity:0;
+transform:scale(0.3);
+transition:2s;
 }
 
 /* CARTOON */
-#cartoonScreen{background:#ff9ecb;display:none}
-
-/* VALENTINE SCREEN */
-#valentineScreen{
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-display:none;
-text-align:center;
+#cartoon{
+width:70%;
 }
 
-.bigBtn{
-font-size:28px;
-padding:18px 40px;
-margin:15px;
+/* BUTTONS */
+button{
+padding:15px 30px;
+font-size:22px;
+border:none;
+border-radius:30px;
+margin:10px;
 }
 
-/* YES SCREEN */
+.yes{background:#ff4d6d;color:white}
+.no{background:white;color:#ff4d6d}
+
+/* BIG YES */
 #yesScreen{
-background:url(ring.jpg) center/cover;
-display:none;
-color:white;
-text-shadow:2px 2px 10px black;
-}
-
-/* QUIZ SCREEN */
-#quizScreen{
-position:fixed;
-width:100%;
-height:100vh;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-text-align:center;
-}
-
-.storyText{
-font-size:42px;
-margin-top:20px;
-margin-bottom:10px;
+background:url("ring.jpg") center/cover no-repeat;
+font-size:40px;
 }
 </style>
 </head>
 
 <body>
 
+<audio id="music" src="music.mp3"></audio>
+
 <!-- PASSWORD -->
 <div id="passwordScreen" class="screen">
 <h1>Only for my baby ❤️</h1>
-<input id="passInput" placeholder="Enter password">
-<button onclick="checkPass()">Enter</button>
-<p id="hint"></p>
+<input id="pass" placeholder="Enter password">
 </div>
 
 <!-- LOVE LINES -->
 <div id="loveScreen" class="screen">
-<div class="loveText" id="loveText"></div>
+<div id="loveText"></div>
 </div>
 
 <!-- COLLAGE -->
@@ -130,119 +100,143 @@ margin-bottom:10px;
 
 <!-- CARTOON -->
 <div id="cartoonScreen" class="screen">
-<lottie-player src="idle.json" background="transparent" speed="1" style="width:300px" autoplay loop></lottie-player>
+<img id="cartoon" src="bg.jpg">
 </div>
 
 <!-- VALENTINE -->
-<div id="valentineScreen" class="screen">
-<h1>Will you be my Valentine? ❤️</h1>
-<button class="bigBtn" onclick="yes()">YES 💖</button>
-<button class="bigBtn" id="noBtn" onclick="moveNo()">NO 😜</button>
+<div id="valScreen" class="screen">
+<h1>Will you be my Valentine? 💖</h1>
+<button class="yes" onclick="bigYes()">YES 😍</button>
+<button class="no" id="noBtn">NO 😏</button>
 </div>
 
 <!-- BIG YES -->
 <div id="yesScreen" class="screen">
-<h1 style="font-size:60px">SHE SAID YESSS ❤️</h1>
-<button onclick="startQuiz()">Next 💕</button>
+<h1>SHE SAID YESSS ❤️💍</h1>
+<button onclick="startQuestions()">Continue 💕</button>
 </div>
 
-<!-- QUIZ -->
-<div id="quizScreen" class="screen">
-<lottie-player src="idle.json" background="transparent" speed="1" style="width:250px" autoplay loop></lottie-player>
-<div class="storyText" id="question"></div>
+<!-- QUESTIONS -->
+<div id="questionScreen" class="screen">
+<h1 id="q"></h1>
 <div id="answers"></div>
 </div>
 
-<audio id="music" src="music.mp3" loop></audio>
-
 <script>
+const screens=document.querySelectorAll(".screen")
+function show(id){
+screens.forEach(s=>s.style.display="none")
+document.getElementById(id).style.display="flex"
+}
 
-/* PASSWORD SYSTEM */
-let attempts=0
-function checkPass(){
-let p=document.getElementById("passInput").value
-if(p==="Classy"){
-document.getElementById("passwordScreen").style.display="none"
+/* PASSWORD */
+pass.oninput=()=>{
+if(pass.value.toLowerCase()=="only for my baby"){
 startLove()
-}else{
-attempts++
-let h=document.getElementById("hint")
-if(attempts==1) h.innerHTML="Ohh I knew this would happen first time 😉"
-else if(attempts==2) h.innerHTML="Hint: word which made us meet 😁"
-else h.innerHTML="6 letter word, first letter capital 😏"
 }
 }
 
 /* LOVE LINES */
-let lines=["Hi baby ❤️","I made something for you","Keep watching 😘"]
-let i=0
+const lines=[
+"You are my favourite notification ❤️",
+"You are my safest place 💕",
+"You are my forever person 🥺"
+]
+
 function startLove(){
-document.getElementById("loveScreen").style.display="flex"
-let interval=setInterval(()=>{
-document.getElementById("loveText").innerText=lines[i++]
-if(i==lines.length){clearInterval(interval);setTimeout(showCollage,2000)}
-},2000)
+show("loveScreen")
+let i=0
+let text=""
+let idx=0
+function type(){
+if(idx<lines[i].length){
+text+=lines[i][idx]
+loveText.innerHTML=text
+idx++
+setTimeout(type,40)
+}else{
+setTimeout(()=>{
+text=""
+idx=0
+i++
+if(i<lines.length) type()
+else startCollage()
+},1000)
+}
+}
+type()
 }
 
 /* COLLAGE */
-function showCollage(){
-document.getElementById("loveScreen").style.display="none"
-document.getElementById("collageScreen").style.display="flex"
-document.getElementById("music").play()
-setTimeout(showCartoon,5000)
+function startCollage(){
+show("collageScreen")
+setTimeout(()=>{
+collage.style.opacity=1
+collage.style.transform="scale(1.5)"
+document.body.style.background="black"
+music.play()
+setTimeout(startCartoon,5000)
+},100)
 }
 
 /* CARTOON */
-function showCartoon(){
-document.getElementById("collageScreen").style.display="none"
-document.getElementById("cartoonScreen").style.display="flex"
-setTimeout(showValentine,15000)
+function startCartoon(){
+show("cartoonScreen")
+setTimeout(()=>show("valScreen"),15000)
 }
 
-/* VALENTINE */
-function showValentine(){
-document.getElementById("cartoonScreen").style.display="none"
-document.getElementById("valentineScreen").style.display="flex"
-}
-function moveNo(){
-let btn=document.getElementById("noBtn")
-btn.style.position="absolute"
-btn.style.top=Math.random()*80+"%"
-btn.style.left=Math.random()*80+"%"
-}
-function yes(){
-document.getElementById("valentineScreen").style.display="none"
-document.getElementById("yesScreen").style.display="flex"
+/* NO BUTTON RUN */
+let noTexts=[
+"Not a chance 😏",
+"Think again 😌",
+"Wrong answer 😆",
+"No button disabled 😂"
+]
+let n=0
+noBtn.onclick=()=>{
+noBtn.innerText=noTexts[n%noTexts.length]
+n++
+noBtn.style.position="absolute"
+noBtn.style.left=Math.random()*70+"%"
+noBtn.style.top=Math.random()*70+"%"
 }
 
-/* QUIZ */
-let qIndex=0
-let questions=[
-{q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"]},
-{q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Both ♾️"]},
-{q:"How much I love you? 💕",a:["A lot ❤️","So much 💞","Infinite ♾️"]}
+/* YES */
+function bigYes(){
+show("yesScreen")
+}
+
+/* QUESTIONS GAME */
+const qs=[
+{q:"Who fell first? 🥰",a:["Me 😎","You 😘","Destiny ✨"]},
+{q:"Who loves more? ❤️",a:["Me","You","Both"]},
+{q:"How much I love you? 💖",a:["A lot","So much","Infinite ♾️"]}
 ]
 
-function startQuiz(){
-document.getElementById("yesScreen").style.display="none"
-document.getElementById("quizScreen").style.display="flex"
-showQ()
+let qi=0
+function startQuestions(){
+show("questionScreen")
+loadQ()
 }
 
-function showQ(){
-let q=questions[qIndex]
-document.getElementById("question").innerText=q.q
-let ans=""
-q.a.forEach(a=>{
-ans+=`<button class="bigBtn" onclick="nextQ()">${a}</button>`
+function loadQ(){
+q.innerText=qs[qi].q
+answers.innerHTML=""
+qs[qi].a.forEach(a=>{
+let b=document.createElement("button")
+b.innerText=a
+b.onclick=nextQ
+answers.appendChild(b)
 })
-document.getElementById("answers").innerHTML=ans
 }
 
 function nextQ(){
-qIndex++
-if(qIndex<questions.length) showQ()
-else document.getElementById("question").innerText="I love you forever ❤️"
+qi++
+if(qi<qs.length) loadQ()
+else{
+q.innerText="THE END ❤️"
+answers.innerHTML=""
+}
 }
 </script>
 
