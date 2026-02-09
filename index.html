@@ -4,7 +4,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Gitu 💖</title>
 
-<!-- LOTTIE LIBRARY -->
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
@@ -25,7 +24,7 @@ box-shadow:0 0 40px rgba(255,0,120,0.6);
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
 /* LOVE LINES */
-#loveScreen,#questionScreen,#quizScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+#loveScreen,#quizScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
@@ -38,8 +37,19 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 #cartoonScreen{position:fixed;width:100%;height:100vh;display:none;background:black}
 .cartoonImg{width:100%;height:100%;object-fit:cover}
 
-/* VALENTINE */
-#questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+/* VALENTINE (CENTERED FIXED) */
+#questionScreen{
+position:fixed;
+width:100%;
+height:100vh;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+color:white;
+background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
+}
 
 /* YES */
 #yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
@@ -78,9 +88,17 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 
 <!-- VALENTINE -->
 <div id="questionScreen">
-<h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
-<button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
-<button id="noBtn" onclick="noClicked()">NO 😝</button>
+  <div style="max-width:90%;padding:20px">
+    <h1 style="font-size:55px;margin-bottom:30px">
+      Will you be my Valentine? 💖
+    </h1>
+    <button onclick="yesClicked()" style="background:white;color:#ff4d88;font-size:26px;padding:18px 45px">
+      YES 💘
+    </button>
+    <button id="noBtn" onclick="noClicked()" style="font-size:26px;padding:18px 45px">
+      NO 😝
+    </button>
+  </div>
 </div>
 
 <!-- YES SCREEN -->
@@ -132,7 +150,6 @@ yesScreen.style.display="flex";
 setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
 }
 
-/* STORY QUESTIONS */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
