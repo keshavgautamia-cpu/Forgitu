@@ -1,35 +1,69 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Only for my baby ❤️</title>
 
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
+
+html,body{
+height:100%;
+width:100%;
 overflow:hidden;
+}
+
+body{
 color:white;
 text-align:center;
-background:url("bg.jpg") center/cover no-repeat;
+background:url("bg.jpg") center center / cover no-repeat fixed;
 }
+
 body::before{
 content:"";
 position:fixed;
-width:100%;
-height:100%;
+top:0;left:0;
+width:100%;height:100%;
 backdrop-filter:blur(12px) brightness(0.7);
 z-index:-1;
 }
-.screen{position:absolute;width:100%;height:100%;display:none;justify-content:center;align-items:center;flex-direction:column}
+
+.screen{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+}
+
 .show{display:flex}
 
-/* password */
-input{padding:15px;border-radius:30px;border:none;width:230px;font-size:18px;text-align:center;margin-top:20px}
-button{padding:14px 30px;border:none;border-radius:30px;background:#ff4b8a;color:white;font-size:18px;margin-top:15px}
+input{
+padding:15px;
+border-radius:30px;
+border:none;
+width:230px;
+font-size:18px;
+text-align:center;
+margin-top:20px;
+}
 
-/* collage */
+button{
+padding:14px 30px;
+border:none;
+border-radius:30px;
+background:#ff4b8a;
+color:white;
+font-size:18px;
+margin-top:15px;
+}
+
 #collage{
 position:absolute;
 width:60%;
@@ -39,12 +73,10 @@ opacity:0;
 transition:2s;
 }
 
-/* pink screens */
 .pink{
 background:linear-gradient(180deg,#ff7eb3,#ff4b8a);
 }
 
-/* valentine buttons */
 .bigBtn{
 padding:18px 40px;
 font-size:22px;
@@ -52,9 +84,13 @@ border-radius:40px;
 margin:15px;
 }
 
-/* questions */
 .option{
-background:white;color:#ff4b8a;padding:14px 30px;border-radius:30px;margin:10px;font-weight:bold
+background:white;
+color:#ff4b8a;
+padding:14px 30px;
+border-radius:30px;
+margin:10px;
+font-weight:bold;
 }
 </style>
 </head>
@@ -64,11 +100,17 @@ background:white;color:#ff4b8a;padding:14px 30px;border-radius:30px;margin:10px;
 <audio id="music" src="music.mp3"></audio>
 
 <!-- PASSWORD -->
-<div id="pass" class="screen show">
+<div id="passwordScreen" class="screen show">
 <h1>Only for my baby ❤️</h1>
-<input id="pw" placeholder="Enter password">
-<button onclick="check()">Unlock ❤️</button>
+<input id="pass" placeholder="Enter password">
+<button onclick="checkPass()">Unlock 💖</button>
 <p id="hint"></p>
+</div>
+
+<!-- LOVE LINES -->
+<div id="loveScreen" class="screen">
+<h1>I made this just for you 💕</h1>
+<h2>You make my world beautiful 🌍</h2>
 </div>
 
 <!-- COLLAGE -->
@@ -78,99 +120,105 @@ background:white;color:#ff4b8a;padding:14px 30px;border-radius:30px;margin:10px;
 
 <!-- CARTOON -->
 <div id="cartoonScreen" class="screen pink">
-<img src="cartoon.png" style="width:70%">
+<img src="cartoon.png" width="260">
 </div>
 
 <!-- VALENTINE -->
-<div id="valentine" class="screen pink">
-<h1 style="font-size:40px">Will you be my Valentine? 💖</h1>
-<button id="yesBtn" class="bigBtn" onclick="yes()">YES 😍</button>
-<button id="noBtn" class="bigBtn" onclick="no()">NO 😜</button>
+<div id="valentineScreen" class="screen pink">
+<h1>Will you be my Valentine? 💘</h1>
+<button class="bigBtn" onclick="yes()">YES 💖</button>
+<button id="noBtn" class="bigBtn" onclick="moveNo()">NO 😝</button>
 </div>
 
-<!-- BIG YES -->
-<div id="bigYes" class="screen" style="background:url(yes.jpg) center/cover">
-<h1 style="font-size:60px">SHE SAID YESSSS 😭💍❤️</h1>
-<button onclick="startQuestions()">Continue 😍</button>
+<!-- YES SCREEN -->
+<div id="yesScreen" class="screen" style="background:url('yes.jpg') center/cover;">
+<h1>She said YESS 💍❤️</h1>
 </div>
 
 <!-- QUESTIONS -->
-<div id="questions" class="screen pink">
-<lottie-player id="bunny" src="idle.json" background="transparent" speed="1" style="width:200px" loop autoplay></lottie-player>
-<h2 id="q"></h2>
+<div id="questionScreen" class="screen pink">
+<lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:200px" loop autoplay></lottie-player>
+<h1 id="question"></h1>
 <div id="answers"></div>
 </div>
 
 <script>
-let tries=0
-function check(){
-let p=document.getElementById("pw").value
-let hint=document.getElementById("hint")
+let tries=0;
+
+function checkPass(){
+let p=document.getElementById("pass").value;
+let hint=document.getElementById("hint");
 
 if(p==="Classy"){
-document.getElementById("pass").style.display="none"
-startCollage()
-}
-else{
-tries++
-if(tries==1)hint.innerText="Ohh I knew this would happen first time 😉"
-else if(tries==2)hint.innerText="Hint: has to do with beginning 😅"
-else hint.innerText="6 letters, first capital 😁"
+music.play();
+next("passwordScreen","loveScreen");
+
+setTimeout(()=>next("loveScreen","collageScreen"),4000);
+
+setTimeout(()=>{
+document.getElementById("collage").style.opacity=1;
+document.getElementById("collage").style.transform="scale(1.2)";
+},4200);
+
+setTimeout(()=>next("collageScreen","cartoonScreen"),9000);
+setTimeout(()=>next("cartoonScreen","valentineScreen"),15000);
+
+}else{
+tries++;
+if(tries==1) hint.innerHTML="ohh I knew this would happen 😏 try again";
+if(tries==2) hint.innerHTML="hint: it made us meet 😉";
+if(tries==3) hint.innerHTML="6 letter word, first capital 😁";
 }
 }
 
-function startCollage(){
-document.getElementById("music").play()
-let s=document.getElementById("collageScreen")
-let img=document.getElementById("collage")
-s.style.display="flex"
-setTimeout(()=>{img.style.opacity=1;img.style.transform="scale(1.2)"},300)
-setTimeout(()=>{s.style.display="none";document.getElementById("cartoonScreen").style.display="flex"},5000)
-setTimeout(()=>{document.getElementById("cartoonScreen").style.display="none";document.getElementById("valentine").style.display="flex"},20000)
+function next(a,b){
+document.getElementById(a).classList.remove("show");
+document.getElementById(b).classList.add("show");
+}
+
+let noCount=0;
+function moveNo(){
+let btn=document.getElementById("noBtn");
+noCount++;
+btn.style.position="absolute";
+btn.style.top=Math.random()*80+"%";
+btn.style.left=Math.random()*80+"%";
+if(noCount>3) btn.innerHTML="You can't escape 😝";
 }
 
 function yes(){
-document.getElementById("valentine").style.display="none"
-document.getElementById("bigYes").style.display="flex"
-}
-function no(){
-let b=document.getElementById("noBtn")
-b.style.position="absolute"
-b.style.left=Math.random()*80+"%"
-b.style.top=Math.random()*80+"%"
+next("valentineScreen","yesScreen");
+setTimeout(()=>startQuestions(),5000);
 }
 
-let qs=[
-{q:"Who fell first? 😌",a:["Me 😎","You 😘"]},
-{q:"Who loves more? 🥺",a:["Me ❤️","You ❤️"]},
-{q:"How much I love you? 💖",a:["A lot 💕","Infinite ♾️"]}
-]
+const qs=[
+{q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny ✨"]},
+{q:"Who loves more? 🥺",a:["Me ❤️","You 💕","Both ♾"]},
+{q:"How much I love you? 💖",a:["A lot ❤️","So much 💞","Infinite ♾"]}
+];
 
-let qi=0
+let i=0;
 function startQuestions(){
-document.getElementById("bigYes").style.display="none"
-document.getElementById("questions").style.display="flex"
-showQ()
+next("yesScreen","questionScreen");
+showQ();
 }
+
 function showQ(){
-let q=qs[qi]
-document.getElementById("q").innerText=q.q
-let ans=document.getElementById("answers")
-ans.innerHTML=""
-q.a.forEach(t=>{
-let b=document.createElement("button")
-b.className="option"
-b.innerText=t
-b.onclick=()=>{
-document.getElementById("bunny").src="happy.json"
-setTimeout(()=>{document.getElementById("bunny").src="idle.json"},2000)
-qi++
-if(qi<qs.length)showQ()
-else document.getElementById("q").innerText="I LOVE YOU FOREVER ❤️"
+let q=qs[i];
+document.getElementById("question").innerHTML=q.q;
+let ans="";
+q.a.forEach(a=>ans+=`<div class='option' onclick='nextQ()'>${a}</div>`);
+document.getElementById("answers").innerHTML=ans;
 }
-ans.appendChild(b)
-})
+
+function nextQ(){
+document.getElementById("idleAnim").load("happy.json");
+setTimeout(()=>document.getElementById("idleAnim").load("idle.json"),2000);
+i++;
+if(i<qs.length) showQ();
+else document.getElementById("question").innerHTML="I LOVE YOU ❤️";
 }
 </script>
+
 </body>
 </html>
