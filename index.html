@@ -4,77 +4,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For My Baby ❤️</title>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+<script src="https://unpkg.com/lottie-web@5.9.6/build/player/lottie.min.js"></script>
 
+<style>
 body{
-background:#ff7eb3;
+margin:0;
+font-family:Arial,Helvetica,sans-serif;
 overflow:hidden;
+background:#ff6fa5;
 color:white;
+text-align:center;
 }
 
-/* ALL SCREENS */
 .screen{
-position:fixed;
-display:none;
+position:absolute;
 width:100%;
-height:100vh;
+height:100%;
+display:none;
 justify-content:center;
 align-items:center;
 flex-direction:column;
-text-align:center;
-padding:20px;
+transition:1s;
 }
 
-#passwordScreen{display:flex}
+.show{display:flex}
 
-/* PASSWORD */
 input{
 padding:15px;
-font-size:18px;
-border-radius:30px;
 border:none;
-text-align:center;
-margin-top:20px;
-}
-
-/* LOVE LINES */
-#loveText{
-font-size:28px;
-width:90%;
-}
-
-/* COLLAGE */
-#collage{
-width:70%;
 border-radius:30px;
-opacity:0;
-transform:scale(0.3);
-transition:2s;
+font-size:18px;
+text-align:center;
 }
 
-/* CARTOON */
-#cartoon{
-width:70%;
-}
-
-/* BUTTONS */
 button{
 padding:15px 30px;
-font-size:22px;
 border:none;
 border-radius:30px;
+font-size:20px;
 margin:10px;
+cursor:pointer;
 }
 
-.yes{background:#ff4d6d;color:white}
-.no{background:white;color:#ff4d6d}
-
-/* BIG YES */
-#yesScreen{
-background:url("ring.jpg") center/cover no-repeat;
-font-size:40px;
+#collage{
+position:absolute;
+width:200px;
+opacity:0;
+transition:3s;
+border-radius:20px;
 }
+
+#cartoon{
+width:80%;
+border-radius:20px;
+}
+
+.bigBtn{
+font-size:30px;
+padding:20px 40px;
+}
+
+#noBtn{position:absolute}
 </style>
 </head>
 
@@ -83,14 +73,15 @@ font-size:40px;
 <audio id="music" src="music.mp3"></audio>
 
 <!-- PASSWORD -->
-<div id="passwordScreen" class="screen">
+<div id="pass" class="screen show">
 <h1>Only for my baby ❤️</h1>
-<input id="pass" placeholder="Enter password">
+<input id="pwd" placeholder="Enter password">
+<p id="hint"></p>
 </div>
 
-<!-- LOVE LINES -->
-<div id="loveScreen" class="screen">
-<div id="loveText"></div>
+<!-- LOVE TEXT -->
+<div id="love" class="screen">
+<h1 id="loveText"></h1>
 </div>
 
 <!-- COLLAGE -->
@@ -100,143 +91,138 @@ font-size:40px;
 
 <!-- CARTOON -->
 <div id="cartoonScreen" class="screen">
-<img id="cartoon" src="bg.jpg">
+<img id="cartoon" src="cartoon.png">
 </div>
 
 <!-- VALENTINE -->
-<div id="valScreen" class="screen">
-<h1>Will you be my Valentine? 💖</h1>
-<button class="yes" onclick="bigYes()">YES 😍</button>
-<button class="no" id="noBtn">NO 😏</button>
+<div id="valentine" class="screen">
+<h1>Will you be my Valentine? ❤️</h1>
+<button class="bigBtn" onclick="yes()">YES 😍</button>
+<button id="noBtn" class="bigBtn" onclick="no()">NO 😢</button>
 </div>
 
-<!-- BIG YES -->
+<!-- YES SCREEN -->
 <div id="yesScreen" class="screen">
-<h1>SHE SAID YESSS ❤️💍</h1>
-<button onclick="startQuestions()">Continue 💕</button>
+<img src="yes.jpg" style="width:100%;position:absolute;z-index:-1">
+<h1 style="font-size:60px">SHE SAID YESSSS 💍❤️</h1>
 </div>
 
 <!-- QUESTIONS -->
-<div id="questionScreen" class="screen">
+<div id="questions" class="screen">
+<div id="lottie" style="width:200px"></div>
 <h1 id="q"></h1>
-<div id="answers"></div>
+<div id="opts"></div>
 </div>
 
 <script>
-const screens=document.querySelectorAll(".screen")
-function show(id){
-screens.forEach(s=>s.style.display="none")
-document.getElementById(id).style.display="flex"
-}
+let wrong=0;
 
-/* PASSWORD */
-pass.oninput=()=>{
-if(pass.value.toLowerCase()=="only for my baby"){
-startLove()
+document.getElementById("pwd").onchange=function(){
+if(this.value=="Classy"){
+startLove();
+}else{
+wrong++;
+let hints=[
+"Ohh I knew this would happen first time 😉",
+"Haha my gitu 😅 hint: something from starting 😁",
+"It is 6 letter word & first letter capital 😁"
+];
+document.getElementById("hint").innerText=hints[wrong-1]||"😭";
 }
 }
-
-/* LOVE LINES */
-const lines=[
-"You are my favourite notification ❤️",
-"You are my safest place 💕",
-"You are my forever person 🥺"
-]
 
 function startLove(){
-show("loveScreen")
-let i=0
-let text=""
-let idx=0
-function type(){
-if(idx<lines[i].length){
-text+=lines[i][idx]
-loveText.innerHTML=text
-idx++
-setTimeout(type,40)
-}else{
-setTimeout(()=>{
-text=""
-idx=0
-i++
-if(i<lines.length) type()
-else startCollage()
-},1000)
-}
-}
-type()
+show("love");
+type("I made this just for you ❤️",()=>{
+setTimeout(startCollage,2000);
+});
 }
 
-/* COLLAGE */
+function type(text,cb){
+let i=0;
+let el=document.getElementById("loveText");
+let t=setInterval(()=>{
+el.innerHTML+=text[i];
+i++;
+if(i>=text.length){clearInterval(t);cb();}
+},50);
+}
+
 function startCollage(){
-show("collageScreen")
+show("collageScreen");
+let img=document.getElementById("collage");
 setTimeout(()=>{
-collage.style.opacity=1
-collage.style.transform="scale(1.5)"
-document.body.style.background="black"
-music.play()
-setTimeout(startCartoon,5000)
-},100)
+img.style.opacity=1;
+img.style.width="100%";
+document.body.style.background="black";
+document.getElementById("music").play();
+setTimeout(startCartoon,5000);
+},500);
 }
 
-/* CARTOON */
 function startCartoon(){
-show("cartoonScreen")
-setTimeout(()=>show("valScreen"),15000)
+show("cartoonScreen");
+setTimeout(()=>show("valentine"),15000);
 }
 
-/* NO BUTTON RUN */
-let noTexts=[
-"Not a chance 😏",
-"Think again 😌",
-"Wrong answer 😆",
-"No button disabled 😂"
-]
-let n=0
-noBtn.onclick=()=>{
-noBtn.innerText=noTexts[n%noTexts.length]
-n++
-noBtn.style.position="absolute"
-noBtn.style.left=Math.random()*70+"%"
-noBtn.style.top=Math.random()*70+"%"
+let noCount=0;
+function no(){
+noCount++;
+let btn=document.getElementById("noBtn");
+btn.innerText=["Not chance 😤","Think again 😭","This is wrong 😡"][noCount-1]||"NO";
+btn.style.top=Math.random()*70+"%";
+btn.style.left=Math.random()*70+"%";
 }
 
-/* YES */
-function bigYes(){
-show("yesScreen")
+function yes(){
+show("yesScreen");
+setTimeout(startQuestions,5000);
 }
 
-/* QUESTIONS GAME */
-const qs=[
-{q:"Who fell first? 🥰",a:["Me 😎","You 😘","Destiny ✨"]},
-{q:"Who loves more? ❤️",a:["Me","You","Both"]},
-{q:"How much I love you? 💖",a:["A lot","So much","Infinite ♾️"]}
-]
+let qs=[
+["Who fell first? 😉",["Me 😎","You 😘","Destiny 💫"]],
+["Who loves more? 🥰",["Me","You","Both 💞"]],
+["How much I love you? 💖",["A lot ❤️","So much 💕","Infinite ♾️"]]
+];
+let qi=0;
 
-let qi=0
 function startQuestions(){
-show("questionScreen")
-loadQ()
-}
-
-function loadQ(){
-q.innerText=qs[qi].q
-answers.innerHTML=""
-qs[qi].a.forEach(a=>{
-let b=document.createElement("button")
-b.innerText=a
-b.onclick=nextQ
-answers.appendChild(b)
-})
+show("questions");
+lottie.loadAnimation({
+container:document.getElementById("lottie"),
+renderer:"svg",
+loop:true,
+autoplay:true,
+path:"idle.json"
+});
+nextQ();
 }
 
 function nextQ(){
-qi++
-if(qi<qs.length) loadQ()
-else{
-q.innerText="THE END ❤️"
-answers.innerHTML=""
+if(qi>=qs.length)return;
+document.getElementById("q").innerText=qs[qi][0];
+let html="";
+qs[qi][1].forEach(a=>{
+html+=`<button onclick="happy()">${a}</button>`;
+});
+document.getElementById("opts").innerHTML=html;
+qi++;
 }
+
+function happy(){
+lottie.loadAnimation({
+container:document.getElementById("lottie"),
+renderer:"svg",
+loop:false,
+autoplay:true,
+path:"happy.json"
+});
+setTimeout(nextQ,2000);
+}
+
+function show(id){
+document.querySelectorAll(".screen").forEach(s=>s.classList.remove("show"));
+document.getElementById(id).classList.add("show");
 }
 </script>
 
