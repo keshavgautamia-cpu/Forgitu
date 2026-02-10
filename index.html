@@ -10,61 +10,59 @@
 body{
 margin:0;font-family:sans-serif;
 background:url("bg.jpg") center/cover no-repeat;
-height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;
+height:100vh;overflow:hidden;
 }
 
-/* PASSWORD CARD */
+/* CENTER WRAPPER */
+.center{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+color:white;
+}
+
+/* PASSWORD */
 .card{
 background:rgba(255,255,255,0.15);
-padding:35px;border-radius:25px;text-align:center;color:white;
-width:85%;max-width:330px;backdrop-filter:blur(12px);
+padding:35px;border-radius:25px;color:white;
+width:85%;max-width:330px;
+backdrop-filter:blur(12px);
 box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 
 /* LOVE LINES */
-#loveScreen,#questionScreen,#quizScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
-#loveScreen{background:url("bg.jpg") center/cover no-repeat}
+#loveScreen{display:none}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
 /* COLLAGE */
-#collageScreen{position:fixed;width:100%;height:100vh;display:none;background:black;justify-content:center;align-items:center}
+#collageScreen{display:none;background:black}
 .collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
 @keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
 
 /* CARTOON */
-#cartoonScreen{position:fixed;width:100%;height:100vh;display:none;background:black}
+#cartoonScreen{display:none;background:black}
 .cartoonImg{width:100%;height:100%;object-fit:cover}
 
 /* VALENTINE */
-#questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+#questionScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 
 /* YES */
-#yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
+#yesScreen{display:none;background:url("yes.jpg") center/cover no-repeat}
 
-/* QUIZ CENTER FIX */
-#quizScreen{
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-justify-content:center;
-align-items:center;
-}
-.storyWrap{
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-height:100%;
-transform:translateY(-40px);
-}
-.storyText{font-size:42px}
-#quizOptions button{
-display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88
-}
+/* QUIZ CENTERED */
+#quizScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+.quizWrap{display:flex;flex-direction:column;align-items:center;justify-content:center}
 
 /* FINAL VIDEO */
-#finalVideo{position:fixed;width:100%;height:100%;display:none;background:black}
-#finalVideo video{width:100%;height:100%;object-fit:cover}
+#finalVideo{display:none;background:black}
+#loveVid{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 
@@ -73,15 +71,17 @@ display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-ra
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <!-- PASSWORD -->
+<div class="center">
 <div class="card">
 <h2>Only for my baby 💕</h2>
 <input id="pass" placeholder="Enter password">
 <button onclick="checkPass()">Unlock ❤️</button>
 <p id="msg"></p>
 </div>
+</div>
 
 <!-- LOVE LINES -->
-<div id="loveScreen">
+<div id="loveScreen" class="center">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
 <h1 id="l3" class="line">My daily happiness 🌸</h1>
@@ -89,44 +89,43 @@ display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-ra
 </div>
 
 <!-- COLLAGE -->
-<div id="collageScreen"><img src="collage.jpg" class="collageImg"></div>
+<div id="collageScreen" class="center">
+<img src="collage.jpg" class="collageImg">
+</div>
 
 <!-- CARTOON -->
-<div id="cartoonScreen"><img src="cartoon.png" class="cartoonImg"></div>
+<div id="cartoonScreen" class="center">
+<img src="cartoon.png" class="cartoonImg">
+</div>
 
 <!-- VALENTINE -->
-<div id="questionScreen">
+<div id="questionScreen" class="center">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<!-- YES SCREEN -->
-<div id="yesScreen">
+<!-- YES -->
+<div id="yesScreen" class="center">
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<!-- LOVE STORY -->
-<div id="quizScreen">
-<div class="storyWrap">
+<!-- QUIZ -->
+<div id="quizScreen" class="center">
+<div class="quizWrap">
 
-<lottie-player id="idleAnim"
-src="idle.json"
-background="transparent"
-speed="1"
-style="width:220px"
-loop autoplay></lottie-player>
+<lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
 
-<h1 id="quizQ" class="storyText"></h1>
+<h1 id="quizQ"></h1>
 <div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
 
 </div>
 </div>
 
-<!-- FINAL VIDEO -->
-<div id="finalVideo">
-<video id="loveVid" src="love.mp4" autoplay muted loop></video>
+<!-- VIDEO -->
+<div id="finalVideo" class="center">
+<video id="loveVid" src="love.mp4" autoplay muted playsinline></video>
 </div>
 
 <script>
@@ -141,21 +140,17 @@ else msg.innerHTML="Hint: 6 letter word, first letter capital, the word which ma
 return;
 }
 
-document.querySelector(".card").style.display="none";
+document.querySelector(".card").parentElement.style.display="none";
 loveScreen.style.display="flex";
+bgMusic.play();
 
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-setTimeout(()=>{
-loveScreen.style.display="none";
-collageScreen.style.display="flex";
-bgMusic.play();
-},9000);
-
-setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="block";},16000);
+setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";},9000);
+setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex";},16000);
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
@@ -173,7 +168,6 @@ yesScreen.style.display="flex";
 setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
 }
 
-/* STORY */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
@@ -195,19 +189,13 @@ quizOptions.innerHTML+=`<button onclick="nextStory('${s.e}')">${text}</button>`;
 
 function nextStory(emoji){
 emojiReact.innerHTML=emoji;
-document.getElementById("idleAnim").src="happy.json";
-setTimeout(()=>document.getElementById("idleAnim").src="idle.json",1500);
-
 setTimeout(()=>{
 step++;
 if(step<story.length) showQuestion();
 else{
-quizQ.innerHTML="Our love story continues forever 💖";
-setTimeout(()=>{
 quizScreen.style.display="none";
-document.getElementById("finalVideo").style.display="block";
-document.getElementById("loveVid").muted=false;
-},3000);
+finalVideo.style.display="flex";
+setTimeout(()=>{loveVid.muted=false;},1000);
 }
 },1000);
 }
