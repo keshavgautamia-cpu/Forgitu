@@ -26,7 +26,9 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 /* LOVE LINES */
 #loveScreen,#questionScreen,#quizScreen{
 position:fixed;width:100%;height:100vh;display:none;
-justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+justify-content:center;align-items:center;flex-direction:column;
+text-align:center;color:white
+}
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
@@ -45,34 +47,13 @@ justify-content:center;align-items:center;flex-direction:column;text-align:cente
 /* YES */
 #yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
 
-/* ⭐⭐⭐ QUIZ SCREEN FIXED CENTER ⭐⭐⭐ */
-#quizScreen{
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-color:white;
-}
+/* STORY */
+#quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 
-/* PERFECT CENTER WRAPPER */
-.quizCenter{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:100%;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-}
+/* ⭐⭐⭐ THIS IS THE ONLY FIX ADDED ⭐⭐⭐ */
+#quizScreen{gap:20px;padding-bottom:80px;}
+#idleAnim{margin-top:-40px;}
+#quizQ{margin-top:0;}
 
 .storyText{font-size:42px}
 #quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
@@ -82,7 +63,6 @@ justify-content:center;
 <body>
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
-<!-- PASSWORD -->
 <div class="card">
 <h2>Only for my baby 💕</h2>
 <input id="pass" placeholder="Enter password">
@@ -90,7 +70,6 @@ justify-content:center;
 <p id="msg"></p>
 </div>
 
-<!-- LOVE LINES -->
 <div id="loveScreen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
@@ -98,40 +77,24 @@ justify-content:center;
 <h1 id="l4" class="line">My best decision 😌</h1>
 </div>
 
-<!-- COLLAGE -->
 <div id="collageScreen"><img src="collage.jpg" class="collageImg"></div>
-
-<!-- CARTOON -->
 <div id="cartoonScreen"><img src="cartoon.png" class="cartoonImg"></div>
 
-<!-- VALENTINE -->
 <div id="questionScreen">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<!-- YES SCREEN -->
 <div id="yesScreen">
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<!-- QUIZ / STORY -->
 <div id="quizScreen">
-<div class="quizCenter">
-
-<lottie-player id="idleAnim"
-src="idle.json"
-background="transparent"
-speed="1"
-style="width:220px"
-loop autoplay></lottie-player>
-
+<lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
 <h1 id="quizQ" class="storyText"></h1>
 <div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
-
-</div>
 </div>
 
 <script>
