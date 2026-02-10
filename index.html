@@ -14,7 +14,6 @@ height:100vh;display:flex;justify-content:center;align-items:center;overflow:hid
 }
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 
-/* PASSWORD */
 .card{
 background:rgba(255,255,255,0.15);
 padding:35px;border-radius:25px;text-align:center;color:white;
@@ -23,59 +22,37 @@ box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
-/* LOVE LINES */
-#loveScreen,#questionScreen,#quizScreen{
-position:fixed;width:100%;height:100vh;display:none;
-justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+#loveScreen,#questionScreen,#quizScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
-/* COLLAGE */
 #collageScreen{position:fixed;width:100%;height:100vh;display:none;background:black;justify-content:center;align-items:center}
 .collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
 @keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
 
-/* CARTOON */
 #cartoonScreen{position:fixed;width:100%;height:100vh;display:none;background:black}
 .cartoonImg{width:100%;height:100%;object-fit:cover}
 
-/* VALENTINE */
 #questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 
-/* YES */
 #yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
 
-/* ⭐⭐⭐ QUIZ SCREEN FIXED CENTER ⭐⭐⭐ */
-#quizScreen{
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-color:white;
-}
-
-/* PERFECT CENTER WRAPPER */
-.quizCenter{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-width:100%;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-}
-
-.storyText{font-size:42px}
+#quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+.storyText{font-size:42px;margin-top:20px}
 #quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
+
+/* VIDEO SCREEN */
+#videoScreen{
+position:fixed;
+width:100%;
+height:100vh;
+display:none;
+background:black;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+z-index:999;
+}
 </style>
 </head>
 
@@ -116,9 +93,8 @@ justify-content:center;
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<!-- QUIZ / STORY -->
+<!-- QUIZ -->
 <div id="quizScreen">
-<div class="quizCenter">
 
 <lottie-player id="idleAnim"
 src="idle.json"
@@ -132,6 +108,15 @@ loop autoplay></lottie-player>
 <div id="quizOptions"></div>
 
 </div>
+
+<!-- FINAL VIDEO -->
+<div id="videoScreen">
+<video id="loveVideo" style="width:100%;height:100%;object-fit:cover" controls>
+<source src="love.mp4" type="video/mp4">
+</video>
+<h2 style="position:absolute;bottom:25px;color:white;font-size:22px">
+Our story is just beginning ❤️
+</h2>
 </div>
 
 <script>
@@ -188,7 +173,15 @@ setTimeout(()=>document.getElementById("idleAnim").src="idle.json",1500);
 setTimeout(()=>{
 step++;
 if(step<story.length) showQuestion();
-else quizQ.innerHTML="Our love story continues forever 💖";
+else {
+quizQ.innerHTML="Our love story continues forever 💖";
+setTimeout(()=>{
+quizScreen.style.display="none";
+videoScreen.style.display="flex";
+bgMusic.pause();
+document.getElementById("loveVideo").play();
+},3000);
+}
 },1000);
 }
 </script>
