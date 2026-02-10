@@ -12,9 +12,8 @@ margin:0;font-family:sans-serif;
 background:url("bg.jpg") center/cover no-repeat;
 height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;
 }
-button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 
-/* PASSWORD */
+/* PASSWORD CARD */
 .card{
 background:rgba(255,255,255,0.15);
 padding:35px;border-radius:25px;text-align:center;color:white;
@@ -22,9 +21,10 @@ width:85%;max-width:330px;backdrop-filter:blur(12px);
 box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
+button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 
 /* LOVE LINES */
-#loveScreen,#quizScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+#loveScreen,#questionScreen,#quizScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
@@ -37,31 +37,39 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 #cartoonScreen{position:fixed;width:100%;height:100vh;display:none;background:black}
 .cartoonImg{width:100%;height:100%;object-fit:cover}
 
-/* VALENTINE (CENTERED FIXED) */
-#questionScreen{
-position:fixed;
-width:100%;
-height:100vh;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-color:white;
-background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-}
+/* VALENTINE */
+#questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 
 /* YES */
 #yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
 
-/* STORY */
-#quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+/* QUIZ CENTER FIX */
+#quizScreen{
+background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
+justify-content:center;
+align-items:center;
+}
+.storyWrap{
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+height:100%;
+transform:translateY(-40px);
+}
 .storyText{font-size:42px}
-#quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
+#quizOptions button{
+display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88
+}
+
+/* FINAL VIDEO */
+#finalVideo{position:fixed;width:100%;height:100%;display:none;background:black}
+#finalVideo video{width:100%;height:100%;object-fit:cover}
 </style>
 </head>
 
 <body>
+
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <!-- PASSWORD -->
@@ -88,17 +96,9 @@ background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
 
 <!-- VALENTINE -->
 <div id="questionScreen">
-  <div style="max-width:90%;padding:20px">
-    <h1 style="font-size:55px;margin-bottom:30px">
-      Will you be my Valentine? 💖
-    </h1>
-    <button onclick="yesClicked()" style="background:white;color:#ff4d88;font-size:26px;padding:18px 45px">
-      YES 💘
-    </button>
-    <button id="noBtn" onclick="noClicked()" style="font-size:26px;padding:18px 45px">
-      NO 😝
-    </button>
-  </div>
+<h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
+<button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
+<button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
 <!-- YES SCREEN -->
@@ -108,6 +108,7 @@ background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
 
 <!-- LOVE STORY -->
 <div id="quizScreen">
+<div class="storyWrap">
 
 <lottie-player id="idleAnim"
 src="idle.json"
@@ -121,17 +122,39 @@ loop autoplay></lottie-player>
 <div id="quizOptions"></div>
 
 </div>
+</div>
+
+<!-- FINAL VIDEO -->
+<div id="finalVideo">
+<video id="loveVid" src="love.mp4" autoplay muted loop></video>
+</div>
 
 <script>
+let tries=0;
+
 function checkPass(){
-if(pass.value!="Classy"){msg.innerHTML="Wrong password 😝";return;}
+if(pass.value!="Classy"){
+tries++;
+if(tries==1) msg.innerHTML="Wrong password 😅";
+else if(tries==2) msg.innerHTML="Hint: it has to do with starting 😁";
+else msg.innerHTML="Hint: 6 letter word, first letter capital, the word which made us met 💕";
+return;
+}
+
 document.querySelector(".card").style.display="none";
 loveScreen.style.display="flex";
+
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
-setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
+
+setTimeout(()=>{
+loveScreen.style.display="none";
+collageScreen.style.display="flex";
+bgMusic.play();
+},9000);
+
 setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="block";},16000);
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
@@ -150,6 +173,7 @@ yesScreen.style.display="flex";
 setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
 }
 
+/* STORY */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
@@ -173,10 +197,18 @@ function nextStory(emoji){
 emojiReact.innerHTML=emoji;
 document.getElementById("idleAnim").src="happy.json";
 setTimeout(()=>document.getElementById("idleAnim").src="idle.json",1500);
+
 setTimeout(()=>{
 step++;
 if(step<story.length) showQuestion();
-else quizQ.innerHTML="Our love story continues forever 💖";
+else{
+quizQ.innerHTML="Our love story continues forever 💖";
+setTimeout(()=>{
+quizScreen.style.display="none";
+document.getElementById("finalVideo").style.display="block";
+document.getElementById("loveVid").muted=false;
+},3000);
+}
 },1000);
 }
 </script>
