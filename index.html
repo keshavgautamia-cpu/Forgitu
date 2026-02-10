@@ -10,16 +10,50 @@
 body{
 margin:0;font-family:sans-serif;
 background:url("bg.jpg") center/cover no-repeat;
-height:100vh;overflow:hidden;
+height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;
 }
+button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 
-/* FULLSCREEN CENTER */
-.fullscreen{
+/* PASSWORD */
+.card{
+background:rgba(255,255,255,0.15);
+padding:35px;border-radius:25px;text-align:center;color:white;
+width:85%;max-width:330px;backdrop-filter:blur(12px);
+box-shadow:0 0 40px rgba(255,0,120,0.6);
+}
+input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
+
+/* LOVE LINES */
+#loveScreen,#questionScreen,#quizScreen{
+position:fixed;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+#loveScreen{background:url("bg.jpg") center/cover no-repeat}
+.line{opacity:0;font-size:34px;margin:15px;transition:1s}
+
+/* COLLAGE */
+#collageScreen{position:fixed;width:100%;height:100vh;display:none;background:black;justify-content:center;align-items:center}
+.collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
+@keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
+
+/* CARTOON */
+#cartoonScreen{position:fixed;width:100%;height:100vh;display:none;background:black}
+.cartoonImg{width:100%;height:100%;object-fit:cover}
+
+/* VALENTINE */
+#questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+
+/* YES */
+#yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
+
+/* ⭐⭐⭐ QUIZ SCREEN FIXED CENTER ⭐⭐⭐ */
+#quizScreen{
+background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
 position:fixed;
-top:0;left:0;
+top:0;
+left:0;
 width:100%;
-height:100vh;
-display:flex;
+height:100%;
+display:none;
 justify-content:center;
 align-items:center;
 flex-direction:column;
@@ -27,130 +61,90 @@ text-align:center;
 color:white;
 }
 
-/* BUTTON */
-button{
-padding:14px 30px;
-border:none;border-radius:30px;
-background:#ff4d88;color:white;
-margin:10px;font-size:20px;
+/* PERFECT CENTER WRAPPER */
+.quizCenter{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+width:100%;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
 }
 
-/* ❤️ PASSWORD CARD (RESTORED) */
-.card{
-background:rgba(255,255,255,0.15);
-padding:35px;border-radius:25px;
-text-align:center;color:white;
-width:85%;max-width:330px;
-backdrop-filter:blur(15px);
-box-shadow:0 0 60px rgba(255,0,120,0.9);
-}
-input{
-margin-top:15px;padding:12px;
-width:90%;border:none;border-radius:10px;text-align:center
-}
-
-/* LOVE LINES */
-#loveScreen{display:none;background:url("bg.jpg") center/cover no-repeat}
-.line{opacity:0;font-size:34px;margin:15px;transition:1s}
-
-/* COLLAGE */
-#collageScreen{display:none;background:black;}
-.collageImg{
-width:200px;border-radius:20px;
-box-shadow:0 0 40px pink;
-animation:zoomFull 6s forwards;
-}
-@keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
-
-/* CARTOON */
-#cartoonScreen{display:none;background:black}
-.cartoonImg{width:100%;height:100%;object-fit:cover}
-
-/* VALENTINE */
-#questionScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
-
-/* YES */
-#yesScreen{display:none;background:url("yes.jpg") center/cover no-repeat}
-
-/* STORY */
-#quizScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 .storyText{font-size:42px}
-#quizOptions button{
-display:block;width:260px;margin:15px auto;
-padding:18px;font-size:22px;border-radius:40px;
-background:white;color:#ff4d88}
-
-/* FINAL VIDEO */
-#videoScreen{display:none;background:black}
-#loveVideo{width:100%;height:100%;object-fit:cover}
+#quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
 </style>
 </head>
 
 <body>
-
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <!-- PASSWORD -->
-<div class="fullscreen" id="passwordScreen">
-  <div class="card">
-    <h2>Only for my baby 💕</h2>
-    <p>Hint: Your nickname for me 😏</p>
-    <input id="pass" placeholder="Enter password">
-    <button onclick="checkPass()">Unlock ❤️</button>
-    <p id="msg"></p>
-  </div>
+<div class="card">
+<h2>Only for my baby 💕</h2>
+<input id="pass" placeholder="Enter password">
+<button onclick="checkPass()">Unlock ❤️</button>
+<p id="msg"></p>
 </div>
 
 <!-- LOVE LINES -->
-<div id="loveScreen" class="fullscreen">
+<div id="loveScreen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
 <h1 id="l3" class="line">My daily happiness 🌸</h1>
 <h1 id="l4" class="line">My best decision 😌</h1>
 </div>
 
-<div id="collageScreen" class="fullscreen">
-<img src="collage.jpg" class="collageImg">
-</div>
+<!-- COLLAGE -->
+<div id="collageScreen"><img src="collage.jpg" class="collageImg"></div>
 
-<div id="cartoonScreen" class="fullscreen">
-<img src="cartoon.png" class="cartoonImg">
-</div>
+<!-- CARTOON -->
+<div id="cartoonScreen"><img src="cartoon.png" class="cartoonImg"></div>
 
-<div id="questionScreen" class="fullscreen">
+<!-- VALENTINE -->
+<div id="questionScreen">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<div id="yesScreen" class="fullscreen">
+<!-- YES SCREEN -->
+<div id="yesScreen">
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<div id="quizScreen" class="fullscreen">
-<lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
+<!-- QUIZ / STORY -->
+<div id="quizScreen">
+<div class="quizCenter">
+
+<lottie-player id="idleAnim"
+src="idle.json"
+background="transparent"
+speed="1"
+style="width:220px"
+loop autoplay></lottie-player>
+
 <h1 id="quizQ" class="storyText"></h1>
 <div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
-</div>
 
-<div id="videoScreen" class="fullscreen">
-<video id="loveVideo" src="love.mp4" autoplay playsinline></video>
+</div>
 </div>
 
 <script>
 function checkPass(){
 if(pass.value!="Classy"){msg.innerHTML="Wrong password 😝";return;}
-passwordScreen.style.display="none";
+document.querySelector(".card").style.display="none";
 loveScreen.style.display="flex";
-bgMusic.play();
-
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
-setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";},9000);
-setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex";},16000);
+setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
+setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="block";},16000);
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
@@ -191,19 +185,10 @@ function nextStory(emoji){
 emojiReact.innerHTML=emoji;
 document.getElementById("idleAnim").src="happy.json";
 setTimeout(()=>document.getElementById("idleAnim").src="idle.json",1500);
-
 setTimeout(()=>{
 step++;
 if(step<story.length) showQuestion();
-else{
-quizQ.innerHTML="Our love story continues forever 💖";
-quizOptions.innerHTML="";
-setTimeout(()=>{
-quizScreen.style.display="none";
-videoScreen.style.display="flex";
-loveVideo.play();
-},3000);
-}
+else quizQ.innerHTML="Our love story continues forever 💖";
 },1000);
 }
 </script>
