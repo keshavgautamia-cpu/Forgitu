@@ -3,53 +3,26 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Gitu 💖</title>
-
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
 body{margin:0;font-family:sans-serif;background:url("bg.jpg") center/cover no-repeat;height:100vh;overflow:hidden}
-
-/* CENTER */
 .center{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
-
-/* PASSWORD */
 .card{background:rgba(255,255,255,0.15);padding:35px;border-radius:25px;color:white;width:85%;max-width:330px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(255,0,120,0.6)}
-input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
+input,textarea{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
-
-/* LOVE LINES */
-#loveScreen{display:none}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
-
-/* COLLAGE */
-#collageScreen{display:none;background:black}
+#collageScreen,#cartoonScreen,#questionScreen,#yesScreen,#quizScreen,#finalVideo,#challengeScreen,#loveScreen{display:none}
 .collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
 @keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
-
-/* CARTOON */
-#cartoonScreen{display:none;background:black}
-.cartoonImg{width:100%;height:100%;object-fit:cover}
-
-/* VALENTINE */
-#questionScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
-
-/* YES */
-#yesScreen{display:none;background:url("yes.jpg") center/cover no-repeat}
-
-/* QUIZ */
-#quizScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
-
-/* VIDEO */
-#finalVideo{display:none;background:black}
-#loveVid{width:100%;height:100%;object-fit:cover}
-
-/* LOVE CHALLENGE */
-#challengeScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
-.challengeBox{font-size:26px;max-width:700px}
+.cartoonImg,#loveVid{width:100%;height:100%;object-fit:cover}
+#questionScreen,#quizScreen,#challengeScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+#yesScreen{background:url("yes.jpg") center/cover no-repeat}
 </style>
 </head>
 
 <body>
+
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <!-- PASSWORD -->
@@ -88,10 +61,19 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 <!-- ❤️ LOVE CHALLENGE -->
 <div id="challengeScreen" class="center">
 <h1 style="font-size:48px">Gitu’s Valentine Challenge 💕</h1>
-<div class="challengeBox">
+
+<div style="width:85%;max-width:600px">
 <p>✍️ Write 5 things you love about me</p>
-<p>🥹 Write our favourite memory together</p>
-<p>🎤 Send me a voice note telling why you love me</p>
+<textarea id="loveThings" rows="3"></textarea>
+
+<p>🥹 Write our favourite memory</p>
+<textarea id="memory" rows="3"></textarea>
+
+<p>🎤 Upload voice note</p>
+<input type="file" id="voice" accept="audio/*">
+
+<br><br>
+<button onclick="sendAnswers()">Send my answers 💌</button>
 <h2>Reward = unlimited kisses 😏💋</h2>
 </div>
 </div>
@@ -120,6 +102,14 @@ loveVid.onended = ()=>{
 finalVideo.style.display="none";
 challengeScreen.style.display="flex";
 }
+
+function sendAnswers(){
+let a=document.getElementById("loveThings").value;
+let b=document.getElementById("memory").value;
+let text=`My Valentine Challenge Answers 💖%0A%0AThings I love about you:%0A${a}%0A%0AOur memory:%0A${b}`;
+window.open("https://wa.me/?text="+text);
+}
 </script>
 </body>
 </html>
+```0
