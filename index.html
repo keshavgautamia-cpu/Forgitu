@@ -7,33 +7,13 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
-body{
-margin:0;font-family:sans-serif;
-background:url("bg.jpg") center/cover no-repeat;
-height:100vh;overflow:hidden;
-}
+body{margin:0;font-family:sans-serif;background:url("bg.jpg") center/cover no-repeat;height:100vh;overflow:hidden}
 
-/* CENTER WRAPPER */
-.center{
-position:fixed;
-top:0;left:0;
-width:100%;height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-color:white;
-}
+/* CENTER */
+.center{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
 
 /* PASSWORD */
-.card{
-background:rgba(255,255,255,0.15);
-padding:35px;border-radius:25px;color:white;
-width:85%;max-width:330px;
-backdrop-filter:blur(12px);
-box-shadow:0 0 40px rgba(255,0,120,0.6);
-}
+.card{background:rgba(255,255,255,0.15);padding:35px;border-radius:25px;color:white;width:85%;max-width:330px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(255,0,120,0.6)}
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 
@@ -56,29 +36,29 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 /* YES */
 #yesScreen{display:none;background:url("yes.jpg") center/cover no-repeat}
 
-/* QUIZ CENTERED */
+/* QUIZ */
 #quizScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
-.quizWrap{display:flex;flex-direction:column;align-items:center;justify-content:center}
 
-/* FINAL VIDEO */
+/* VIDEO */
 #finalVideo{display:none;background:black}
 #loveVid{width:100%;height:100%;object-fit:cover}
+
+/* LOVE CHALLENGE */
+#challengeScreen{display:none;background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+.challengeBox{font-size:26px;max-width:700px}
 </style>
 </head>
 
 <body>
-
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <!-- PASSWORD -->
-<div class="center">
-<div class="card">
+<div class="center"><div class="card">
 <h2>Only for my baby 💕</h2>
 <input id="pass" placeholder="Enter password">
 <button onclick="checkPass()">Unlock ❤️</button>
 <p id="msg"></p>
-</div>
-</div>
+</div></div>
 
 <!-- LOVE LINES -->
 <div id="loveScreen" class="center">
@@ -88,118 +68,58 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 <h1 id="l4" class="line">My best decision 😌</h1>
 </div>
 
-<!-- COLLAGE -->
-<div id="collageScreen" class="center">
-<img src="collage.jpg" class="collageImg">
-</div>
+<div id="collageScreen" class="center"><img src="collage.jpg" class="collageImg"></div>
+<div id="cartoonScreen" class="center"><img src="cartoon.png" class="cartoonImg"></div>
 
-<!-- CARTOON -->
-<div id="cartoonScreen" class="center">
-<img src="cartoon.png" class="cartoonImg">
-</div>
-
-<!-- VALENTINE -->
 <div id="questionScreen" class="center">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<!-- YES -->
-<div id="yesScreen" class="center">
-<h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
-</div>
+<div id="yesScreen" class="center"><h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1></div>
 
-<!-- QUIZ -->
-<div id="quizScreen" class="center">
-<div class="quizWrap">
+<div id="quizScreen" class="center"><h1>Our love story continues 💖</h1></div>
 
-<lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
-
-<h1 id="quizQ"></h1>
-<div id="emojiReact" style="font-size:50px;height:60px"></div>
-<div id="quizOptions"></div>
-
-</div>
-</div>
-
-<!-- VIDEO -->
 <div id="finalVideo" class="center">
 <video id="loveVid" src="love.mp4" autoplay muted playsinline></video>
 </div>
 
+<!-- ❤️ LOVE CHALLENGE -->
+<div id="challengeScreen" class="center">
+<h1 style="font-size:48px">Gitu’s Valentine Challenge 💕</h1>
+<div class="challengeBox">
+<p>✍️ Write 5 things you love about me</p>
+<p>🥹 Write our favourite memory together</p>
+<p>🎤 Send me a voice note telling why you love me</p>
+<h2>Reward = unlimited kisses 😏💋</h2>
+</div>
+</div>
+
 <script>
 let tries=0;
-
 function checkPass(){
-if(pass.value!="Classy"){
-tries++;
-if(tries==1) msg.innerHTML="Wrong password 😅";
-else if(tries==2) msg.innerHTML="Hint: it has to do with starting 😁";
-else msg.innerHTML="Hint: 6 letter word, first letter capital, the word which made us met 💕";
-return;
-}
-
+if(pass.value!="Classy"){tries++;msg.innerHTML="Wrong password 😅";return;}
 document.querySelector(".card").parentElement.style.display="none";
-loveScreen.style.display="flex";
-bgMusic.play();
-
+loveScreen.style.display="flex";bgMusic.play();
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
-
 setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";},9000);
 setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex";},16000);
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
 let stage=0;
-function noClicked(){
-let btn=noBtn;
-if(stage==0){btn.innerHTML="Not a chance 😤";stage=1;return;}
-if(stage==1){btn.innerHTML="This is not what you want 😏";stage=2;return;}
-btn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-150}px)`;
-}
+function noClicked(){let btn=noBtn;if(stage==0){btn.innerHTML="Not a chance 😤";stage=1;return;}if(stage==1){btn.innerHTML="This is not what you want 😏";stage=2;return;}btn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-150}px)`;}
+function yesClicked(){questionScreen.style.display="none";yesScreen.style.display="flex";setTimeout(()=>{yesScreen.style.display="none";finalVideo.style.display="flex";setTimeout(()=>{loveVid.muted=false;},1000);},5000);}
 
-function yesClicked(){
-questionScreen.style.display="none";
-yesScreen.style.display="flex";
-setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
-}
-
-let story=[
-{q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
-{q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
-{q:"Who misses more? 🥺",a:["Me","You","Same"],e:"💞"},
-{q:"Who sends more reels? 😂",a:["Me","You","Both"],e:"🤣"},
-{q:"Do you know how much I love you? 💖",a:["A lot ❤️","Infinite ♾️","Not enough 😏"],e:"😘"}
-];
-
-let step=0;
-function showQuestion(){
-let s=story[step];
-quizQ.innerHTML=s.q;
-quizOptions.innerHTML="";
-emojiReact.innerHTML="";
-s.a.forEach(text=>{
-quizOptions.innerHTML+=`<button onclick="nextStory('${s.e}')">${text}</button>`;
-});
-}
-
-function nextStory(emoji){
-emojiReact.innerHTML=emoji;
-setTimeout(()=>{
-step++;
-if(step<story.length) showQuestion();
-else{
-quizScreen.style.display="none";
-finalVideo.style.display="flex";
-setTimeout(()=>{loveVid.muted=false;},1000);
-}
-},1000);
+/* VIDEO -> CHALLENGE */
+loveVid.onended = ()=>{
+finalVideo.style.display="none";
+challengeScreen.style.display="flex";
 }
 </script>
-
 </body>
 </html>
