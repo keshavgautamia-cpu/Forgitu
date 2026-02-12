@@ -21,6 +21,18 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 #loveVid{width:100%;height:100%;object-fit:contain;background:black}
 
 #questionScreen,#challengeScreen,#planGame,#finalPlan{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+
+#yesScreen{
+background:url("yes.jpg") center/cover no-repeat;
+}
+#yesScreen::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.35);
+}
+
 .option{background:white;color:#ff4d88;padding:16px;border-radius:30px;margin:12px;font-size:22px}
 .popup{position:fixed;bottom:40px;background:#ff4d88;padding:20px;border-radius:20px;display:none}
 </style>
@@ -48,14 +60,17 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 <div id="collageScreen" class="center"><img src="collage.jpg" class="collageImg"></div>
 <div id="cartoonScreen" class="center"><img src="cartoon.png" class="cartoonImg"></div>
 
-<!-- VALENTINE QUESTION -->
+<!-- VALENTINE -->
 <div id="questionScreen" class="center">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<div id="yesScreen" class="center"><h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1></div>
+<!-- YES SCREEN -->
+<div id="yesScreen" class="center">
+<h1 style="font-size:60px;text-shadow:0 0 20px black;">SHE SAID YESSS 😍💍</h1>
+</div>
 
 <!-- VIDEO -->
 <div id="finalVideo" class="center">
@@ -120,7 +135,7 @@ loveVid.onended=()=>{finalVideo.style.display="none";challengeScreen.style.displ
 
 function sendAnswers(){window.open("https://wa.me/?text=My answers 💖");}
 
-/* TEASING NO BUTTON */
+/* NO BUTTON TEASE */
 let noStage=0;
 function noClicked(){
 let btn=document.getElementById("noBtn");
