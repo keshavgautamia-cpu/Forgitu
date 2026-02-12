@@ -3,21 +3,24 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Gitu 💖</title>
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
 body{margin:0;font-family:sans-serif;background:url("bg.jpg") center/cover no-repeat;height:100vh;overflow:hidden}
 .center{position:fixed;top:0;left:0;width:100%;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
-.card{background:rgba(255,255,255,0.15);padding:35px;border-radius:25px;color:white;width:85%;max-width:330px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(255,0,120,0.6)}
+.card{background:rgba(255,255,255,0.15);padding:35px;border-radius:25px;width:85%;max-width:330px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(255,0,120,0.6)}
 input,textarea{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
-#loveScreen,#collageScreen,#cartoonScreen,#questionScreen,#yesScreen,#quizScreen,#finalVideo,#challengeScreen,#planGame,#finalPlan{display:none}
+
+#loveScreen,#collageScreen,#cartoonScreen,#questionScreen,#yesScreen,#finalVideo,#challengeScreen,#planGame,#finalPlan{display:none}
+
 .collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
 @keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
-.cartoonImg,#loveVid{width:100%;height:100%;object-fit:cover}
-#questionScreen,#quizScreen,#challengeScreen,#planGame,#finalPlan{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
-#yesScreen{background:url("yes.jpg") center/cover no-repeat}
+
+.cartoonImg{width:100%;height:100%;object-fit:cover}
+#loveVid{width:100%;height:100%;object-fit:contain;background:black}
+
+#questionScreen,#challengeScreen,#planGame,#finalPlan{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 .option{background:white;color:#ff4d88;padding:16px;border-radius:30px;margin:12px;font-size:22px}
 .popup{position:fixed;bottom:40px;background:#ff4d88;padding:20px;border-radius:20px;display:none}
 </style>
@@ -45,6 +48,7 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 <div id="collageScreen" class="center"><img src="collage.jpg" class="collageImg"></div>
 <div id="cartoonScreen" class="center"><img src="cartoon.png" class="cartoonImg"></div>
 
+<!-- VALENTINE QUESTION -->
 <div id="questionScreen" class="center">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
@@ -53,6 +57,7 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 
 <div id="yesScreen" class="center"><h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1></div>
 
+<!-- VIDEO -->
 <div id="finalVideo" class="center">
 <video id="loveVid" src="love.mp4" autoplay muted playsinline></video>
 </div>
@@ -101,9 +106,30 @@ setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
-function yesClicked(){questionScreen.style.display="none";yesScreen.style.display="flex";setTimeout(()=>{yesScreen.style.display="none";finalVideo.style.display="flex";setTimeout(()=>loveVid.muted=false,1000);},5000);}
+function yesClicked(){
+questionScreen.style.display="none";
+yesScreen.style.display="flex";
+setTimeout(()=>{
+yesScreen.style.display="none";
+finalVideo.style.display="flex";
+setTimeout(()=>loveVid.muted=false,1000);
+},5000);
+}
+
 loveVid.onended=()=>{finalVideo.style.display="none";challengeScreen.style.display="flex";}
+
 function sendAnswers(){window.open("https://wa.me/?text=My answers 💖");}
+
+/* TEASING NO BUTTON */
+let noStage=0;
+function noClicked(){
+let btn=document.getElementById("noBtn");
+if(noStage==0){btn.innerHTML="Not a chance 😤";noStage=1;return;}
+if(noStage==1){btn.innerHTML="This is not what you want 😏";noStage=2;return;}
+btn.style.position="absolute";
+btn.style.left=Math.random()*70+"%";
+btn.style.top=Math.random()*70+"%";
+}
 
 /* PLAN GAME */
 function startPlanGame(){challengeScreen.style.display="none";planGame.style.display="flex";showStep();}
@@ -116,8 +142,21 @@ let game=[
 {q:"Where we go?",opt:["Shopping","Tamohon","Singapore","Switzerland"],correct:[0,1]},
 {q:"After shopping we will…",opt:["Movie night 🎬","Gaming","Sleeping","🤭"],correct:[0]}
 ];
-function showStep(){let g=game[stepPlan];gameQ.innerHTML=g.q;options.innerHTML="";g.opt.forEach((o,i)=>options.innerHTML+=`<div class="option" onclick="choosePlan(${i})">${o}</div>`);}
-function choosePlan(i){if(game[stepPlan].correct.includes(i)){stepPlan++;if(stepPlan>=game.length){planGame.style.display="none";finalPlan.style.display="flex";}else showStep();}else{popup.style.display="block";setTimeout(()=>popup.style.display="none",1500);}}
+
+function showStep(){
+let g=game[stepPlan];
+gameQ.innerHTML=g.q;
+options.innerHTML="";
+g.opt.forEach((o,i)=>options.innerHTML+=`<div class="option" onclick="choosePlan(${i})">${o}</div>`);
+}
+
+function choosePlan(i){
+if(game[stepPlan].correct.includes(i)){
+stepPlan++;
+if(stepPlan>=game.length){planGame.style.display="none";finalPlan.style.display="flex";}
+else showStep();
+}else{popup.style.display="block";setTimeout(()=>popup.style.display="none",1500);}
+}
 </script>
 </body>
 </html>
