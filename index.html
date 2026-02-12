@@ -12,11 +12,11 @@ body{margin:0;font-family:sans-serif;background:url("bg.jpg") center/cover no-re
 input,textarea{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
-#loveScreen,#collageScreen,#cartoonScreen,#questionScreen,#yesScreen,#finalVideo,#challengeScreen,#planGame,#finalPlan{display:none}
+#loveScreen,#collageScreen,#cartoonScreen,#questionScreen,#yesScreen,#quizScreen,#finalVideo,#challengeScreen,#planGame,#finalPlan{display:none}
 .collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
 @keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
 .cartoonImg,#loveVid{width:100%;height:100%;object-fit:cover}
-#questionScreen,#challengeScreen,#planGame,#finalPlan{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+#questionScreen,#quizScreen,#challengeScreen,#planGame,#finalPlan{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 #yesScreen{background:url("yes.jpg") center/cover no-repeat}
 .option{background:white;color:#ff4d88;padding:16px;border-radius:30px;margin:12px;font-size:22px}
 .popup{position:fixed;bottom:40px;background:#ff4d88;padding:20px;border-radius:20px;display:none}
@@ -24,7 +24,6 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 </head>
 
 <body>
-
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
 <!-- PASSWORD -->
@@ -58,13 +57,13 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 <video id="loveVid" src="love.mp4" autoplay muted playsinline></video>
 </div>
 
-<!-- LOVE CHALLENGE -->
+<!-- CHALLENGE -->
 <div id="challengeScreen" class="center">
 <h1 style="font-size:48px">Gitu’s Valentine Challenge 💕</h1>
 <textarea id="loveThings" placeholder="Write 5 things you love about me"></textarea>
 <textarea id="memory" placeholder="Write our favourite memory"></textarea>
 <button onclick="sendAnswers()">Send my answers 💌</button>
-<button onclick="startPlanGame()">Continue to Valentine Plan 😏</button>
+<button onclick="startPlanGame()">Continue our Valentine Plan 😏</button>
 </div>
 
 <!-- PLAN GAME -->
@@ -80,18 +79,31 @@ button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color
 <div id="popup" class="popup">Wrong choice 😝 Try again</div>
 
 <script>
+let tries=0;
 function checkPass(){
-if(pass.value!="Classy"){msg.innerHTML="Wrong password 😅";return;}
+if(pass.value!="Classy"){
+tries++;
+if(tries==1) msg.innerHTML="Wrong password 😅";
+else if(tries==2) msg.innerHTML="Hint: it has to do with starting 😁";
+else msg.innerHTML="Hint: 6 letter word, first letter capital 💕";
+return;
+}
 document.querySelector(".card").parentElement.style.display="none";
-loveScreen.style.display="flex";bgMusic.play();
-setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";},6000);
-setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex";},12000);
-setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},18000);
+loveScreen.style.display="flex";
+
+setTimeout(()=>l1.style.opacity=1,500);
+setTimeout(()=>l2.style.opacity=1,2000);
+setTimeout(()=>l3.style.opacity=1,3500);
+setTimeout(()=>l4.style.opacity=1,5000);
+
+setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
+setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex";},16000);
+setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
-function yesClicked(){questionScreen.style.display="none";yesScreen.style.display="flex";setTimeout(()=>{yesScreen.style.display="none";finalVideo.style.display="flex";setTimeout(()=>{loveVid.muted=false;},1000);},5000);}
+function yesClicked(){questionScreen.style.display="none";yesScreen.style.display="flex";setTimeout(()=>{yesScreen.style.display="none";finalVideo.style.display="flex";setTimeout(()=>loveVid.muted=false,1000);},5000);}
 loveVid.onended=()=>{finalVideo.style.display="none";challengeScreen.style.display="flex";}
-function sendAnswers(){let a=loveThings.value;let b=memory.value;window.open("https://wa.me/?text=Things I love about you:%0A"+a+"%0A%0AOur memory:%0A"+b);}
+function sendAnswers(){window.open("https://wa.me/?text=My answers 💖");}
 
 /* PLAN GAME */
 function startPlanGame(){challengeScreen.style.display="none";planGame.style.display="flex";showStep();}
@@ -104,24 +116,9 @@ let game=[
 {q:"Where we go?",opt:["Shopping","Tamohon","Singapore","Switzerland"],correct:[0,1]},
 {q:"After shopping we will…",opt:["Movie night 🎬","Gaming","Sleeping","🤭"],correct:[0]}
 ];
-
-function showStep(){
-let g=game[stepPlan];
-gameQ.innerHTML=g.q;
-options.innerHTML="";
-g.opt.forEach((o,i)=>{
-options.innerHTML+=`<div class="option" onclick="choosePlan(${i})">${o}</div>`;
-});
-}
-
-function choosePlan(i){
-if(game[stepPlan].correct.includes(i)){
-stepPlan++;
-if(stepPlan>=game.length){planGame.style.display="none";finalPlan.style.display="flex";}
-else{showStep();}
-}else{popup.style.display="block";setTimeout(()=>popup.style.display="none",1500);}
-}
+function showStep(){let g=game[stepPlan];gameQ.innerHTML=g.q;options.innerHTML="";g.opt.forEach((o,i)=>options.innerHTML+=`<div class="option" onclick="choosePlan(${i})">${o}</div>`);}
+function choosePlan(i){if(game[stepPlan].correct.includes(i)){stepPlan++;if(stepPlan>=game.length){planGame.style.display="none";finalPlan.style.display="flex";}else showStep();}else{popup.style.display="block";setTimeout(()=>popup.style.display="none",1500);}}
 </script>
-
 </body>
 </html>
+```0
