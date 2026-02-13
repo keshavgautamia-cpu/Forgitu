@@ -24,11 +24,20 @@ box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
-/* COMMON FULL SCREEN */
+/* ⭐ FIXED CENTERING FOR MOBILE + DESKTOP */
 .screen{
-position:fixed;width:100%;height:100vh;display:none;
-justify-content:center;align-items:center;flex-direction:column;
-text-align:center;color:white;padding:20px;
+position:fixed;
+width:100%;
+height:100dvh;
+top:0;
+left:0;
+display:none;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+text-align:center;
+color:white;
+padding:20px;
 }
 
 /* LOVE LINES */
@@ -51,10 +60,7 @@ text-align:center;color:white;padding:20px;
 /* STORY QUIZ */
 #quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 .storyText{font-size:42px}
-#quizOptions button{
-display:block;width:260px;margin:15px auto;padding:18px;
-font-size:22px;border-radius:40px;background:white;color:#ff4d88
-}
+#quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
 
 /* LOVE VIDEO */
 #loveVideoScreen{background:black}
@@ -68,8 +74,17 @@ padding:30px;font-size:28px;line-height:1.6
 .fadeIn{animation:fade 3s forwards}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 
-/* GOOGLE DRIVE PLAYER */
-#memoriesVideoFrame{
+/* ⭐ GOOGLE DRIVE PLAYER FIX */
+.drivePlayer{
+width:90%;
+max-width:900px;
+aspect-ratio:16/9;
+background:black;
+border-radius:20px;
+overflow:hidden;
+box-shadow:0 0 40px rgba(0,0,0,0.6);
+}
+.drivePlayer iframe{
 width:100%;
 height:100%;
 border:none;
@@ -107,19 +122,19 @@ border:none;
 <img src="cartoon.png" class="cartoonImg">
 </div>
 
-<!-- VALENTINE QUESTION -->
+<!-- VALENTINE -->
 <div id="questionScreen" class="screen">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<!-- YES SCREEN -->
+<!-- YES -->
 <div id="yesScreen" class="screen">
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<!-- LOVE STORY QUIZ -->
+<!-- QUIZ -->
 <div id="quizScreen" class="screen">
 <lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
 <h1 id="quizQ" class="storyText"></h1>
@@ -145,13 +160,11 @@ And I am forever grateful that life gave me YOU 💖
 </div>
 </div>
 
-<!-- MEMORIES VIDEO (FIXED) -->
+<!-- MEMORIES VIDEO (FIXED PLAYER) -->
 <div id="memoriesVideoScreen" class="screen">
-<iframe id="memoriesVideoFrame"
-src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview"
-allow="autoplay"
-allowfullscreen>
-</iframe>
+<div class="drivePlayer">
+<iframe src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview" allow="autoplay" allowfullscreen></iframe>
+</div>
 </div>
 
 <script>
@@ -165,8 +178,11 @@ setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-/* ⭐ MUSIC NOW STARTS WHEN COLLAGE APPEARS */
-setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
+setTimeout(()=>{
+loveScreen.style.display="none";
+collageScreen.style.display="flex";
+bgMusic.play();   // ⭐ MUSIC STARTS HERE
+},9000);
 
 setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex"},16000);
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex"},26000);
@@ -186,6 +202,7 @@ yesScreen.style.display="flex";
 setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
 }
 
+/* QUIZ */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
@@ -214,6 +231,7 @@ else startLoveVideo();
 },1000);
 }
 
+/* VIDEO FLOW */
 function startLoveVideo(){
 quizScreen.style.display="none";
 loveVideoScreen.style.display="flex";
@@ -221,10 +239,6 @@ loveVideo.play();
 
 loveVideo.onended = ()=>{
 loveVideoScreen.style.display="none";
-
-/* STOP MUSIC BEFORE MEMORY LINES */
-bgMusic.pause();
-
 memoryTextScreen.style.display="flex";
 
 setTimeout(()=>{
@@ -234,5 +248,6 @@ memoriesVideoScreen.style.display="flex";
 };
 }
 </script>
+
 </body>
 </html>
