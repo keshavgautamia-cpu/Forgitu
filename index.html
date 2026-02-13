@@ -24,46 +24,46 @@ box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
-/* COMMON FULL SCREEN */
-.screen{
-position:fixed;width:100%;height:100vh;display:none;
-justify-content:center;align-items:center;flex-direction:column;
-text-align:center;color:white;
-}
-
 /* LOVE LINES */
+#loveScreen,#questionScreen,#quizScreen,#memoryTextScreen,#videoScreen{
+position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
 /* COLLAGE */
-#collageScreen{background:black}
+#collageScreen{position:fixed;width:100%;height:100vh;display:none;background:black;justify-content:center;align-items:center}
 .collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
 @keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
 
 /* CARTOON */
-#cartoonScreen{background:black}
+#cartoonScreen{position:fixed;width:100%;height:100vh;display:none;background:black}
 .cartoonImg{width:100%;height:100%;object-fit:cover}
 
 /* VALENTINE */
 #questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
-#yesScreen{background:url("yes.jpg") center/cover no-repeat}
 
-/* STORY QUIZ */
+/* YES */
+#yesScreen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;background:url("yes.jpg") center/cover no-repeat;color:white}
+
+/* STORY */
 #quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 .storyText{font-size:42px}
 #quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
 
-/* LOVE VIDEO */
-#loveVideoScreen{background:black}
-video{width:100%;height:100%;object-fit:contain}
-
 /* MEMORY TEXT */
 #memoryTextScreen{
 background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
-padding:30px;font-size:28px;line-height:1.6
+padding:30px;font-size:28px;line-height:1.6;
 }
-.fadeIn{animation:fade 3s forwards}
-@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* VIDEO */
+#videoScreen{background:black}
+#memoriesVideo{
+width:100%;
+height:100%;
+object-fit:contain;
+}
 </style>
 </head>
 
@@ -80,7 +80,7 @@ padding:30px;font-size:28px;line-height:1.6
 </div>
 
 <!-- LOVE LINES -->
-<div id="loveScreen" class="screen">
+<div id="loveScreen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
 <h1 id="l3" class="line">My daily happiness 🌸</h1>
@@ -88,75 +88,61 @@ padding:30px;font-size:28px;line-height:1.6
 </div>
 
 <!-- COLLAGE -->
-<div id="collageScreen" class="screen">
-<img src="collage.jpg" class="collageImg">
-</div>
+<div id="collageScreen"><img src="collage.jpg" class="collageImg"></div>
 
 <!-- CARTOON -->
-<div id="cartoonScreen" class="screen">
-<img src="cartoon.png" class="cartoonImg">
-</div>
+<div id="cartoonScreen"><img src="cartoon.png" class="cartoonImg"></div>
 
-<!-- VALENTINE QUESTION -->
-<div id="questionScreen" class="screen">
+<!-- VALENTINE -->
+<div id="questionScreen">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
 <!-- YES SCREEN -->
-<div id="yesScreen" class="screen">
+<div id="yesScreen">
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<!-- LOVE STORY QUIZ -->
-<div id="quizScreen" class="screen">
+<!-- LOVE STORY -->
+<div id="quizScreen">
 <lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
 <h1 id="quizQ" class="storyText"></h1>
 <div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
 </div>
 
-<!-- LOVE VIDEO -->
-<div id="loveVideoScreen" class="screen">
-<video id="loveVideo" src="love.mp4"></video>
-</div>
-
 <!-- MEMORY TEXT -->
-<div id="memoryTextScreen" class="screen">
-<div id="memoryText" class="fadeIn">
-We chose each other in happiness ❤️  
-We chose each other in hard times 🤝  
-We chose love over ego 💞  
-We grew together 🌱  
-We fought together ⚔️  
-We healed together 💫  
-And I am forever grateful that life gave me YOU 💖
-</div>
+<div id="memoryTextScreen">
+We chose each other in happy times ❤️<br><br>
+We chose each other in hard times 🤍<br><br>
+We grew together, laughed together, cried together 💞<br><br>
+And I am forever grateful that life gave me YOU 🥹💕
 </div>
 
-<!-- MEMORIES VIDEO -->
-<div id="memoriesVideoScreen" class="screen">
+<!-- 🎬 GOOGLE DRIVE VIDEO -->
+<div id="videoScreen">
 <video id="memoriesVideo"
-src="https://drive.google.com/uc?export=download&id=1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0"
-controls autoplay></video>
+src="https://drive.google.com/uc?export=preview&id=1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0"
+autoplay playsinline controls></video>
 </div>
 
 <script>
 function checkPass(){
-if(pass.value!="Classy"){msg.innerHTML="Wrong password 😝";return;}
+if(pass.value!="Classy"){
+msg.innerHTML="Wrong password 😝<br>Hint: it has to do with starting 😁<br>6 letter word first letter capital 💕";
+return;
+}
 document.querySelector(".card").style.display="none";
-bgMusic.play();
-
 loveScreen.style.display="flex";
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
-
-setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex"},9000);
-setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex"},16000);
-setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex"},26000);
+setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
+setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="block";},16000);
+setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex";},31000);
 }
 
 let stage=0;
@@ -195,32 +181,23 @@ quizOptions.innerHTML+=`<button onclick="nextStory('${s.e}')">${text}</button>`;
 
 function nextStory(emoji){
 emojiReact.innerHTML=emoji;
+document.getElementById("idleAnim").src="happy.json";
+setTimeout(()=>document.getElementById("idleAnim").src="idle.json",1500);
 setTimeout(()=>{
 step++;
 if(step<story.length) showQuestion();
-else startLoveVideo();
-},1000);
-}
-
-/* LOVE VIDEO → MEMORY TEXT → MEMORIES VIDEO */
-function startLoveVideo(){
+else{
 quizScreen.style.display="none";
-loveVideoScreen.style.display="flex";
-loveVideo.play();
-
-loveVideo.onended = ()=>{
-loveVideoScreen.style.display="none";
 memoryTextScreen.style.display="flex";
 
 setTimeout(()=>{
 memoryTextScreen.style.display="none";
-memoriesVideoScreen.style.display="flex";
-memoriesVideo.play();
+videoScreen.style.display="flex";
+document.getElementById("memoriesVideo").play();
 },20000);
-
-};
+}
+},1000);
 }
 </script>
-
 </body>
 </html>
