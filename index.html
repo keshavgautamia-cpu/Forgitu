@@ -3,44 +3,84 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Gitu 💖</title>
+
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
 body{
-margin:0;
-font-family:sans-serif;
+margin:0;font-family:sans-serif;
 background:url("bg.jpg") center/cover no-repeat;
-height:100vh;
-overflow:hidden;
-display:flex;
-justify-content:center;
-align-items:center;
+height:100vh;display:flex;justify-content:center;align-items:center;overflow:hidden;
 }
 
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
-.card{background:rgba(255,255,255,0.15);padding:35px;border-radius:25px;text-align:center;color:white;width:85%;max-width:330px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(255,0,120,0.6);}
+
+/* PASSWORD */
+.card{
+background:rgba(255,255,255,0.15);
+padding:35px;border-radius:25px;text-align:center;color:white;
+width:85%;max-width:330px;backdrop-filter:blur(12px);
+box-shadow:0 0 40px rgba(255,0,120,0.6);
+}
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
-.screen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
+/* COMMON FULL SCREEN */
+.screen{
+position:fixed;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;flex-direction:column;
+text-align:center;color:white;
+}
+
+/* LOVE LINES */
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
+/* COLLAGE */
 #collageScreen{background:black}
 .collageImg{width:200px;border-radius:20px;box-shadow:0 0 40px pink;animation:zoomFull 6s forwards}
 @keyframes zoomFull{0%{width:200px;}100%{width:100%;height:100%;border-radius:0}}
 
+/* CARTOON */
 #cartoonScreen{background:black}
 .cartoonImg{width:100%;height:100%;object-fit:cover}
 
-#questionScreen,#quizScreen,#planScreen,#memoryTextScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+/* VALENTINE */
+#questionScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 #yesScreen{background:url("yes.jpg") center/cover no-repeat}
 
-.optionBtn{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
+/* STORY QUIZ */
+#quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+.storyText{font-size:42px}
+#quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
+
+/* LOVE VIDEO */
+#loveVideoScreen{background:black}
 video{width:100%;height:100%;object-fit:contain}
-#memoriesFrame{width:90vw;height:90vh;border:none;border-radius:20px}
+
+/* MEMORY TEXT */
+#memoryTextScreen{
+background:linear-gradient(135deg,#ff9ecb,#ff6aa6);
+padding:30px;font-size:28px;line-height:1.6
+}
+.fadeIn{animation:fade 3s forwards}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* MEMORIES FRAME */
+#memoriesFrame{
+display:none;
+width:90%;
+height:80vh;
+border-radius:20px;
+}
 
 /* FIREWORKS */
-#fireworksCanvas{position:absolute;width:100%;height:100%;top:0;left:0}
+#fireworksCanvas{
+position:fixed;
+top:0;left:0;
+width:100%;height:100%;
+display:none;
+pointer-events:none;
+}
 </style>
 </head>
 
@@ -48,6 +88,7 @@ video{width:100%;height:100%;object-fit:contain}
 
 <audio id="bgMusic" src="music.mp3" loop></audio>
 
+<!-- PASSWORD -->
 <div class="card">
 <h2>Only for my baby 💕</h2>
 <input id="pass" placeholder="Enter password">
@@ -55,6 +96,7 @@ video{width:100%;height:100%;object-fit:contain}
 <p id="msg"></p>
 </div>
 
+<!-- LOVE LINES -->
 <div id="loveScreen" class="screen">
 <h1 id="l1" class="line">You are my favorite notification ❤️</h1>
 <h1 id="l2" class="line">My peace after chaos ☁️</h1>
@@ -62,175 +104,166 @@ video{width:100%;height:100%;object-fit:contain}
 <h1 id="l4" class="line">My best decision 😌</h1>
 </div>
 
-<div id="collageScreen" class="screen"><img src="collage.jpg" class="collageImg"></div>
-<div id="cartoonScreen" class="screen"><img src="cartoon.png" class="cartoonImg"></div>
+<!-- COLLAGE -->
+<div id="collageScreen" class="screen">
+<img src="collage.jpg" class="collageImg">
+</div>
 
+<!-- CARTOON -->
+<div id="cartoonScreen" class="screen">
+<img src="cartoon.png" class="cartoonImg">
+</div>
+
+<!-- VALENTINE QUESTION -->
 <div id="questionScreen" class="screen">
-<h1>Will you be my Valentine? 💖</h1>
+<h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<div id="yesScreen" class="screen"><h1>SHE SAID YESSS 😍💍</h1></div>
+<!-- YES SCREEN -->
+<div id="yesScreen" class="screen">
+<h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
+</div>
 
+<!-- LOVE STORY QUIZ -->
 <div id="quizScreen" class="screen">
-<h1 id="quizQ"></h1>
+<lottie-player src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
+<h1 id="quizQ" class="storyText"></h1>
 <div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
 </div>
 
-<div id="planScreen" class="screen">
-<h1 id="planQ"></h1>
-<div id="planOptions"></div>
+<!-- LOVE VIDEO -->
+<div id="loveVideoScreen" class="screen">
+<video id="loveVideo" src="love.mp4"></video>
 </div>
 
-<div id="loveVideoScreen" class="screen"><video id="loveVideo" src="love.mp4"></video></div>
-
+<!-- MEMORY TEXT -->
 <div id="memoryTextScreen" class="screen">
-<h1>
-We chose each other in happiness ❤️<br>
-We chose each other in hard times 🤝<br>
-We chose love over ego 💞<br>
-We grew together 🌱<br>
-We fought together ⚔️<br>
-We healed together 💫<br>
+<div class="fadeIn">
+We chose each other in happiness ❤️  
+We chose each other in hard times 🤝  
+We chose love over ego 💞  
+We grew together 🌱  
+We fought together ⚔️  
+We healed together 💫  
 And I am forever grateful that life gave me YOU 💖
-</h1>
+</div>
 </div>
 
+<!-- MEMORIES VIDEO -->
 <div id="memoriesVideoScreen" class="screen">
-<iframe id="memoriesFrame" src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview" allowfullscreen></iframe>
+<h1 style="font-size:40px;margin-bottom:20px">Our Memories 🎬❤️</h1>
+<button onclick="playMemories()">PLAY OUR MEMORIES 💖</button>
+
+<iframe id="memoriesFrame"
+src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview"
+allow="autoplay">
+</iframe>
 </div>
 
-<!-- FIREWORKS SCREEN -->
-<div id="fireworksScreen" class="screen" style="background:black;">
 <canvas id="fireworksCanvas"></canvas>
-<h1 id="finalText" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:0;transition:2s;">
-I love you forever 💖<br>My gitu my jaanu 😘<br>Happy Valentine’s Day 🌹
-</h1>
-</div>
 
 <script>
-let hintCount=0;
 function checkPass(){
-if(pass.value==="Classy"){
+if(pass.value!="Classy"){msg.innerHTML="Wrong password 😝";return;}
 document.querySelector(".card").style.display="none";
+
 loveScreen.style.display="flex";
 setTimeout(()=>l1.style.opacity=1,500);
 setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
+
 setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
 setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex"},16000);
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex"},26000);
-return;
-}
-hintCount++;
-if(hintCount==1) msg.innerHTML="Wrong password 😅";
-else if(hintCount==2) msg.innerHTML="Hint: it has to do with starting 😁";
-else msg.innerHTML="Hint: 6 letter word first letter capital — the word which made us met 💕";
 }
 
 let stage=0;
 function noClicked(){
-if(stage==0){noBtn.innerHTML="Not a chance 😤";stage=1;return;}
-if(stage==1){noBtn.innerHTML="This is not what you want 😏";stage=2;return;}
-noBtn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-150}px)`;
+let btn=noBtn;
+if(stage==0){btn.innerHTML="Not a chance 😤";stage=1;return;}
+if(stage==1){btn.innerHTML="This is not what you want 😏";stage=2;return;}
+btn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-150}px)`;
 }
 
 function yesClicked(){
 questionScreen.style.display="none";
 yesScreen.style.display="flex";
-setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showStory();},5000);
+setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
 }
 
-/* FUN GAME */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
-{q:"Who misses more? 🥺",a:["Me 😭","You 😭","Same 💞"],e:"💞"},
-{q:"Who sends more reels? 😂",a:["Me 📱","You 📱","Both 🤣"],e:"🤣"},
+{q:"Who misses more? 🥺",a:["Me","You","Same"],e:"💞"},
+{q:"Who sends more reels? 😂",a:["Me","You","Both"],e:"🤣"},
 {q:"Do you know how much I love you? 💖",a:["A lot ❤️","Infinite ♾️","Not enough 😏"],e:"😘"}
 ];
 
-let s=0;
-function showStory(){
-let st=story[s];
-quizQ.innerHTML=st.q;
+let step=0;
+function showQuestion(){
+let s=story[step];
+quizQ.innerHTML=s.q;
 quizOptions.innerHTML="";
 emojiReact.innerHTML="";
-st.a.forEach(text=>{
-quizOptions.innerHTML+=`<button class="optionBtn" onclick="nextStory('${st.e}')">${text}</button>`;
+s.a.forEach(text=>{
+quizOptions.innerHTML+=`<button onclick="nextStory('${s.e}')">${text}</button>`;
 });
 }
+
 function nextStory(emoji){
 emojiReact.innerHTML=emoji;
-setTimeout(()=>{s++; if(s<story.length)showStory(); else startPlan();},1000);
+setTimeout(()=>{
+step++;
+if(step<story.length) showQuestion();
+else startLoveVideo();
+},1000);
 }
-
-/* PLAN */
-let plan=[
-{q:"After waking up we will?",o:["Make love 🤭","1 kiss 😘","5 kisses 😘","Kiss until we want 😘"],c:[3]},
-{q:"After kissing so much we will?",o:["Shower and become clean 🚿","Shower together 🤭🔥","Eat breakfast 🍳","Make love 🤭"],c:[0]}
-];
-let p=0;
-function startPlan(){quizScreen.style.display="none";planScreen.style.display="flex";showPlan();}
-function showPlan(){
-planQ.innerHTML=plan[p].q;
-planOptions.innerHTML="";
-plan[p].o.forEach((t,i)=>planOptions.innerHTML+=`<button class="optionBtn" onclick="choosePlan(${i})">${t}</button>`);
-}
-function choosePlan(i){ if(plan[p].c.includes(i)){p++; if(p<plan.length)showPlan(); else startLoveVideo();}}
 
 function startLoveVideo(){
-planScreen.style.display="none";
+quizScreen.style.display="none";
 loveVideoScreen.style.display="flex";
 loveVideo.play();
-loveVideo.onended=()=>{
+
+loveVideo.onended = ()=>{
 loveVideoScreen.style.display="none";
 memoryTextScreen.style.display="flex";
+
 setTimeout(()=>{
 memoryTextScreen.style.display="none";
 memoriesVideoScreen.style.display="flex";
-
-/* FIREWORKS AFTER VIDEO */
-setTimeout(()=>{
-memoriesVideoScreen.style.display="none";
-fireworksScreen.style.display="flex";
-startFireworks();
-setTimeout(()=>finalText.style.opacity=1,2000);
-},30000);
-
+bgMusic.pause();
 },20000);
-}
+};
 }
 
-/* FIREWORKS ENGINE */
+/* PLAY MEMORIES */
+function playMemories(){
+document.getElementById("memoriesFrame").style.display="block";
+event.target.style.display="none";
+setTimeout(startFireworks,210000);
+}
+
+/* FIREWORKS */
 function startFireworks(){
+document.getElementById("fireworksCanvas").style.display="block";
 const canvas=document.getElementById("fireworksCanvas");
 const ctx=canvas.getContext("2d");
 canvas.width=window.innerWidth;
 canvas.height=window.innerHeight;
-let particles=[];
 setInterval(()=>{
-for(let i=0;i<50;i++){
-particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,life:100});
-}},600);
-
-function animate(){
 ctx.fillStyle="rgba(0,0,0,0.2)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
-particles=particles.filter(p=>p.life>0);
-particles.forEach(p=>{
-ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+for(let i=0;i<10;i++){
 ctx.beginPath();
-ctx.arc(p.x,p.y,2,0,Math.PI*2);
+ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,3,0,2*Math.PI);
+ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
 ctx.fill();
-p.x+=p.vx;p.y+=p.vy;p.life--;
-});
-requestAnimationFrame(animate);
 }
-animate();
+},50);
 }
 </script>
 </body>
