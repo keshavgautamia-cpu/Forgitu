@@ -38,6 +38,9 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 .optionBtn{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
 video{width:100%;height:100%;object-fit:contain}
 #memoriesFrame{width:90vw;height:90vh;border:none;border-radius:20px}
+
+/* FIREWORKS */
+#fireworksCanvas{position:absolute;width:100%;height:100%;top:0;left:0}
 </style>
 </head>
 
@@ -99,9 +102,16 @@ And I am forever grateful that life gave me YOU 💖
 <iframe id="memoriesFrame" src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview" allowfullscreen></iframe>
 </div>
 
+<!-- FIREWORKS SCREEN -->
+<div id="fireworksScreen" class="screen" style="background:black;">
+<canvas id="fireworksCanvas"></canvas>
+<h1 id="finalText" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:0;transition:2s;">
+I love you forever 💖<br>My gitu my jaanu 😘<br>Happy Valentine’s Day 🌹
+</h1>
+</div>
+
 <script>
 let hintCount=0;
-
 function checkPass(){
 if(pass.value==="Classy"){
 document.querySelector(".card").style.display="none";
@@ -158,16 +168,11 @@ emojiReact.innerHTML=emoji;
 setTimeout(()=>{s++; if(s<story.length)showStory(); else startPlan();},1000);
 }
 
-/* VALENTINE PLAN */
+/* PLAN */
 let plan=[
 {q:"After waking up we will?",o:["Make love 🤭","1 kiss 😘","5 kisses 😘","Kiss until we want 😘"],c:[3]},
-{q:"After kissing so much we will?",o:["Shower and become clean 🚿","Shower together 🤭🔥","Eat breakfast 🍳","Make love 🤭"],c:[0]},
-{q:"Now we are clean, we will?",o:["Pray together 🙏❣️"],c:[0]},
-{q:"Dress code my janu will steal my heart ❤️",o:["Red ♥️","Yellow 💛","Blue 💙","White 🤍","Pink 🩷","Black 🖤"],c:"all"},
-{q:"Now we will go?",o:["Shopping 🛍️","Tamohon 🍽️","Singapore ✈️","Switzerland ❄️"],c:[0,1]},
-{q:"After shopping we will?",o:["Movie night 🎬","Gaming 🎮","Sleeping 😴","Hornu 🤭"],c:[0]}
+{q:"After kissing so much we will?",o:["Shower and become clean 🚿","Shower together 🤭🔥","Eat breakfast 🍳","Make love 🤭"],c:[0]}
 ];
-
 let p=0;
 function startPlan(){quizScreen.style.display="none";planScreen.style.display="flex";showPlan();}
 function showPlan(){
@@ -175,17 +180,57 @@ planQ.innerHTML=plan[p].q;
 planOptions.innerHTML="";
 plan[p].o.forEach((t,i)=>planOptions.innerHTML+=`<button class="optionBtn" onclick="choosePlan(${i})">${t}</button>`);
 }
-function choosePlan(i){
-let correct=plan[p].c;
-if(correct==="all" || correct.includes(i)){p++; if(p<plan.length)showPlan(); else startLoveVideo();}
-else alert("Wrong choice 😝 try again");
-}
+function choosePlan(i){ if(plan[p].c.includes(i)){p++; if(p<plan.length)showPlan(); else startLoveVideo();}}
 
 function startLoveVideo(){
 planScreen.style.display="none";
 loveVideoScreen.style.display="flex";
 loveVideo.play();
-loveVideo.onended=()=>{loveVideoScreen.style.display="none";memoryTextScreen.style.display="flex";setTimeout(()=>{memoryTextScreen.style.display="none";memoriesVideoScreen.style.display="flex"},20000);}
+loveVideo.onended=()=>{
+loveVideoScreen.style.display="none";
+memoryTextScreen.style.display="flex";
+setTimeout(()=>{
+memoryTextScreen.style.display="none";
+memoriesVideoScreen.style.display="flex";
+
+/* FIREWORKS AFTER VIDEO */
+setTimeout(()=>{
+memoriesVideoScreen.style.display="none";
+fireworksScreen.style.display="flex";
+startFireworks();
+setTimeout(()=>finalText.style.opacity=1,2000);
+},30000);
+
+},20000);
+}
+}
+
+/* FIREWORKS ENGINE */
+function startFireworks(){
+const canvas=document.getElementById("fireworksCanvas");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let particles=[];
+setInterval(()=>{
+for(let i=0;i<50;i++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,vx:(Math.random()-0.5)*5,vy:(Math.random()-0.5)*5,life:100});
+}},600);
+
+function animate(){
+ctx.fillStyle="rgba(0,0,0,0.2)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+particles=particles.filter(p=>p.life>0);
+particles.forEach(p=>{
+ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+ctx.beginPath();
+ctx.arc(p.x,p.y,2,0,Math.PI*2);
+ctx.fill();
+p.x+=p.vx;p.y+=p.vy;p.life--;
+});
+requestAnimationFrame(animate);
+}
+animate();
 }
 </script>
 </body>
