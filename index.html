@@ -6,7 +6,18 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
-body{margin:0;font-family:sans-serif;background:url("bg.jpg") center/cover no-repeat;height:100vh;overflow:hidden}
+/* ⭐ PASSWORD CENTER FIX ADDED HERE */
+body{
+margin:0;
+font-family:sans-serif;
+background:url("bg.jpg") center/cover no-repeat;
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+}
+
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
 
 .card{background:rgba(255,255,255,0.15);padding:35px;border-radius:25px;text-align:center;color:white;width:85%;max-width:330px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(255,0,120,0.6);}
@@ -108,7 +119,6 @@ setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex"},26000);
 return;
 }
-
 hintCount++;
 if(hintCount==1) msg.innerHTML="Wrong password 😅";
 else if(hintCount==2) msg.innerHTML="Hint: it has to do with starting 😁";
