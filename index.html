@@ -24,20 +24,11 @@ box-shadow:0 0 40px rgba(255,0,120,0.6);
 }
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
-/* ⭐ FIXED CENTERING FOR MOBILE + DESKTOP */
+/* COMMON FULL SCREEN */
 .screen{
-position:fixed;
-width:100%;
-height:100dvh;
-top:0;
-left:0;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-color:white;
-padding:20px;
+position:fixed;width:100%;height:100vh;display:none;
+justify-content:center;align-items:center;flex-direction:column;
+text-align:center;color:white;
 }
 
 /* LOVE LINES */
@@ -74,20 +65,13 @@ padding:30px;font-size:28px;line-height:1.6
 .fadeIn{animation:fade 3s forwards}
 @keyframes fade{from{opacity:0}to{opacity:1}}
 
-/* ⭐ GOOGLE DRIVE PLAYER FIX */
-.drivePlayer{
-width:90%;
-max-width:900px;
-aspect-ratio:16/9;
-background:black;
-border-radius:20px;
-overflow:hidden;
-box-shadow:0 0 40px rgba(0,0,0,0.6);
-}
-.drivePlayer iframe{
-width:100%;
-height:100%;
+/* GOOGLE DRIVE VIDEO FIX */
+#memoriesFrame{
+width:90vw;
+height:90vh;
 border:none;
+border-radius:20px;
+box-shadow:0 0 40px black;
 }
 </style>
 </head>
@@ -122,21 +106,21 @@ border:none;
 <img src="cartoon.png" class="cartoonImg">
 </div>
 
-<!-- VALENTINE -->
+<!-- VALENTINE QUESTION -->
 <div id="questionScreen" class="screen">
 <h1 style="font-size:50px">Will you be my Valentine? 💖</h1>
 <button onclick="yesClicked()" style="background:white;color:#ff4d88">YES 💘</button>
 <button id="noBtn" onclick="noClicked()">NO 😝</button>
 </div>
 
-<!-- YES -->
+<!-- YES SCREEN -->
 <div id="yesScreen" class="screen">
 <h1 style="font-size:60px">SHE SAID YESSS 😍💍</h1>
 </div>
 
-<!-- QUIZ -->
+<!-- LOVE STORY QUIZ -->
 <div id="quizScreen" class="screen">
-<lottie-player id="idleAnim" src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
+<lottie-player src="idle.json" background="transparent" speed="1" style="width:220px" loop autoplay></lottie-player>
 <h1 id="quizQ" class="storyText"></h1>
 <div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
@@ -160,11 +144,13 @@ And I am forever grateful that life gave me YOU 💖
 </div>
 </div>
 
-<!-- MEMORIES VIDEO (FIXED PLAYER) -->
+<!-- MEMORIES VIDEO -->
 <div id="memoriesVideoScreen" class="screen">
-<div class="drivePlayer">
-<iframe src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview" allow="autoplay" allowfullscreen></iframe>
-</div>
+<iframe id="memoriesFrame"
+src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview"
+allow="autoplay; fullscreen"
+allowfullscreen>
+</iframe>
 </div>
 
 <script>
@@ -178,10 +164,11 @@ setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
+/* MUSIC STARTS WHEN COLLAGE APPEARS */
 setTimeout(()=>{
 loveScreen.style.display="none";
 collageScreen.style.display="flex";
-bgMusic.play();   // ⭐ MUSIC STARTS HERE
+bgMusic.play();
 },9000);
 
 setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex"},16000);
@@ -202,7 +189,6 @@ yesScreen.style.display="flex";
 setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
 }
 
-/* QUIZ */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
@@ -231,7 +217,6 @@ else startLoveVideo();
 },1000);
 }
 
-/* VIDEO FLOW */
 function startLoveVideo(){
 quizScreen.style.display="none";
 loveVideoScreen.style.display="flex";
