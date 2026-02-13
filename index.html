@@ -1,207 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For Gitu ❤️</title>
+<title>For Gitu 💖</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif}
-body{overflow:hidden;background:#ff7aa8;color:white}
+body{margin:0;font-family:sans-serif;background:url("bg.jpg") center/cover no-repeat;height:100vh;overflow:hidden}
+.screen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white;padding:20px}
+button{padding:14px 26px;border:none;border-radius:30px;background:#ff4d88;color:white;font-size:18px;margin:10px}
 
-/* SCREENS */
-.screen{
-position:fixed;
-width:100%;
-height:100%;
-display:none;
-justify-content:center;
-align-items:center;
-flex-direction:column;
-text-align:center;
-padding:20px;
-}
-
-.active{display:flex}
-
-button{
-padding:14px 26px;
-border:none;
-border-radius:30px;
-background:white;
-color:#ff3b7c;
-font-size:18px;
-margin:10px;
-cursor:pointer;
-}
-
-h1{font-size:32px;margin-bottom:20px}
-h2{margin-bottom:20px}
-
-/* MEMORY TEXT */
-#memoryTextScreen{
-background:black;
-font-size:22px;
-line-height:1.6;
-padding:40px;
-}
-
-/* VIDEO FULL SCREEN */
-video{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-object-fit:contain;
-background:black;
-}
-
-/* popup */
-#popup{
-position:fixed;
-bottom:40px;
-background:white;
-color:#ff3b7c;
-padding:14px 22px;
-border-radius:25px;
-display:none;
-}
+/* screens */
+#valentine{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+#quiz{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+#memoryText{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
+video{width:100%;height:100%;object-fit:contain;background:black}
 </style>
 </head>
 
 <body>
 
-<audio id="bgMusic" src="music.mp3"></audio>
+<audio id="music" src="music.mp3" loop></audio>
 
-<!-- Valentine ask -->
-<div id="valentineScreen" class="screen active">
-<h1>Will you be my Valentine? 💕</h1>
-<button onclick="yesValentine()">Yes 😍</button>
-<button id="noBtn" onclick="noValentine()">No 😒</button>
+<!-- PASSWORD -->
+<div id="password" class="screen" style="display:flex">
+<h2>Only for my baby 💕</h2>
+<input id="pass" placeholder="Enter password"><br>
+<button onclick="unlock()">Unlock ❤️</button>
+<p id="hint"></p>
 </div>
 
-<!-- Love video -->
-<div id="loveVideoScreen" class="screen">
-<video id="loveVideo" src="love.mp4"></video>
+<!-- CARTOON -->
+<div id="cartoon" class="screen">
+<img src="cartoon.png" style="width:100%;height:100%;object-fit:cover">
 </div>
 
-<!-- Quiz screen -->
-<div id="quizScreen" class="screen">
-<h2 id="question"></h2>
+<!-- VALENTINE -->
+<div id="valentine" class="screen">
+<h1>Will you be my Valentine? 💖</h1>
+<button onclick="yes()">YES 💘</button>
+<button id="noBtn" onclick="no()">NO 😝</button>
+</div>
+
+<!-- YES SCREEN -->
+<div id="yesScreen" class="screen" style="background:url('yes.jpg') center/cover">
+<h1>SHE SAID YESSS 😍💍</h1>
+</div>
+
+<!-- LOVE VIDEO -->
+<div id="loveVideo" class="screen">
+<video id="loveVid" src="love.mp4" autoplay muted></video>
+</div>
+
+<!-- PLAN QUIZ -->
+<div id="quiz" class="screen">
+<h2 id="qText"></h2>
 <div id="options"></div>
 </div>
 
-<!-- Memory text -->
-<div id="memoryTextScreen" class="screen">
-<div>
-We didn’t choose each other only in happy moments…  
-We chose each other in hard days too ❤️  
-
-We stayed. We fought. We fixed.  
-And we kept choosing each other again and again.  
-
-I am so grateful for you.  
-For us. For everything we are. 💕
-</div>
+<!-- MEMORY TEXT -->
+<div id="memoryText" class="screen">
+<h1>
+We chose each other in happy times ❤️<br><br>
+We chose each other in hard times 🤝<br><br>
+We kept choosing each other again and again 💕
+</h1>
 </div>
 
-<!-- Memories video -->
-<div id="videoScreen" class="screen">
-<video id="memoriesVideo" src="https://drive.google.com/uc?export=download&id=1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0"></video>
+<!-- MEMORIES VIDEO -->
+<div id="memVideo" class="screen">
+<iframe width="100%" height="100%"
+src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview"
+allow="autoplay"></iframe>
 </div>
-
-<div id="popup"></div>
 
 <script>
-const bgMusic=document.getElementById("bgMusic");
-bgMusic.loop=true;
-
-const valentineScreen=document.getElementById("valentineScreen");
-const loveVideoScreen=document.getElementById("loveVideoScreen");
-const loveVideo=document.getElementById("loveVideo");
-
-const quizScreen=document.getElementById("quizScreen");
-const questionEl=document.getElementById("question");
-const optionsEl=document.getElementById("options");
-
-const memoryTextScreen=document.getElementById("memoryTextScreen");
-const videoScreen=document.getElementById("videoScreen");
-const memoriesVideo=document.getElementById("memoriesVideo");
-
-const popup=document.getElementById("popup");
-
-/* VALENTINE */
-function yesValentine(){
-bgMusic.play();
-valentineScreen.style.display="none";
-loveVideoScreen.style.display="flex";
-loveVideo.play();
+let tries=0;
+function unlock(){
+if(pass.value!="Classy"){
+tries++;
+if(tries==1) hint.innerHTML="Wrong password 😅";
+else if(tries==2) hint.innerHTML="Hint: has to do with starting 😉";
+else hint.innerHTML="Hint: 6 letter word first letter capital 💕";
+return;
+}
+password.style.display="none";
+cartoon.style.display="flex";
+setTimeout(()=>{cartoon.style.display="none";valentine.style.display="flex";music.play();},6000);
 }
 
-function noValentine(){
-showPopup("This is not option 😏");
+let noStage=0;
+function no(){
+if(noStage==0){noBtn.innerHTML="Not a chance 😤";noStage=1;return;}
+if(noStage==1){noBtn.innerHTML="This is not what you want 😏";noStage=2;return;}
+noBtn.style.position="absolute";
+noBtn.style.left=Math.random()*70+"%";
+noBtn.style.top=Math.random()*70+"%";
 }
 
-loveVideo.onended=()=>startQuiz();
+function yes(){
+valentine.style.display="none";
+yesScreen.style.display="flex";
+setTimeout(()=>{yesScreen.style.display="none";loveVideo.style.display="flex";},4000);
+}
 
-/* QUIZ DATA */
-let q=0;
-const quiz=[
-{q:"After waking up we will…",o:["Make love 🤭","1 kiss 😘","5 kisses 😘","Kiss until we want 😘"],a:[3]},
-{q:"After kissing we will…",o:["Shower and become clean","Shower together 🤭🔥","Eat breakfast","Make love 🤭"],a:[0]},
-{q:"Now we are clean, we will…",o:["Pray together 🙏"],a:[0]},
+loveVid.onended=()=>startQuiz();
+
+let step=0;
+const game=[
+{q:"After waking up…",o:["Make love","1 kiss","5 kisses","Kiss until we want"],a:[3]},
+{q:"After kissing…",o:["Shower and become clean","Shower together","Eat breakfast","Make love"],a:[0]},
+{q:"Now we are clean…",o:["Pray together"],a:[0]},
 {q:"Dress code ❤️",o:["Red","Yellow","Blue","White","Pink","Black"],a:[0,1,2,3,4,5]},
-{q:"We will go…",o:["Shopping","Tamhon","Singapore","Switzerland"],a:[0,1]},
-{q:"After shopping…",o:["Movie night","Gaming","Sleeping","Hornu 🤭"],a:[0]}
+{q:"We will go…",o:["Shopping","Tamohon","Singapore","Switzerland"],a:[0,1]},
+{q:"After shopping…",o:["Movie night","Gaming","Sleeping","Hornu"],a:[0]}
 ];
 
-function startQuiz(){
-loveVideoScreen.style.display="none";
-quizScreen.style.display="flex";
-showQ();
-}
-
+function startQuiz(){loveVideo.style.display="none";quiz.style.display="flex";showQ();}
 function showQ(){
-if(q>=quiz.length){nextStory();return}
-questionEl.innerText=quiz[q].q;
-optionsEl.innerHTML="";
-quiz[q].o.forEach((opt,i)=>{
-let btn=document.createElement("button");
-btn.innerText=opt;
-btn.onclick=()=>choose(i);
-optionsEl.appendChild(btn);
+if(step>=game.length){finish();return;}
+qText.innerHTML=game[step].q;
+options.innerHTML="";
+game[step].o.forEach((opt,i)=>{
+options.innerHTML+=`<button onclick="choose(${i})">${opt}</button>`;
 });
 }
+function choose(i){ if(game[step].a.includes(i)){step++;showQ();} }
 
-function choose(i){
-if(quiz[q].a.includes(i)){q++;showQ();}
-else showPopup("Wrong answer 😜 try again");
-}
-
-/* FINAL STORY */
-function nextStory(){
-quizScreen.style.display="none";
-
-/* STOP MUSIC HERE ❤️ */
-bgMusic.pause();
-bgMusic.currentTime=0;
-
-memoryTextScreen.style.display="flex";
-
-setTimeout(()=>{
-memoryTextScreen.style.display="none";
-videoScreen.style.display="flex";
-memoriesVideo.play();
-},20000);
-}
-
-function showPopup(text){
-popup.innerText=text;
-popup.style.display="block";
-setTimeout(()=>popup.style.display="none",2000);
+function finish(){
+quiz.style.display="none";
+music.pause(); music.currentTime=0;
+memoryText.style.display="flex";
+setTimeout(()=>{memoryText.style.display="none";memVideo.style.display="flex";},20000);
 }
 </script>
-
 </body>
 </html>
