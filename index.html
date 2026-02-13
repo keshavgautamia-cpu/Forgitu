@@ -6,7 +6,6 @@
 <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 <style>
-/* ⭐ PASSWORD CENTER FIX ADDED HERE */
 body{
 margin:0;
 font-family:sans-serif;
@@ -19,12 +18,10 @@ align-items:center;
 }
 
 button{padding:14px 30px;border:none;border-radius:30px;background:#ff4d88;color:white;margin:10px;font-size:20px}
-
 .card{background:rgba(255,255,255,0.15);padding:35px;border-radius:25px;text-align:center;color:white;width:85%;max-width:330px;backdrop-filter:blur(12px);box-shadow:0 0 40px rgba(255,0,120,0.6);}
 input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text-align:center}
 
 .screen{position:fixed;width:100%;height:100vh;display:none;justify-content:center;align-items:center;flex-direction:column;text-align:center;color:white}
-
 #loveScreen{background:url("bg.jpg") center/cover no-repeat}
 .line{opacity:0;font-size:34px;margin:15px;transition:1s}
 
@@ -39,9 +36,7 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 #yesScreen{background:url("yes.jpg") center/cover no-repeat}
 
 .optionBtn{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
-
 video{width:100%;height:100%;object-fit:contain}
-
 #memoriesFrame{width:90vw;height:90vh;border:none;border-radius:20px}
 </style>
 </head>
@@ -77,6 +72,7 @@ video{width:100%;height:100%;object-fit:contain}
 
 <div id="quizScreen" class="screen">
 <h1 id="quizQ"></h1>
+<div id="emojiReact" style="font-size:50px;height:60px"></div>
 <div id="quizOptions"></div>
 </div>
 
@@ -138,7 +134,7 @@ yesScreen.style.display="flex";
 setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showStory();},5000);
 }
 
-/* STORY QUIZ */
+/* FUN GAME */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
@@ -146,7 +142,7 @@ let story=[
 {q:"Who sends more reels? 😂",a:["Me 📱","You 📱","Both 🤣"],e:"🤣"},
 {q:"Do you know how much I love you? 💖",a:["A lot ❤️","Infinite ♾️","Not enough 😏"],e:"😘"}
 ];
-}
+
 let s=0;
 function showStory(){
 let st=story[s];
@@ -156,20 +152,13 @@ emojiReact.innerHTML="";
 st.a.forEach(text=>{
 quizOptions.innerHTML+=`<button class="optionBtn" onclick="nextStory('${st.e}')">${text}</button>`;
 });
-
-
+}
 function nextStory(emoji){
 emojiReact.innerHTML=emoji;
-setTimeout(()=>{
-s++;
-if(s<story.length) showStory();
-else startPlan();
-},1000);
+setTimeout(()=>{s++; if(s<story.length)showStory(); else startPlan();},1000);
 }
-}
-function nextStory(){s++; if(s<story.length)showStory(); else startPlan();}
 
-/* PLAN QUIZ */
+/* VALENTINE PLAN */
 let plan=[
 {q:"After waking up we will?",o:["Make love 🤭","1 kiss 😘","5 kisses 😘","Kiss until we want 😘"],c:[3]},
 {q:"After kissing so much we will?",o:["Shower and become clean 🚿","Shower together 🤭🔥","Eat breakfast 🍳","Make love 🤭"],c:[0]},
@@ -178,6 +167,7 @@ let plan=[
 {q:"Now we will go?",o:["Shopping 🛍️","Tamohon 🍽️","Singapore ✈️","Switzerland ❄️"],c:[0,1]},
 {q:"After shopping we will?",o:["Movie night 🎬","Gaming 🎮","Sleeping 😴","Hornu 🤭"],c:[0]}
 ];
+
 let p=0;
 function startPlan(){quizScreen.style.display="none";planScreen.style.display="flex";showPlan();}
 function showPlan(){
@@ -187,15 +177,8 @@ plan[p].o.forEach((t,i)=>planOptions.innerHTML+=`<button class="optionBtn" oncli
 }
 function choosePlan(i){
 let correct=plan[p].c;
-
-if(correct==="all" || correct.includes(i)){
-p++;
-if(p<plan.length) showPlan();
-else startLoveVideo();
-}
-else{
-alert("Wrong choice 😝 try again");
-}
+if(correct==="all" || correct.includes(i)){p++; if(p<plan.length)showPlan(); else startLoveVideo();}
+else alert("Wrong choice 😝 try again");
 }
 
 function startLoveVideo(){
@@ -207,4 +190,3 @@ loveVideo.onended=()=>{loveVideoScreen.style.display="none";memoryTextScreen.sty
 </script>
 </body>
 </html>
-
