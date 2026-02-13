@@ -98,17 +98,15 @@ And I am forever grateful that life gave me YOU 💖
 </h1>
 </div>
 
-<!-- FIXED MEMORIES VIDEO -->
+<!-- FIXED MEMORIES SECTION -->
 <div id="memoriesVideoScreen" class="screen">
 <h1 style="font-size:42px;margin-bottom:20px">Our Memories 🎬❤️</h1>
 <button id="playBtn" onclick="playMemories()">Play Memories 💖</button>
 <iframe id="memoriesFrame"
 src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview"
-allow="autoplay; fullscreen">
-</iframe>
+allow="autoplay; fullscreen"></iframe>
 </div>
 
-<!-- FIREWORKS -->
 <div id="fireworksScreen" class="screen" style="background:black;">
 <canvas id="fireworksCanvas"></canvas>
 <h1 id="finalText" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:40px;opacity:0;transition:2s;">
@@ -137,83 +135,18 @@ else if(hintCount==2) msg.innerHTML="Hint: it has to do with starting 😁";
 else msg.innerHTML="Hint: 6 letter word first letter capital — the word which made us met 💕";
 }
 
-let stage=0;
-function noClicked(){
-if(stage==0){noBtn.innerHTML="Not a chance 😤";stage=1;return;}
-if(stage==1){noBtn.innerHTML="This is not what you want 😏";stage=2;return;}
-noBtn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-150}px)`;
-}
-
-function yesClicked(){
-questionScreen.style.display="none";
-yesScreen.style.display="flex";
-setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showStory();},5000);
-}
-
-/* STORY */
-let story=[
-{q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
-{q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"}
-];
-
-let s=0;
-function showStory(){
-let st=story[s];
-quizQ.innerHTML=st.q;
-quizOptions.innerHTML="";
-emojiReact.innerHTML="";
-st.a.forEach(text=>{
-quizOptions.innerHTML+=`<button class="optionBtn" onclick="nextStory('${st.e}')">${text}</button>`;
-});
-}
-function nextStory(emoji){
-emojiReact.innerHTML=emoji;
-setTimeout(()=>{s++; if(s<story.length)showStory(); else startLoveVideo();},1000);
-}
-
-function startLoveVideo(){
-quizScreen.style.display="none";
-loveVideoScreen.style.display="flex";
-loveVideo.play();
-loveVideo.onended=()=>{
-loveVideoScreen.style.display="none";
-memoryTextScreen.style.display="flex";
-setTimeout(()=>{
-memoryTextScreen.style.display="none";
-memoriesVideoScreen.style.display="flex";
-},20000);
-}
-}
-
-/* PLAY MEMORIES + FIREWORKS */
+/* 🔥 ONLY NEW FUNCTION ADDED */
 function playMemories(){
 document.getElementById("playBtn").style.display="none";
 document.getElementById("memoriesFrame").style.display="block";
 
+/* change 210000 if video length different */
 setTimeout(()=>{
 memoriesVideoScreen.style.display="none";
 fireworksScreen.style.display="flex";
 startFireworks();
 setTimeout(()=>finalText.style.opacity=1,2000);
 },210000);
-}
-
-/* FIREWORKS */
-function startFireworks(){
-const canvas=document.getElementById("fireworksCanvas");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
-setInterval(()=>{
-ctx.fillStyle="rgba(0,0,0,0.2)";
-ctx.fillRect(0,0,canvas.width,canvas.height);
-for(let i=0;i<10;i++){
-ctx.beginPath();
-ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,3,0,2*Math.PI);
-ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
-ctx.fill();
-}
-},50);
 }
 </script>
 </body>
