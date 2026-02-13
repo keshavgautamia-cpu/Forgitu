@@ -28,7 +28,7 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 .screen{
 position:fixed;width:100%;height:100vh;display:none;
 justify-content:center;align-items:center;flex-direction:column;
-text-align:center;color:white;
+text-align:center;color:white;padding:20px;
 }
 
 /* LOVE LINES */
@@ -51,7 +51,10 @@ text-align:center;color:white;
 /* STORY QUIZ */
 #quizScreen{background:linear-gradient(135deg,#ff9ecb,#ff6aa6)}
 .storyText{font-size:42px}
-#quizOptions button{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
+#quizOptions button{
+display:block;width:260px;margin:15px auto;padding:18px;
+font-size:22px;border-radius:40px;background:white;color:#ff4d88
+}
 
 /* LOVE VIDEO */
 #loveVideoScreen{background:black}
@@ -64,6 +67,13 @@ padding:30px;font-size:28px;line-height:1.6
 }
 .fadeIn{animation:fade 3s forwards}
 @keyframes fade{from{opacity:0}to{opacity:1}}
+
+/* GOOGLE DRIVE PLAYER */
+#memoriesVideoFrame{
+width:100%;
+height:100%;
+border:none;
+}
 </style>
 </head>
 
@@ -124,7 +134,7 @@ padding:30px;font-size:28px;line-height:1.6
 
 <!-- MEMORY TEXT -->
 <div id="memoryTextScreen" class="screen">
-<div id="memoryText" class="fadeIn">
+<div class="fadeIn">
 We chose each other in happiness ❤️  
 We chose each other in hard times 🤝  
 We chose love over ego 💞  
@@ -135,18 +145,19 @@ And I am forever grateful that life gave me YOU 💖
 </div>
 </div>
 
-<!-- MEMORIES VIDEO -->
+<!-- MEMORIES VIDEO (FIXED) -->
 <div id="memoriesVideoScreen" class="screen">
-<video id="memoriesVideo"
-src="https://drive.google.com/uc?export=download&id=1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0"
-controls autoplay></video>
+<iframe id="memoriesVideoFrame"
+src="https://drive.google.com/file/d/1XytJDNfxCMzwkt1n-h-c29IF6v8DALS0/preview"
+allow="autoplay"
+allowfullscreen>
+</iframe>
 </div>
 
 <script>
 function checkPass(){
 if(pass.value!="Classy"){msg.innerHTML="Wrong password 😝";return;}
 document.querySelector(".card").style.display="none";
-bgMusic.play();
 
 loveScreen.style.display="flex";
 setTimeout(()=>l1.style.opacity=1,500);
@@ -154,7 +165,9 @@ setTimeout(()=>l2.style.opacity=1,2000);
 setTimeout(()=>l3.style.opacity=1,3500);
 setTimeout(()=>l4.style.opacity=1,5000);
 
-setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex"},9000);
+/* ⭐ MUSIC NOW STARTS WHEN COLLAGE APPEARS */
+setTimeout(()=>{loveScreen.style.display="none";collageScreen.style.display="flex";bgMusic.play();},9000);
+
 setTimeout(()=>{collageScreen.style.display="none";cartoonScreen.style.display="flex"},16000);
 setTimeout(()=>{cartoonScreen.style.display="none";questionScreen.style.display="flex"},26000);
 }
@@ -173,7 +186,6 @@ yesScreen.style.display="flex";
 setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";showQuestion();},5000);
 }
 
-/* STORY QUESTIONS */
 let story=[
 {q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
 {q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
@@ -202,7 +214,6 @@ else startLoveVideo();
 },1000);
 }
 
-/* LOVE VIDEO → MEMORY TEXT → MEMORIES VIDEO */
 function startLoveVideo(){
 quizScreen.style.display="none";
 loveVideoScreen.style.display="flex";
@@ -210,17 +221,18 @@ loveVideo.play();
 
 loveVideo.onended = ()=>{
 loveVideoScreen.style.display="none";
+
+/* STOP MUSIC BEFORE MEMORY LINES */
+bgMusic.pause();
+
 memoryTextScreen.style.display="flex";
 
 setTimeout(()=>{
 memoryTextScreen.style.display="none";
 memoriesVideoScreen.style.display="flex";
-memoriesVideo.play();
 },20000);
-
 };
 }
 </script>
-
 </body>
 </html>
