@@ -139,18 +139,44 @@ setTimeout(()=>{yesScreen.style.display="none";quizScreen.style.display="flex";s
 }
 
 /* STORY QUIZ */
-let story=["Who fell first? 😌","Who loves more? 😏"];
+let story=[
+{q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
+{q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"},
+{q:"Who misses more? 🥺",a:["Me 😭","You 😭","Same 💞"],e:"💞"},
+{q:"Who sends more reels? 😂",a:["Me 📱","You 📱","Both 🤣"],e:"🤣"},
+{q:"Do you know how much I love you? 💖",a:["A lot ❤️","Infinite ♾️","Not enough 😏"],e:"😘"}
+];
+}
 let s=0;
 function showStory(){
-quizQ.innerHTML=story[s];
-quizOptions.innerHTML='<button class="optionBtn" onclick="nextStory()">Answer</button>';
+let st=story[s];
+quizQ.innerHTML=st.q;
+quizOptions.innerHTML="";
+emojiReact.innerHTML="";
+st.a.forEach(text=>{
+quizOptions.innerHTML+=`<button class="optionBtn" onclick="nextStory('${st.e}')">${text}</button>`;
+});
+
+
+function nextStory(emoji){
+emojiReact.innerHTML=emoji;
+setTimeout(()=>{
+s++;
+if(s<story.length) showStory();
+else startPlan();
+},1000);
+}
 }
 function nextStory(){s++; if(s<story.length)showStory(); else startPlan();}
 
 /* PLAN QUIZ */
 let plan=[
-{q:"After waking up we will?",o:["Make love","1 kiss","5 kisses","Kiss until we want"],c:3},
-{q:"After kissing?",o:["Shower clean","Shower together","Eat breakfast","Make love"],c:0}
+{q:"After waking up we will?",o:["Make love 🤭","1 kiss 😘","5 kisses 😘","Kiss until we want 😘"],c:[3]},
+{q:"After kissing so much we will?",o:["Shower and become clean 🚿","Shower together 🤭🔥","Eat breakfast 🍳","Make love 🤭"],c:[0]},
+{q:"Now we are clean, we will?",o:["Pray together 🙏❣️"],c:[0]},
+{q:"Dress code my janu will steal my heart ❤️",o:["Red ♥️","Yellow 💛","Blue 💙","White 🤍","Pink 🩷","Black 🖤"],c:"all"},
+{q:"Now we will go?",o:["Shopping 🛍️","Tamohon 🍽️","Singapore ✈️","Switzerland ❄️"],c:[0,1]},
+{q:"After shopping we will?",o:["Movie night 🎬","Gaming 🎮","Sleeping 😴","Hornu 🤭"],c:[0]}
 ];
 let p=0;
 function startPlan(){quizScreen.style.display="none";planScreen.style.display="flex";showPlan();}
@@ -159,7 +185,18 @@ planQ.innerHTML=plan[p].q;
 planOptions.innerHTML="";
 plan[p].o.forEach((t,i)=>planOptions.innerHTML+=`<button class="optionBtn" onclick="choosePlan(${i})">${t}</button>`);
 }
-function choosePlan(i){ if(i==plan[p].c){p++; if(p<plan.length)showPlan(); else startLoveVideo();}}
+function choosePlan(i){
+let correct=plan[p].c;
+
+if(correct==="all" || correct.includes(i)){
+p++;
+if(p<plan.length) showPlan();
+else startLoveVideo();
+}
+else{
+alert("Wrong choice 😝 try again");
+}
+}
 
 function startLoveVideo(){
 planScreen.style.display="none";
@@ -170,3 +207,4 @@ loveVideo.onended=()=>{loveVideoScreen.style.display="none";memoryTextScreen.sty
 </script>
 </body>
 </html>
+
