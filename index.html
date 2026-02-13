@@ -38,7 +38,7 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 .optionBtn{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
 video{width:100%;height:100%;object-fit:contain}
 
-/* ⭐ IMPORTANT FIX */
+/* memories iframe fix */
 #memoriesFrame{
 width:90vw;
 height:90vh;
@@ -48,7 +48,7 @@ display:none;
 pointer-events:none;
 }
 
-/* FIREWORKS */
+/* fireworks */
 #fireworksCanvas{position:absolute;width:100%;height:100%;top:0;left:0}
 </style>
 </head>
@@ -107,7 +107,6 @@ And I am forever grateful that life gave me YOU 💖
 </h1>
 </div>
 
-<!-- FIXED MEMORIES -->
 <div id="memoriesVideoScreen" class="screen">
 <h1 style="font-size:42px;margin-bottom:20px">Our Memories 🎬❤️</h1>
 <button id="playBtn" onclick="playMemories()">Play Memories 💖</button>
@@ -154,9 +153,47 @@ noBtn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-
 function yesClicked(){
 questionScreen.style.display="none";
 yesScreen.style.display="flex";
+setTimeout(()=>{
+yesScreen.style.display="none";
+quizScreen.style.display="flex";
+showStory();
+},5000);
 }
 
-/* ⭐ NEW FUNCTION */
+let story=[
+{q:"Who fell first? 😌",a:["Me 😎","You 😘","Destiny 💫"],e:"🥰"},
+{q:"Who loves more? 😏",a:["Me ❤️","You ❤️","Equal 😂"],e:"😍"}
+];
+
+let s=0;
+function showStory(){
+let st=story[s];
+quizQ.innerHTML=st.q;
+quizOptions.innerHTML="";
+emojiReact.innerHTML="";
+st.a.forEach(text=>{
+quizOptions.innerHTML+=`<button class="optionBtn" onclick="nextStory('${st.e}')">${text}</button>`;
+});
+}
+function nextStory(emoji){
+emojiReact.innerHTML=emoji;
+setTimeout(()=>{s++; if(s<story.length)showStory(); else startLoveVideo();},1000);
+}
+
+function startLoveVideo(){
+quizScreen.style.display="none";
+loveVideoScreen.style.display="flex";
+loveVideo.play();
+loveVideo.onended=()=>{
+loveVideoScreen.style.display="none";
+memoryTextScreen.style.display="flex";
+setTimeout(()=>{
+memoryTextScreen.style.display="none";
+memoriesVideoScreen.style.display="flex";
+},20000);
+}
+}
+
 function playMemories(){
 document.getElementById("playBtn").style.display="none";
 document.getElementById("memoriesFrame").style.display="block";
