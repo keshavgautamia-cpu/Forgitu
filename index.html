@@ -37,7 +37,16 @@ input{margin-top:15px;padding:12px;width:90%;border:none;border-radius:10px;text
 
 .optionBtn{display:block;width:260px;margin:15px auto;padding:18px;font-size:22px;border-radius:40px;background:white;color:#ff4d88}
 video{width:100%;height:100%;object-fit:contain}
-#memoriesFrame{width:90vw;height:90vh;border:none;border-radius:20px;display:none}
+
+/* ⭐ IMPORTANT FIX */
+#memoriesFrame{
+width:90vw;
+height:90vh;
+border:none;
+border-radius:20px;
+display:none;
+pointer-events:none;
+}
 
 /* FIREWORKS */
 #fireworksCanvas{position:absolute;width:100%;height:100%;top:0;left:0}
@@ -98,7 +107,7 @@ And I am forever grateful that life gave me YOU 💖
 </h1>
 </div>
 
-<!-- FIXED MEMORIES SECTION -->
+<!-- FIXED MEMORIES -->
 <div id="memoriesVideoScreen" class="screen">
 <h1 style="font-size:42px;margin-bottom:20px">Our Memories 🎬❤️</h1>
 <button id="playBtn" onclick="playMemories()">Play Memories 💖</button>
@@ -135,18 +144,47 @@ else if(hintCount==2) msg.innerHTML="Hint: it has to do with starting 😁";
 else msg.innerHTML="Hint: 6 letter word first letter capital — the word which made us met 💕";
 }
 
-/* 🔥 ONLY NEW FUNCTION ADDED */
+let stage=0;
+function noClicked(){
+if(stage==0){noBtn.innerHTML="Not a chance 😤";stage=1;return;}
+if(stage==1){noBtn.innerHTML="This is not what you want 😏";stage=2;return;}
+noBtn.style.transform=`translate(${Math.random()*300-150}px,${Math.random()*300-150}px)`;
+}
+
+function yesClicked(){
+questionScreen.style.display="none";
+yesScreen.style.display="flex";
+}
+
+/* ⭐ NEW FUNCTION */
 function playMemories(){
 document.getElementById("playBtn").style.display="none";
 document.getElementById("memoriesFrame").style.display="block";
+document.getElementById("memoriesFrame").style.pointerEvents="auto";
 
-/* change 210000 if video length different */
 setTimeout(()=>{
 memoriesVideoScreen.style.display="none";
 fireworksScreen.style.display="flex";
 startFireworks();
 setTimeout(()=>finalText.style.opacity=1,2000);
 },210000);
+}
+
+function startFireworks(){
+const canvas=document.getElementById("fireworksCanvas");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+setInterval(()=>{
+ctx.fillStyle="rgba(0,0,0,0.2)";
+ctx.fillRect(0,0,canvas.width,canvas.height);
+for(let i=0;i<10;i++){
+ctx.beginPath();
+ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,3,0,2*Math.PI);
+ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+ctx.fill();
+}
+},50);
 }
 </script>
 </body>
